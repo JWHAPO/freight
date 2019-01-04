@@ -7,19 +7,15 @@ package app.hapo.car.freight.api.user;/*
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @GetMapping("/{email}/{password}")
+    @RequestMapping(value = "/user/{email}/{password}", method = RequestMethod.GET)
     public User findByEmailAndPassword(@PathVariable String email, @PathVariable String password){
         User user = userService.findByEmailAndPassword(email, password);
         return user;

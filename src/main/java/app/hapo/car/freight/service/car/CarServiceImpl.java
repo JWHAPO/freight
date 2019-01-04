@@ -1,27 +1,29 @@
-package app.hapo.car.freight.service.user;/*
+package app.hapo.car.freight.service.car;/*
  * Created by hapo
  * Date : 19. 1. 1 오후 11:06
  * Description :
  */
 
-import app.hapo.car.freight.domain.user.User;
-import app.hapo.car.freight.domain.user.UserRepository;
+import app.hapo.car.freight.domain.car.Car;
+import app.hapo.car.freight.domain.car.CarRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class CarServiceImpl implements CarService {
 
-    private UserRepository userRepository;
+    private CarRepository carRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public CarServiceImpl(CarRepository carRepository) {
+        this.carRepository = carRepository;
     }
 
+
     @Override
-    public User findByEmailAndPassword(String email, String password) {
-        return userRepository.findByEmailAndPassword(email,password);
+    public List<Car> findAll() {
+        return carRepository.findAll();
     }
 }

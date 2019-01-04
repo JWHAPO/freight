@@ -1,7 +1,7 @@
-package app.hapo.car.freight.domain.user;/*
+package app.hapo.car.freight.domain.car;/*
  * Created by hapo
  * Date : 19. 1. 1 오후 10:43
- * Description : User DTO
+ * Description : Car DTO
  */
 
 import lombok.Getter;
@@ -14,24 +14,15 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="ta2user")
-public class User {
+@Table(name="ta2car")
+public class Car {
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "no")
+    private Long no;
 
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "level_no")
-    private String level_no;
+    @Column(name = "description")
+    private String description;
 }

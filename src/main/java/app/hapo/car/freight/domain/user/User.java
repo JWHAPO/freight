@@ -1,7 +1,7 @@
 package app.hapo.car.freight.domain.user;/*
  * Created by hapo
  * Date : 19. 1. 1 오후 10:43
- * Description : User DTO
+ * Description : Car DTO
  */
 
 import lombok.Getter;

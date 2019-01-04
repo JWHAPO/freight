@@ -1,11 +1,14 @@
-package app.hapo.car.freight.service.user;/*
+package app.hapo.car.freight.service.car;/*
  * Created by hapo
  * Date : 19. 1. 1 오후 11:04
  * Description :
  */
 
-import app.hapo.car.freight.domain.user.User;
+import app.hapo.car.freight.domain.car.Car;
 
-public interface UserService {
-    User findByEmailAndPassword(String email, String password);
+import java.util.List;
+
+public interface CarService {
+
+    List<Car> findAll();
 }
