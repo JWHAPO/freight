@@ -25,4 +25,13 @@ public class Car {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "weight")
+    private String weight;
+
+    @Column(name = "maker")
+    private String maker;
+
+    @Column(name = "type")
+    private String type;
 }
