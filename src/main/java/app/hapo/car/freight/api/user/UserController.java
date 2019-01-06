@@ -7,7 +7,12 @@ package app.hapo.car.freight.api.user;/*
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -17,7 +22,23 @@ public class UserController {
 
     @RequestMapping(value = "/user/{email}/{password}", method = RequestMethod.GET)
     public User findByEmailAndPassword(@PathVariable String email, @PathVariable String password){
-        User user = userService.findByEmailAndPassword(email, password);
-        return user;
+        return userService.findByEmailAndPassword(email, password);
     }
+
+    @RequestMapping(value = "/users")
+    public List<User> findAll(){
+        return userService.findAll();
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public ResponseEntity<Object> createUser(@RequestBody User user) {
+        User savedUser = userService.createUser(user);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedUser.getId()).toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
+
 }
