@@ -13,24 +13,31 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping(value = "/users")
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/user/{email}/{password}", method = RequestMethod.GET)
+    @GetMapping(value = "/{email}/{password}")
     public User findByEmailAndPassword(@PathVariable String email, @PathVariable String password){
         return userService.findByEmailAndPassword(email, password);
     }
 
-    @RequestMapping(value = "/users")
+    @GetMapping
     public List<User> findAll(){
         return userService.findAll();
     }
 
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @GetMapping(value = "/{id}")
+    public Optional<User> findById(@PathVariable Long id){
+        return userService.findById(id);
+    }
+
+    @PostMapping(value = "/user")
     public ResponseEntity<Object> createUser(@RequestBody User user) {
         User savedUser = userService.createUser(user);
 
@@ -38,6 +45,21 @@ public class UserController {
                 .buildAndExpand(savedUser.getId()).toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Object> updateUser(@RequestBody User user, @PathVariable Long id){
+        Optional<User> userOptional = userService.findById(id);
+        if(!userOptional.isPresent()) return ResponseEntity.notFound().build();
+
+        user.setId(id);
+        userService.createUser(user);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteUser(@PathVariable Long id){
+        userService.deleteById(id);
     }
 
 
