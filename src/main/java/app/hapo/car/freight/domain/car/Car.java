@@ -4,15 +4,13 @@ package app.hapo.car.freight.domain.car;/*
  * Description : Car DTO
  */
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
 @Table(name="ta2car")
 public class Car {
@@ -27,7 +25,10 @@ public class Car {
     private String description;
 
     @Column(name = "weight")
-    private String weight;
+    private Long weight;
+
+    @Column(name = "weight_uom")
+    private String weight_uom;
 
     @Column(name = "maker")
     private String maker;

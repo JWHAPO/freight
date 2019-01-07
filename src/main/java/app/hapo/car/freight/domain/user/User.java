@@ -4,15 +4,16 @@ package app.hapo.car.freight.domain.user;/*
  * Description : Car DTO
  */
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
 @Table(name="ta2user")
 public class User {
