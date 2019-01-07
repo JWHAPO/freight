@@ -9,6 +9,7 @@ import app.hapo.car.freight.service.car.CarService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -24,9 +25,11 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(CarController.class)
+@AutoConfigureRestDocs(outputDir = "target/snippets")
 public class CarControllerTest {
 
     @Autowired
@@ -34,6 +37,7 @@ public class CarControllerTest {
 
     @MockBean
     CarService carService;
+
 
     @Test
     public void findAllTest() throws Exception{
@@ -45,6 +49,7 @@ public class CarControllerTest {
 
         mockMvc.perform(get("/cars").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].no",is(car.getNo().intValue())));
+                .andExpect(jsonPath("$[0].no",is(car.getNo().intValue())))
+                .andDo(document("cars/findAll"));
     }
 }

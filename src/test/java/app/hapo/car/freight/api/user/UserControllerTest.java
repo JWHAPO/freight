@@ -5,18 +5,12 @@ package app.hapo.car.freight.api.user;/*
  */
 
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.service.user.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -26,8 +20,17 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
+@AutoConfigureRestDocs(outputDir = "target/snippets")
 public class UserControllerTest {
 
     @Autowired
@@ -35,6 +38,7 @@ public class UserControllerTest {
 
     @MockBean
     UserService userService;
+
 
     @Test
     public void findAllTest() throws Exception{
@@ -46,17 +50,19 @@ public class UserControllerTest {
         mockMvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$",hasSize(1)))
-                .andExpect(jsonPath("$[0].password",is(user.getPassword())));
+                .andExpect(jsonPath("$[0].password",is(user.getPassword())))
+                .andDo(document("users/findAll"));
     }
 
     @Test
-    public void findByEmailAndPassword() throws Exception{
+    public void findByEmailAndPasswordTest() throws Exception{
         User user = new User(1L,"kjw@naver.com","123","Mr.KKK","Seoul","2");
         given(userService.findByEmailAndPassword("kjw@naver.com","123")).willReturn(user);
 
         mockMvc.perform(get("/users/kjw@naver.com/123").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("name",is(user.getName())));
+                .andExpect(jsonPath("name",is(user.getName())))
+                .andDo(document("users/findByEmailAndPassword"));
 
 
     }
