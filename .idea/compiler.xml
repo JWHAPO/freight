@@ -5,8 +5,6 @@
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="app.hapo.car.freight.main" target="1.8" />
-      <module name="app.hapo.car.freight.test" target="1.8" />
       <module name="freight_main" target="1.8" />
       <module name="freight_test" target="1.8" />
     </bytecodeTargetLevel>

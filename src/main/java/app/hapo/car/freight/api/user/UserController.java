@@ -4,8 +4,12 @@ package app.hapo.car.freight.api.user;/*
  * Description :
  */
 
+import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.user.User;
+import app.hapo.car.freight.domain.usercar.UserCar;
+import app.hapo.car.freight.service.car.CarService;
 import app.hapo.car.freight.service.user.UserService;
+import app.hapo.car.freight.service.usercar.UserCarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +26,12 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CarService carService;
+
+    @Autowired
+    UserCarService userCarService;
+
     @GetMapping(value = "/{email}/{password}")
     public User findByEmailAndPassword(@PathVariable String email, @PathVariable String password){
         return userService.findByEmailAndPassword(email, password);
@@ -37,7 +47,7 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @PostMapping(value = "/user")
+    @PostMapping
     public ResponseEntity<Object> createUser(@RequestBody User user) {
         User savedUser = userService.createUser(user);
 
@@ -60,6 +70,14 @@ public class UserController {
     @DeleteMapping(value = "/{id}")
     public void deleteUser(@PathVariable Long id){
         userService.deleteById(id);
+    }
+
+    @GetMapping(value = "/{id}/cars")
+    public List<Car> findUserCars(@PathVariable Long id){
+
+
+        List<UserCar> userCars = userCarService.findByUserId(id);
+        return null;
     }
 
 

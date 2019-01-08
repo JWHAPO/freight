@@ -4,8 +4,11 @@ package app.hapo.car.freight.service.user;/*
  * Description :
  */
 
+import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.domain.user.UserRepository;
+import app.hapo.car.freight.domain.usercar.UserCar;
+import app.hapo.car.freight.domain.usercar.UserCarRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,10 +20,12 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private UserCarRepository userCarRepository;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    public UserServiceImpl(UserCarRepository userCarRepository) { this.userCarRepository = userCarRepository;}
 
     @Override
     public User findByEmailAndPassword(String email, String password) {
@@ -45,5 +50,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Car> findUserCars(Long id) {
+        //UserCar에서 데이터 가져오기.
+        //UserCar의 데이터로 Car에 있는 데이터 가져오기.
+        List<UserCar> userCars =userCarRepository.findByUserId(id);
+
+        if(userCars.size()>0){
+
+        }
+        return null;
     }
 }

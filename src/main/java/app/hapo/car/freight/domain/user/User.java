@@ -1,19 +1,17 @@
 package app.hapo.car.freight.domain.user;/*
  * Created by hapo
  * Date : 19. 1. 1 오후 10:43
- * Description : Car DTO
+ * Description :
  */
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor
 @Entity
 @Table(name="ta2user")
 public class User {
@@ -34,5 +32,5 @@ public class User {
     private String address;
 
     @Column(name = "level_no")
-    private String level_no;
+    private String levelNo;
 }

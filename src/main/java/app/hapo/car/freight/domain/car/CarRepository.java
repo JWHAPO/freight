@@ -6,6 +6,9 @@ package app.hapo.car.freight.domain.car;/*
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface CarRepository extends JpaRepository<Car, Long> {
+    List<Car> findByUserIdIn(List<Long> userIds);
 
 }

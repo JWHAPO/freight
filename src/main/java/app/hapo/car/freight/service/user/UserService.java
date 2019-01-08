@@ -4,6 +4,7 @@ package app.hapo.car.freight.service.user;/*
  * Description :
  */
 
+import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.user.User;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface UserService {
     List<User> findAll();
     User createUser(User user);
     void deleteById(Long id);
+    List<Car> findUserCars(Long id);
+
 }

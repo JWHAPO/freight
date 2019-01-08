@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor
 @Entity
 @Table(name="ta2car")
 public class Car {
@@ -28,7 +29,7 @@ public class Car {
     private Long weight;
 
     @Column(name = "weight_uom")
-    private String weight_uom;
+    private String weightUom;
 
     @Column(name = "maker")
     private String maker;

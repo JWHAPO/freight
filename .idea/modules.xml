@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.hapo.car.freight.iml" filepath="$PROJECT_DIR$/.idea/modules/app.hapo.car.freight.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.hapo.car.freight.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app.hapo.car.freight.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.hapo.car.freight.test.iml" filepath="$PROJECT_DIR$/.idea/modules/app.hapo.car.freight.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/freight.iml" filepath="$PROJECT_DIR$/.idea/modules/freight.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/freight_main.iml" filepath="$PROJECT_DIR$/.idea/modules/freight_main.iml" group="freight" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/freight_test.iml" filepath="$PROJECT_DIR$/.idea/modules/freight_test.iml" group="freight" />
     </modules>
   </component>
 </project>
