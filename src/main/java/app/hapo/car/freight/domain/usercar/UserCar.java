@@ -19,6 +19,7 @@ public class UserCar {
     @GeneratedValue
     private Long id;
 
+    //조인키 설정해야됨.
     @Column(name = "user_id")
     private String userId;
 
