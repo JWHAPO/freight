@@ -56,11 +56,6 @@ public class UserServiceImpl implements UserService {
     public List<Car> findUserCars(Long id) {
         //UserCar에서 데이터 가져오기.
         //UserCar의 데이터로 Car에 있는 데이터 가져오기.
-        List<UserCar> userCars =userCarRepository.findByUserId(id);
-
-        if(userCars.size()>0){
-
-        }
         return null;
     }
 }
