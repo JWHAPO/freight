@@ -4,6 +4,7 @@ package app.hapo.car.freight.domain.car;/*
  * Description : Car DTO
  */
 
+import app.hapo.car.freight.domain.usercar.UserCar;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,4 +37,8 @@ public class Car {
 
     @Column(name = "type")
     private String type;
+
+    @OneToOne
+    @JoinColumn(name = "car_id")
+    private UserCar userCar;
 }
