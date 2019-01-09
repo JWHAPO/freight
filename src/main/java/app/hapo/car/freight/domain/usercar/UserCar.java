@@ -24,4 +24,6 @@ public class UserCar {
 
     @Column(name = "car_id")
     private String carId;
+
+    
 }
