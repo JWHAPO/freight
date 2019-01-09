@@ -16,8 +16,9 @@ import javax.persistence.*;
 @Table(name="ta2user_car")
 public class UserCar {
     @Id
-    @GeneratedValue
-    private Long id;
+    @Column(name = "user_car_id")
+    @GeneratedValue(strategy = GenerationType. AUTO)
+    private Long userCarId;
 
     @Column(name = "user_id")
     private String userId;
@@ -25,5 +26,5 @@ public class UserCar {
     @Column(name = "car_id")
     private String carId;
 
-    
+
 }

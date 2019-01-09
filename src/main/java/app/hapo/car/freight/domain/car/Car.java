@@ -17,11 +17,12 @@ import javax.persistence.*;
 @Table(name="ta2car")
 public class Car {
     @Id
-    @GeneratedValue
-    private Long id;
+    @Column(name = "car_id")
+    @GeneratedValue(strategy = GenerationType. AUTO)
+    private Long carId;
 
-    @Column(name = "no")
-    private Long no;
+    @Column(name = "car_no")
+    private Long carNo;
 
     @Column(name = "description")
     private String description;
@@ -34,9 +35,6 @@ public class Car {
 
     @Column(name = "maker")
     private String maker;
-
-    @Column(name = "type")
-    private String type;
 
     @OneToOne
     @JoinColumn(name = "car_id")

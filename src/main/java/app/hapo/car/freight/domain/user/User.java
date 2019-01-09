@@ -16,8 +16,12 @@ import javax.persistence.*;
 @Table(name="ta2user")
 public class User {
     @Id
-    @GeneratedValue
-    private Long user_id;
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType. AUTO)
+    private Long userId;
+
+    @Column(name = "user_no")
+    private Long userNo;
 
     @Column(name = "email")
     private String email;
@@ -31,6 +35,6 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "level_no")
-    private String levelNo;
+    @Column(name = "level_id")
+    private Long levelNo;
 }
