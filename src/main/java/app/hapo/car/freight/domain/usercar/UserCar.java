@@ -4,6 +4,7 @@ package app.hapo.car.freight.domain.usercar;/*
  * Description : User의 Car목록을 들고 있는 테이블
  */
 
+import app.hapo.car.freight.domain.car.Car;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +26,10 @@ public class UserCar {
 
     @Column(name = "car_id")
     private String carId;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_id")
+    private Car car;
 
 
 }

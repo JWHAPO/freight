@@ -7,6 +7,7 @@ package app.hapo.car.freight.api.user;/*
 
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.service.user.UserService;
+import app.hapo.car.freight.service.usercar.UserCarService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +39,13 @@ public class UserControllerTest {
 
     @MockBean
     UserService userService;
+    @MockBean
+    UserCarService userCarService;
 
 
     @Test
     public void findAllTest() throws Exception{
-        User user = new User(1L,"kjw@naver.com","123","Mr.KKK","Seoul","2");
+        User user = new User(1L,1L,"kjw@naver.com","123","Mr.KKK","Seoul",1L);
 
         List<User> allUsers = Collections.singletonList(user);
         given(userService.findAll()).willReturn(allUsers);
@@ -56,14 +59,53 @@ public class UserControllerTest {
 
     @Test
     public void findByEmailAndPasswordTest() throws Exception{
-        User user = new User(1L,"kjw@naver.com","123","Mr.KKK","Seoul","2");
-        given(userService.findByEmailAndPassword("kjw@naver.com","123")).willReturn(user);
+        User user = new User(1L,1L,"mrKim4@email.com","1234","Mr.Kim","Seoul",1L);
+        given(userService.findByEmailAndPassword("mrKim4@email.com","1234")).willReturn(user);
 
-        mockMvc.perform(get("/users/kjw@naver.com/123").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/users/mrKim4@email.com/1234").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name",is(user.getName())))
                 .andDo(document("users/findByEmailAndPassword"));
 
 
     }
+
+//    ublic class OneToManyAndManyToOneTest {
+//
+//        @Autowired
+//        private EntityManagerFactory entityManagerFactory;
+//        private EntityManager entityManager;
+//
+//        @Test
+//        public void oneToManyAndManyToOneTest() {
+//            Order order = new Order();
+//            order.setOrderName("test order");
+//            order.setPrice(123);
+//            order.setNote("test note");
+//            User user = new User();
+//            user.setUsername("lkw1989");
+//            user.setNickName("woniper");
+//            user.setAddress("seoul");
+//
+//            // relationship
+//            user.addOrder(order);
+//            order.setUser(user);
+//            entityManager.persist(user);
+//
+//            Assert.assertEquals(user.getOrders().get(0).getOrderId(), order.getOrderId());
+//        }
+//
+//        @Before
+//        public void setUp() throws Exception {
+//            entityManager = entityManagerFactory.createEntityManager();
+//            entityManager.getTransaction().begin();
+//        }
+//
+//        @After
+//        public void after() {
+//            entityManager.getTransaction().commit();
+//            entityManager.close();
+//        }
+//
+//    }
 }

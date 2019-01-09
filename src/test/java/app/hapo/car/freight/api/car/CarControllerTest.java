@@ -5,6 +5,7 @@ package app.hapo.car.freight.api.car;/*
  */
 
 import app.hapo.car.freight.domain.car.Car;
+import app.hapo.car.freight.domain.usercar.UserCar;
 import app.hapo.car.freight.service.car.CarService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,14 +44,17 @@ public class CarControllerTest {
     @Test
     public void findAllTest() throws Exception{
 
-        Car car = new Car(1L,1L,"newCar1", 2210L,"kg","KIA","1");
+        List<UserCar> userCars = new ArrayList<>();
+
+
+        Car car = new Car(1L,1L,"newCar1", 2210L,"kg","KIA",userCars);
 
         List<Car> allCars = Collections.singletonList(car);
         given(carService.findAll()).willReturn(allCars);
 
         mockMvc.perform(get("/cars").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].no",is(car.getNo().intValue())))
+                .andExpect(jsonPath("$[0].carNo",is(car.getCarNo().intValue())))
                 .andDo(document("cars/findAll"));
     }
 }

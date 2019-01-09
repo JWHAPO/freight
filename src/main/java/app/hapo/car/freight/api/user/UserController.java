@@ -4,7 +4,6 @@ package app.hapo.car.freight.api.user;/*
  * Description :
  */
 
-import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.domain.usercar.UserCar;
 import app.hapo.car.freight.service.car.CarService;
@@ -25,9 +24,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    CarService carService;
 
     @Autowired
     UserCarService userCarService;
@@ -52,7 +48,7 @@ public class UserController {
         User savedUser = userService.createUser(user);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(savedUser.getId()).toUri();
+                .buildAndExpand(savedUser.getUserId()).toUri();
 
         return ResponseEntity.created(location).build();
     }
@@ -62,7 +58,7 @@ public class UserController {
         Optional<User> userOptional = userService.findById(id);
         if(!userOptional.isPresent()) return ResponseEntity.notFound().build();
 
-        user.setId(id);
+        user.setUserId(id);
         userService.createUser(user);
         return ResponseEntity.noContent().build();
     }
@@ -73,11 +69,10 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}/cars")
-    public List<Car> findUserCars(@PathVariable Long id){
+    public List<UserCar> findUserCars(@PathVariable Long id){
         //UserCar에서 데이터 가져오기.
         //UserCar의 데이터로 Car에 있는 데이터 가져오기.
-        //수정중.
-        return null;
+        return userCarService.findAll();
     }
 
 

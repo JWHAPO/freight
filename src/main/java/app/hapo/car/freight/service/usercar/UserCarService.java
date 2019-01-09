@@ -7,6 +7,9 @@ package app.hapo.car.freight.service.usercar;
 
 import app.hapo.car.freight.domain.usercar.UserCar;
 
+import java.util.List;
+
 public interface UserCarService {
     UserCar createUserCar(UserCar userCar);
+    List<UserCar> findAll();
 }

@@ -16,6 +16,5 @@ public interface UserService {
     List<User> findAll();
     User createUser(User user);
     void deleteById(Long id);
-    List<Car> findUserCars(Long id);
 
 }

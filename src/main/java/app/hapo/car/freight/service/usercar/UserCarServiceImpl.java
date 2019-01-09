@@ -5,6 +5,7 @@ import app.hapo.car.freight.domain.usercar.UserCarRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * freight
@@ -26,5 +27,10 @@ public class UserCarServiceImpl implements UserCarService{
     @Override
     public UserCar createUserCar(UserCar userCar) {
         return userCarRepository.save(userCar);
+    }
+
+    @Override
+    public List<UserCar> findAll() {
+        return userCarRepository.findAll();
     }
 }

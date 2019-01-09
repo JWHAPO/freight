@@ -8,6 +8,7 @@ import app.hapo.car.freight.domain.usercar.UserCar;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,7 +37,7 @@ public class Car {
     @Column(name = "maker")
     private String maker;
 
-    @OneToOne
-    @JoinColumn(name = "car_id")
-    private UserCar userCar;
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private List<UserCar> userCars;
+
 }
