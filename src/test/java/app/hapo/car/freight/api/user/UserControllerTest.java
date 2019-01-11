@@ -5,9 +5,12 @@ package app.hapo.car.freight.api.user;/*
  */
 
 
+import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.user.User;
+import app.hapo.car.freight.domain.usercar.UserCar;
 import app.hapo.car.freight.service.user.UserService;
 import app.hapo.car.freight.service.usercar.UserCarService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +20,20 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -35,13 +43,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserControllerTest {
 
     @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    UserService userService;
-    @MockBean
-    UserCarService userCarService;
+    private UserService userService;
 
+    @MockBean
+    private UserCarService userCarService;
 
     @Test
     public void findAllTest() throws Exception{
@@ -58,15 +72,59 @@ public class UserControllerTest {
     }
 
     @Test
+    public void findByIdTest() throws Exception{
+        User user = new User(1L,1L,"kjw@naver.com","123","Mr.KKK","Seoul",1L);
+        Optional<User> userOptional = Optional.of(user);
+
+        given(userService.findById(1L)).willReturn(userOptional);
+
+        mockMvc.perform(get("/users/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email",is(user.getEmail())))
+                .andDo(document("users/findById"));
+    }
+
+    @Test
     public void findByEmailAndPasswordTest() throws Exception{
         User user = new User(1L,1L,"mrKim4@email.com","1234","Mr.Kim","Seoul",1L);
         given(userService.findByEmailAndPassword("mrKim4@email.com","1234")).willReturn(user);
 
         mockMvc.perform(get("/users/mrKim4@email.com/1234").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("name",is(user.getName())))
                 .andDo(document("users/findByEmailAndPassword"));
+    }
 
+    @Test
+    public void createUserTest() throws Exception{
+        User user = new User(1L,1L,"mrKim4@email.com","1234","Mr.Kim","Seoul",1L);
 
+        String userJson = objectMapper.writeValueAsString(user);
+
+        mockMvc.perform(post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(userJson))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isCreated())
+                .andDo(document("users/createUser"))
+                .andReturn();
+
+    }
+
+    @Test
+    public void findUserCarsTest() throws Exception{
+        Car car = new Car(2L,2L,"BMW",1200L,"","");
+        UserCar userCar = new UserCar(1L,1L,2L,car);
+
+        List<UserCar> allUserCars = Collections.singletonList(userCar);
+
+        System.out.println("SIZE:"+allUserCars.size());
+
+        System.out.println(objectMapper.writeValueAsString(allUserCars));
+
+        mockMvc.perform(get("/users/1/cars").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                //.andExpect(jsonPath("$[0]", hasSize(1)))
+                //.andExpect(jsonPath("$[0].car.description",is(userCar.getCar().getDescription())))
+                .andDo(document("users/findUserCars"));
     }
 }
