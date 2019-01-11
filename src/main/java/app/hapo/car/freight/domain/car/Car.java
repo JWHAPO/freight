@@ -37,7 +37,4 @@ public class Car {
     @Column(name = "maker")
     private String maker;
 
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
-    private List<UserCar> userCars;
-
 }

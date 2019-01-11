@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(value = "select * from ta2user a where a.email=:email and a.password = :password", nativeQuery = true)
-    User findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
+    User findByEmailAndPassword(String email, String password);
 
 }

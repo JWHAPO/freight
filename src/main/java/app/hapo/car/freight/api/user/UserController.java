@@ -70,9 +70,8 @@ public class UserController {
 
     @GetMapping(value = "/{id}/cars")
     public List<UserCar> findUserCars(@PathVariable Long id){
-        //UserCar에서 데이터 가져오기.
-        //UserCar의 데이터로 Car에 있는 데이터 가져오기.
-        return userCarService.findAll();
+        List<UserCar> userCars = userCarService.findByUserId(id);
+        return userCars;
     }
 
 

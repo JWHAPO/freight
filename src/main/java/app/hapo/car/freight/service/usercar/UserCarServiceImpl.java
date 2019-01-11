@@ -30,7 +30,7 @@ public class UserCarServiceImpl implements UserCarService{
     }
 
     @Override
-    public List<UserCar> findAll() {
-        return userCarRepository.findAll();
+    public List<UserCar> findByUserId(Long userId) {
+        return userCarRepository.findByUserId(userId);
     }
 }

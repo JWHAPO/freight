@@ -22,13 +22,13 @@ public class UserCar {
     private Long userCarId;
 
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
 
     @Column(name = "car_id")
-    private String carId;
+    private Long carId;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "car_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_id", referencedColumnName = "car_id", insertable = false, updatable = false)
     private Car car;
 
 
