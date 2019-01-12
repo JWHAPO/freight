@@ -77,7 +77,7 @@ public class UserController {
     }
 
     @ControllerAdvice
-    class EmployeeNotFoundAdvice {
+    class UserNotFoundExceptionAdvice {
 
         @ResponseBody
         @ExceptionHandler(UserNotFoundException.class)
