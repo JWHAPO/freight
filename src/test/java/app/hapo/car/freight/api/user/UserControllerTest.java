@@ -30,10 +30,8 @@ import java.util.Optional;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -100,14 +98,39 @@ public class UserControllerTest {
 
         String userJson = objectMapper.writeValueAsString(user);
 
+        given(userService.createUser(user)).willReturn(user);
+
         mockMvc.perform(post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(userJson))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andDo(document("users/createUser"))
                 .andReturn();
+    }
 
+    @Test
+    public void updateUserTest() throws Exception{
+        User user = new User(1L,1L,"mrKim4@email.com","1234","Mr.Kim","Seoul",1L);
+        user.setAddress("Guri");
+        String userJson = objectMapper.writeValueAsString(user);
+
+        mockMvc.perform(put("/users/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(userJson))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andDo(document("users/updateUser"))
+                .andReturn();
+    }
+
+    @Test
+    public void deleteUserTest() throws Exception{
+
+        mockMvc.perform(delete("/users/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -117,14 +140,8 @@ public class UserControllerTest {
 
         List<UserCar> allUserCars = Collections.singletonList(userCar);
 
-        System.out.println("SIZE:"+allUserCars.size());
-
-        System.out.println(objectMapper.writeValueAsString(allUserCars));
-
         mockMvc.perform(get("/users/1/cars").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                //.andExpect(jsonPath("$[0]", hasSize(1)))
-                //.andExpect(jsonPath("$[0].car.description",is(userCar.getCar().getDescription())))
                 .andDo(document("users/findUserCars"));
     }
 }

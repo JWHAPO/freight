@@ -1,7 +1,7 @@
 package app.hapo.car.freight.api.car;/*
  * Created by hapo
  * Date : 19. 1. 1 오후 11:30
- * Description :
+ * Description :  Car Controller-> 자동차에 대한 정보들을 다루는 컨트롤러
  */
 
 import app.hapo.car.freight.domain.car.Car;
