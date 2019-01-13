@@ -6,6 +6,7 @@ package app.hapo.car.freight.service.user;/*
 
 import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.user.User;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,7 @@ import java.util.Optional;
 public interface UserService {
     User findByEmailAndPassword(String email, String password);
     Optional<User> findById(Long id);
-    List<User> findAll();
+    List<User> findAll(Sort sort);
     User createUser(User user);
     void deleteById(Long id);
 

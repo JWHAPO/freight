@@ -9,6 +9,7 @@ import app.hapo.car.freight.domain.usercar.UserCar;
 import app.hapo.car.freight.service.user.UserService;
 import app.hapo.car.freight.service.usercar.UserCarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class UserController {
 
     @GetMapping
     public List<User> findAll(){
-        return userService.findAll();
+        return userService.findAll(new Sort(Sort.Direction.ASC, "user_id"));
     }
 
     @GetMapping(value = "/{id}")
