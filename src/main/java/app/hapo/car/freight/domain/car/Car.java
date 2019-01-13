@@ -28,13 +28,28 @@ public class Car {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "weight")
-    private Long weight;
+    @Column(name = "width")
+    private Long width;
 
-    @Column(name = "weight_uom")
-    private String weightUom;
+    @Column(name = "width_uom")
+    private String widthUom;
 
-    @Column(name = "maker")
-    private String maker;
+    @Column(name = "length")
+    private Long length;
+
+    @Column(name = "length_uom")
+    private String lengthUom;
+
+    @Column(name = "loadable_height")
+    private Long loadableHeight;
+
+    @Column(name = "loadable_height_uom")
+    private String loadableHeightUom;
+
+    @Column(name = "loadable_weight")
+    private Long loadableWeight;
+
+    @Column(name = "loadable_weight_uom")
+    private String loadableWeightUom;
 
 }

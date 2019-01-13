@@ -135,7 +135,7 @@ public class UserControllerTest {
 
     @Test
     public void findUserCarsTest() throws Exception{
-        Car car = new Car(2L,2L,"BMW",1200L,"","");
+        Car car = new Car(2L,2L,"newCar1", 160L,"cm",280L,"cm",180L,"cm",1100L,"Kg");
         UserCar userCar = new UserCar(1L,1L,2L,car);
 
         List<UserCar> allUserCars = Collections.singletonList(userCar);

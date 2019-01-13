@@ -36,6 +36,17 @@ create table ta2car(
    weight_uom varchar(20),
    maker varchar(20) );
 
+    alter table ta2car add column width int;
+    alter table ta2car add column width_uom varchar(20);
+    alter table ta2car add column length int;
+    alter table ta2car add column length_uom varchar(20);
+    alter table ta2car drop column maker;
+    alter table ta2car add column loadable_height int;
+    alter table ta2car add column loadable_height_uom varchar(20);
+    alter table ta2car add column loadable_weight int;
+    alter table ta2car add column loadable_weight_uom varchar(20);
+    alter table ta2car drop column weight;
+    alter table ta2car drop column weight_uom;
 
    insert into ta2car(car_no,description,weight)
    values ( '1', 'Porter',1000 );
@@ -43,6 +54,31 @@ create table ta2car(
    values ( '2', 'Bongo',2000 );
    insert into ta2car(car_no,description,weight)
    values ( '3', 'M3',1500 );
+
+   delete from ta2car;
+   insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
+   values ( '1', '1 톤',160,'cm',280,'cm',170,'cm',1.1,'ton');
+   insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
+   values ( '2', '1 탑차',155,'cm',280,'cm',170,'cm',1.1,'ton');
+   insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
+   values ( '3', '1 윙카',155,'cm',280,'cm',170,'cm',1.1,'ton');
+   insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
+   values ( '4', '1 톤(초장축)',160,'cm',280,'cm',170,'cm',1.1,'ton');
+   insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
+   values ( '5', '1.4 톤',163,'cm',310,'cm',170,'cm',1.54,'ton');
+   insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
+   values ( '6', '1.4 탑차',158,'cm',310,'cm',160,'cm',1.54,'ton');
+   insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
+   values ( '7', '1.4 윙카',158,'cm',310,'cm',170,'cm',1.54,'ton');
+   insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
+   values ( '8', '1.4톤(초장축)',163,'cm',340,'cm',170,'cm',1.54,'ton');
+   insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
+   values ( '9', '2.5 톤',192,'cm',435,'cm',210,'cm',2.75,'ton');
+   insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
+   values ( '10', '2.5 탑차',185,'cm',430,'cm',190,'cm',2.75,'ton');
+   insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
+   values ( '11', '2.5 윙카',185,'cm',430,'cm',200,'cm',2.75,'ton');
+
 
     /** ta2user_car 생성 */
     create table ta2user_car(
