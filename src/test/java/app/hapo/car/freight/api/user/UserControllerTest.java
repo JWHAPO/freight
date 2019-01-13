@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -57,10 +58,10 @@ public class UserControllerTest {
 
     @Test
     public void findAllTest() throws Exception{
-        User user = new User(1L,1L,"kjw@naver.com","123","Mr.KKK","Seoul",1L);
+        User user = new User(1L,1L,"kjw@naver.com","123","Mr.KKK",1L,"","","","","","",300L);
 
         List<User> allUsers = Collections.singletonList(user);
-        given(userService.findAll()).willReturn(allUsers);
+        given(userService.findAll(new Sort(Sort.Direction.ASC,"user_id"))).willReturn(allUsers);
 
         mockMvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -71,7 +72,7 @@ public class UserControllerTest {
 
     @Test
     public void findByIdTest() throws Exception{
-        User user = new User(1L,1L,"kjw@naver.com","123","Mr.KKK","Seoul",1L);
+        User user = new User(1L,1L,"kjw@naver.com","123","Mr.KKK",1L,"","","","","","",300L);
         Optional<User> userOptional = Optional.of(user);
 
         given(userService.findById(1L)).willReturn(userOptional);
@@ -84,7 +85,7 @@ public class UserControllerTest {
 
     @Test
     public void findByEmailAndPasswordTest() throws Exception{
-        User user = new User(1L,1L,"mrKim4@email.com","1234","Mr.Kim","Seoul",1L);
+        User user = new User(1L,1L,"mrKim4@email.com","1234","Mr.Kim",1L,"","","","","","",300L);
         given(userService.findByEmailAndPassword("mrKim4@email.com","1234")).willReturn(user);
 
         mockMvc.perform(get("/users/mrKim4@email.com/1234").contentType(MediaType.APPLICATION_JSON))
@@ -94,7 +95,7 @@ public class UserControllerTest {
 
     @Test
     public void createUserTest() throws Exception{
-        User user = new User(1L,1L,"mrKim4@email.com","1234","Mr.Kim","Seoul",1L);
+        User user = new User(1L,1L,"mrKim4@email.com","1234","Mr.Kim",1L,"","","","","","",300L);
 
         String userJson = objectMapper.writeValueAsString(user);
 
@@ -111,8 +112,7 @@ public class UserControllerTest {
 
     @Test
     public void updateUserTest() throws Exception{
-        User user = new User(1L,1L,"mrKim4@email.com","1234","Mr.Kim","Seoul",1L);
-        user.setAddress("Guri");
+        User user = new User(1L,1L,"mrKim4@email.com","1234","Mr.Kim",1L,"","","","","","",300L);
         String userJson = objectMapper.writeValueAsString(user);
 
         mockMvc.perform(put("/users/1")

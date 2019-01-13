@@ -32,9 +32,27 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "address")
-    private String address;
-
     @Column(name = "level_id")
-    private Long levelNo;
+    private Long levelId;
+
+    @Column(name = "image_path")
+    private String imagePath;
+
+    @Column(name = "is_email_auth")
+    private String isEmailAuth;
+
+    @Column(name = "email_auth_key")
+    private String emailAuthKey;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "is_phone_auth")
+    private String isPhoneAuth;
+
+    @Column(name = "phone_auth_key")
+    private String phoneAuthKey;
+
+    @Column(name = "experience_value")
+    private Long experienceValue;
 }

@@ -50,7 +50,6 @@ public class UserController {
 
         return userService.findById(id).map(user-> {
             user.setName(newUser.getName());
-            user.setAddress(newUser.getAddress());
             return userService.createUser(user);
         })
                 .orElseGet(() ->{
