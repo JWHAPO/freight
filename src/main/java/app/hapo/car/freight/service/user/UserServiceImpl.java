@@ -4,9 +4,13 @@ package app.hapo.car.freight.service.user;/*
  * Description :
  */
 
+import app.hapo.car.freight.common.util.GenerateKey;
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.domain.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,6 +22,9 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+
+    @Autowired
+    public JavaMailSender emailSender;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -34,12 +41,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll(Sort sort) {
-        return userRepository.findAll(sort);
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
     public User createUser(User user) {
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(user.getEmail());
+        message.setSubject("Title!!!");
+        String authKey = GenerateKey.generateRandomKey(50);
+        message.setText("Contents!!!" + authKey);
+        emailSender.send(message);
+
         return userRepository.save(user);
     }
 

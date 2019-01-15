@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface UserService {
     User findByEmailAndPassword(String email, String password);
     Optional<User> findById(Long id);
-    List<User> findAll(Sort sort);
+    List<User> findAll();
     User createUser(User user);
     void deleteById(Long id);
 

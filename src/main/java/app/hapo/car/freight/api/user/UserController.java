@@ -27,7 +27,7 @@ public class UserController {
 
     @GetMapping
     public List<User> findAll(){
-        return userService.findAll(new Sort(Sort.Direction.ASC, "user_id"));
+        return userService.findAll();
     }
 
     @GetMapping(value = "/{id}")

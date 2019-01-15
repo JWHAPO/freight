@@ -19,7 +19,7 @@ import java.util.List;
 public class Car {
     @Id
     @Column(name = "car_id")
-    @GeneratedValue(strategy = GenerationType. AUTO)
+    @GeneratedValue(strategy = GenerationType. IDENTITY)
     private Long carId;
 
     @Column(name = "car_no")

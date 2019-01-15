@@ -1,59 +1,41 @@
 /** ta2user 생성 */
+drop table  if exists ta2user;
 create table ta2user(
    user_id int primary key auto_increment,
    user_no int not null,
    email varchar(120) not null,
    password varchar(512) not null,
    name varchar(120) not null,
-   address varchar(256),
+   phone varchar(12),
+   image_path varchar(512),
+   experience_value int,
    level_id int );
-
-alter table ta2user drop column address;
-alter table ta2user add column image_path varchar(512);
-alter table ta2user add column is_email_auth varchar(4);
-alter table ta2user add column email_auth_key varchar(4);
-alter table ta2user add column phone varchar(12);
-alter table ta2user add column is_phone_auth varchar(4);
-alter table ta2user add column phone_auth_key varchar(4);
-alter table ta2user add column experience_value int;
-
+   delete from ta2user;
    insert into ta2user(user_no,email,password,name)
-   values ( '1', 'mrKim1@email.com','1234','Mr.Kim' );
+   values ( '1', 'jw.kim@email.com','1234','Mr.Kim' );
    insert into ta2user(user_no,email,password,name)
-   values ( '2', 'mrKim2@email.com','1234','Mr.Kim' );
+   values ( '2', 'jw.kim@email.com','1234','Mr.Kim' );
    insert into ta2user(user_no,email,password,name)
-   values ( '3', 'mrKim3@email.com','1234','Mr.Kim' );
+   values ( '3', 'jw.kim@email.com','1234','Mr.Kim' );
    insert into ta2user(user_no,email,password,name)
-   values ( '4', 'mrKim4@email.com','1234','Mr.Kim' );
+   values ( '4', 'jw.kim@email.com','1234','Mr.Kim' );
 
 
 /** ta2car 생성 */
+drop table  if exists ta2car;
 create table ta2car(
    car_id int primary key auto_increment,
    car_no int not null,
-   description varchar(120) not null,
-   weight int,
-   weight_uom varchar(20),
-   maker varchar(20) );
+   description varchar(120) not null );
 
     alter table ta2car add column width int;
     alter table ta2car add column width_uom varchar(20);
     alter table ta2car add column length int;
     alter table ta2car add column length_uom varchar(20);
-    alter table ta2car drop column maker;
     alter table ta2car add column loadable_height int;
     alter table ta2car add column loadable_height_uom varchar(20);
     alter table ta2car add column loadable_weight int;
     alter table ta2car add column loadable_weight_uom varchar(20);
-    alter table ta2car drop column weight;
-    alter table ta2car drop column weight_uom;
-
-   insert into ta2car(car_no,description,weight)
-   values ( '1', 'Porter',1000 );
-   insert into ta2car(car_no,description,weight)
-   values ( '2', 'Bongo',2000 );
-   insert into ta2car(car_no,description,weight)
-   values ( '3', 'M3',1500 );
 
    delete from ta2car;
    insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
@@ -81,6 +63,7 @@ create table ta2car(
 
 
     /** ta2user_car 생성 */
+drop table  if exists ta2user_car;
     create table ta2user_car(
      user_car_id int primary key auto_increment,
      user_id int not null,
@@ -100,5 +83,14 @@ create table ta2car(
    values ( 3,3);
 
 
-    /** ta2order 생성 */
+    /** ta2email_auth 생성 */
+drop table  if exists ta2email_auth;
+    create table ta2email_auth(
+     email_auth_id int primary key auto_increment,
+     user_id int not null,
+     email varchar(120) not null,
+     auth_key varchar(512) not null,
+     reg_date timestamp,
+     expired_date datetime,
+     is_auth varchar(4));
 

@@ -5,8 +5,6 @@ package app.hapo.car.freight.domain.user;/*
  */
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmailAndPassword(String email, String password);
