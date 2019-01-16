@@ -11,11 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 @Transactional
@@ -50,10 +55,26 @@ public class UserServiceImpl implements UserService {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getEmail());
-        message.setSubject("Title!!!");
-        String authKey = GenerateKey.generateRandomKey(50);
-        message.setText("Contents!!!" + authKey);
+        message.setSubject("인증메일");
+
+        message.setText(getAuthEmailForm());
         emailSender.send(message);
+
+//        try {
+//
+//            MimeMessage message = emailSender.createMimeMessage();
+//
+//            message.setSubject("TITLE");
+//            MimeMessageHelper helper;
+//            helper = new MimeMessageHelper(message, true);
+//            helper.setFrom("");
+//            helper.setTo("");
+//            helper.setText("", true);
+//            emailSender.send(message);
+//        } catch (MessagingException ex) {
+//            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
 
         return userRepository.save(user);
     }
@@ -63,4 +84,17 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+
+    private String getAuthEmailForm(){
+        String authKey = GenerateKey.generateRandomKey(50);
+
+        StringBuffer authEmailContents = new StringBuffer();
+        authEmailContents.append("<html>");
+        authEmailContents.append("<h1> 환영합니다. </<h1>");
+        authEmailContents.append("<hr>");
+        authEmailContents.append("<h3> 인증키:</h3>"+authKey);
+        authEmailContents.append("</html>");
+
+        return authEmailContents.toString();
+    }
 }
