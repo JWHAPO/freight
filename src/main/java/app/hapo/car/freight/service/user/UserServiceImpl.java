@@ -8,8 +8,6 @@ import app.hapo.car.freight.common.util.GenerateKey;
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -53,27 +51,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) {
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(user.getEmail());
-        message.setSubject("인증메일");
-
-        message.setText(getAuthEmailForm());
-        emailSender.send(message);
-
-//        try {
-//
-//            MimeMessage message = emailSender.createMimeMessage();
-//
-//            message.setSubject("TITLE");
-//            MimeMessageHelper helper;
-//            helper = new MimeMessageHelper(message, true);
-//            helper.setFrom("");
-//            helper.setTo("");
-//            helper.setText("", true);
-//            emailSender.send(message);
-//        } catch (MessagingException ex) {
-//            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            MimeMessage message = emailSender.createMimeMessage();
+            message.setSubject("TITLE");
+            MimeMessageHelper helper;
+            helper = new MimeMessageHelper(message, true);
+            helper.setTo(user.getEmail());
+            helper.setText(getAuthEmailForm(), true);
+            emailSender.send(message);
+        } catch (MessagingException ex) {
+            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
         return userRepository.save(user);
@@ -89,10 +77,12 @@ public class UserServiceImpl implements UserService {
         String authKey = GenerateKey.generateRandomKey(50);
 
         StringBuffer authEmailContents = new StringBuffer();
+
         authEmailContents.append("<html>");
-        authEmailContents.append("<h1> 환영합니다. </<h1>");
-        authEmailContents.append("<hr>");
-        authEmailContents.append("<h3> 인증키:</h3>"+authKey);
+        authEmailContents.append("<h1> Hello My Users. </<h1>");
+        authEmailContents.append("<h3> If you want to use this app, You try! </h3>");
+        authEmailContents.append("<h3> This is Aour Authorization key: "+authKey+"</h3>");
+        authEmailContents.append("<a href = \"file:///home/hapo/dev/work_space/test_html/test.html\">여기를 클릭</a>");
         authEmailContents.append("</html>");
 
         return authEmailContents.toString();
