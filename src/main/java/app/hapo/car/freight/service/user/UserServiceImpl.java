@@ -5,8 +5,10 @@ package app.hapo.car.freight.service.user;/*
  */
 
 import app.hapo.car.freight.common.util.GenerateKey;
+import app.hapo.car.freight.domain.auth.email.EmailAuth;
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.domain.user.UserRepository;
+import app.hapo.car.freight.service.auth.email.EmailAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -25,6 +28,9 @@ import java.util.logging.Logger;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+
+    @Autowired
+    public EmailAuthService emailAuthService;
 
     @Autowired
     public JavaMailSender emailSender;
@@ -44,27 +50,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
     @Override
     public User createUser(User user) {
+        Optional<User> toBeAddUser = findByEmail(user.getEmail());
+        Optional<EmailAuth> toBeEmailAuth = emailAuthService.findByEmail(user.getEmail());
+        EmailAuth emailAuth = new EmailAuth(1L,1L,"","", LocalDateTime.now(),LocalDateTime.now(),"");
 
-        try {
-            MimeMessage message = emailSender.createMimeMessage();
-            message.setSubject("TITLE");
-            MimeMessageHelper helper;
-            helper = new MimeMessageHelper(message, true);
-            helper.setTo(user.getEmail());
-            helper.setText(getAuthEmailForm(), true);
-            emailSender.send(message);
-        } catch (MessagingException ex) {
-            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+
+        //e-mail 존재여부
+        if(toBeAddUser.isPresent()){
+            //auth 데이터 확인
+            if(toBeEmailAuth.isPresent()){
+                //이미있는 유저라고 알림
+                toBeAddUser = null;
+            }else{
+                //EmailAuth에 넣고 인증메일 보내기.
+                emailAuthService.save(emailAuth);
+                sendEmail(toBeAddUser.get().getEmail());
+            }
+        }else{
+            toBeAddUser = Optional.of(userRepository.save(user));
+            emailAuthService.save(emailAuth);
+            sendEmail(toBeAddUser.get().getEmail());
         }
-
-
-        return userRepository.save(user);
+        return toBeAddUser.get();
     }
 
     @Override
@@ -72,6 +90,19 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    private void sendEmail(String emailAddress){
+        try {
+            MimeMessage message = emailSender.createMimeMessage();
+            message.setSubject("TITLE");
+            MimeMessageHelper helper;
+            helper = new MimeMessageHelper(message, true);
+            helper.setTo(emailAddress);
+            helper.setText(getAuthEmailForm(), true);
+            emailSender.send(message);
+        } catch (MessagingException ex) {
+            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     private String getAuthEmailForm(){
         String authKey = GenerateKey.generateRandomKey(50);
