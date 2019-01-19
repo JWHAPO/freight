@@ -61,28 +61,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        Optional<User> toBeAddUser = findByEmail(user.getEmail());
-        Optional<EmailAuth> toBeEmailAuth = emailAuthService.findByEmail(user.getEmail());
-        EmailAuth emailAuth = new EmailAuth(1L,1L,"","", LocalDateTime.now(),LocalDateTime.now(),"");
+        Optional<User> checkedUser = findByEmail(user.getEmail());
+        Optional<EmailAuth> checkedAuth = emailAuthService.findByEmail(user.getEmail());
 
+        EmailAuth emailAuth = null;
 
-        //e-mail 존재여부
-        if(toBeAddUser.isPresent()){
-            //auth 데이터 확인
-            if(toBeEmailAuth.isPresent()){
-                //이미있는 유저라고 알림
-                toBeAddUser = null;
-            }else{
-                //EmailAuth에 넣고 인증메일 보내기.
+        if(checkedUser.isPresent()){ //Email 주소가 이미 있는 경우
+            if(checkedAuth.isPresent()){ //인증메일을 승인한 내역이 있으면 이미 있는 유저라고 알림.
+                throw new RuntimeException("Already Have ID");
+            }else{//인증메일을 보낸 적이 없는 경우.
+                String authKey = GenerateKey.generateRandomKey(50);
+                emailAuth = new EmailAuth(1L,user.getUserId(),user.getEmail(),authKey,LocalDateTime.now(),LocalDateTime.now(),"N");
                 emailAuthService.save(emailAuth);
-                sendEmail(toBeAddUser.get().getEmail());
+                sendEmail(checkedUser.get().getEmail(),authKey);
             }
         }else{
-            toBeAddUser = Optional.of(userRepository.save(user));
+            String authKey = GenerateKey.generateRandomKey(50);
+            checkedUser = Optional.of(userRepository.save(user));
+            emailAuth = new EmailAuth(1L,checkedUser.get().getUserId(),checkedUser.get().getEmail(),authKey,LocalDateTime.now(),LocalDateTime.now(),"N");
             emailAuthService.save(emailAuth);
-            sendEmail(toBeAddUser.get().getEmail());
+            sendEmail(checkedUser.get().getEmail(),authKey);
         }
-        return toBeAddUser.get();
+        return checkedUser.get();
     }
 
     @Override
@@ -90,23 +90,21 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    private void sendEmail(String emailAddress){
+    private void sendEmail(String emailAddress, String authKey){
         try {
             MimeMessage message = emailSender.createMimeMessage();
             message.setSubject("TITLE");
             MimeMessageHelper helper;
             helper = new MimeMessageHelper(message, true);
             helper.setTo(emailAddress);
-            helper.setText(getAuthEmailForm(), true);
+            helper.setText(getAuthEmailForm(authKey), true);
             emailSender.send(message);
         } catch (MessagingException ex) {
             Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private String getAuthEmailForm(){
-        String authKey = GenerateKey.generateRandomKey(50);
-
+    private String getAuthEmailForm(String authKey){
         StringBuffer authEmailContents = new StringBuffer();
 
         authEmailContents.append("<html>");
