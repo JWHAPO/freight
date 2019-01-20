@@ -97,21 +97,21 @@ public class UserServiceImpl implements UserService {
             MimeMessageHelper helper;
             helper = new MimeMessageHelper(message, true);
             helper.setTo(emailAddress);
-            helper.setText(getAuthEmailForm(authKey), true);
+            helper.setText(getAuthEmailForm(emailAddress, authKey), true);
             emailSender.send(message);
         } catch (MessagingException ex) {
             Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private String getAuthEmailForm(String authKey){
+    private String getAuthEmailForm(String emailAddress, String authKey){
         StringBuffer authEmailContents = new StringBuffer();
 
         authEmailContents.append("<html>");
         authEmailContents.append("<h1> Hello My Users. </<h1>");
         authEmailContents.append("<h3> If you want to use this app, You try! </h3>");
         authEmailContents.append("<h3> This is Aour Authorization key: "+authKey+"</h3>");
-        authEmailContents.append("<a href = \"file:///home/hapo/dev/work_space/test_html/test.html\">여기를 클릭</a>");
+        authEmailContents.append("<a href = \"http://localhost:8080/auth/email/"+emailAddress+"/"+authKey+"\">여기를 클릭</a>");
         authEmailContents.append("</html>");
 
         return authEmailContents.toString();

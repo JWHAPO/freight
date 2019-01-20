@@ -100,7 +100,6 @@ public class UserControllerTest {
         System.out.println("userJson:::");
         System.out.println(userJson);
 
-
         given(userService.createUser(user)).willReturn(user);
 
         mockMvc.perform(post("/users")
