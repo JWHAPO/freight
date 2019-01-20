@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException("Already Have ID");
             }else{//인증메일을 보낸 적이 없는 경우.
                 String authKey = GenerateKey.generateRandomKey(50);
-                emailAuth = new EmailAuth(1L,user.getUserId(),user.getEmail(),authKey,LocalDateTime.now(),LocalDateTime.now(),"N");
+                emailAuth = new EmailAuth(1L,checkedUser.get().getUserId(),checkedUser.get().getEmail(),authKey,LocalDateTime.now(),LocalDateTime.now(),"N");
                 emailAuthService.save(emailAuth);
                 sendEmail(checkedUser.get().getEmail(),authKey);
             }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(name = "/auth/email")
+@RequestMapping(value = "/auth/email")
 public class EmailAuthController {
 
     @Autowired
