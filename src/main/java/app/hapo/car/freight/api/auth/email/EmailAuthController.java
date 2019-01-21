@@ -7,11 +7,9 @@ package app.hapo.car.freight.api.auth.email;/*
 import app.hapo.car.freight.domain.auth.email.EmailAuth;
 import app.hapo.car.freight.service.auth.email.EmailAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -21,13 +19,21 @@ public class EmailAuthController {
     @Autowired
     EmailAuthService emailAuthService;
 
-    @PutMapping(value = "/{email}/{authKey}")
+    @GetMapping(value = "/{email}/{authKey}")
     public Optional<EmailAuth> updateEmailAuth(@PathVariable String email, @PathVariable String authKey){
         return emailAuthService.findByEmailAndAuthKey(email,authKey).map(emailAuth -> {
+
+            LocalDateTime expiredDate = emailAuth.getExpiredDate();
+            LocalDateTime currentDateTime = LocalDateTime.now();
+
+            if(!currentDateTime.isBefore(expiredDate)){
+                throw new RuntimeException("After Expired Date. Re sign-up Please.");
+            }
+
             emailAuth.setIsAuth("Y");
             return emailAuthService.save(emailAuth);
         }).orElseGet(() -> {
-           return null;
+           throw new RuntimeException("Wrong Auth Key");
         });
 
     }

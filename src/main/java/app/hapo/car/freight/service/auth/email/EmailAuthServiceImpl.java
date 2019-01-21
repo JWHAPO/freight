@@ -36,7 +36,7 @@ public class EmailAuthServiceImpl implements EmailAuthService {
 
     @Override
     public Optional<EmailAuth> findByEmailAndAuthKey(String email, String authKey) {
-        return findByEmailAndAuthKey(email,authKey);
+        return emailAuthRepository.findByEmailAndAuthKey(email,authKey);
     }
 
     @Override

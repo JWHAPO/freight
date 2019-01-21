@@ -79,7 +79,6 @@ public class UserServiceImpl implements UserService {
                         .userId(checkedUser.get().getUserId())
                         .email(checkedUser.get().getEmail())
                         .authKey(authKey)
-                        .regDate(currentLocalDateTime)
                         .expiredDate(expiredDateTime)
                         .isAuth("N")
                         .build();
@@ -97,7 +96,6 @@ public class UserServiceImpl implements UserService {
                     .userId(checkedUser.get().getUserId())
                     .email(checkedUser.get().getEmail())
                     .authKey(authKey)
-                    .regDate(currentLocalDateTime)
                     .expiredDate(expiredDateTime)
                     .isAuth("N")
                     .build();

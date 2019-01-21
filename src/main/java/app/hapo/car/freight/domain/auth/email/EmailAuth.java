@@ -33,9 +33,6 @@ public class EmailAuth {
     @Column(name = "auth_key")
     private String authKey;
 
-    @Column(name = "reg_date", nullable = false)
-    private LocalDateTime regDate;
-
     @Column(name = "expired_date", nullable = false)
     private LocalDateTime expiredDate;
 
@@ -51,11 +48,10 @@ public class EmailAuth {
     private LocalDateTime updatedTimeAt;
 
     @Builder
-    public EmailAuth(Long userId, String email, String authKey, LocalDateTime regDate, LocalDateTime expiredDate, String isAuth) {
+    public EmailAuth(Long userId, String email, String authKey, LocalDateTime expiredDate, String isAuth) {
         this.userId = userId;
         this.email = email;
         this.authKey = authKey;
-        this.regDate = regDate;
         this.expiredDate = expiredDate;
         this.isAuth = isAuth;
     }
