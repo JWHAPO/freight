@@ -1,6 +1,8 @@
 package app.hapo.car.freight.domain.auth.email;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -39,6 +41,14 @@ public class EmailAuth {
 
     @Column(name = "is_auth")
     private String isAuth;
+
+    @CreationTimestamp
+    @Column(name = "created_time_at")
+    private LocalDateTime createdTimeAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_time_at")
+    private LocalDateTime updatedTimeAt;
 
     @Builder
     public EmailAuth(Long userId, String email, String authKey, LocalDateTime regDate, LocalDateTime expiredDate, String isAuth) {

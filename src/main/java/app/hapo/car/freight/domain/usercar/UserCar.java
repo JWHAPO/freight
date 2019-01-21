@@ -6,13 +6,15 @@ package app.hapo.car.freight.domain.usercar;/*
 
 import app.hapo.car.freight.domain.car.Car;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="ta2user_car")
 public class UserCar {
@@ -31,5 +33,18 @@ public class UserCar {
     @JoinColumn(name = "car_id", referencedColumnName = "car_id", insertable = false, updatable = false)
     private Car car;
 
+    @CreationTimestamp
+    @Column(name = "created_time_at")
+    private LocalDateTime createdTimeAt;
 
+    @UpdateTimestamp
+    @Column(name = "updated_time_at")
+    private LocalDateTime updatedTimeAt;
+
+    @Builder
+    public UserCar(Long userId, Long carId, Car car) {
+        this.userId = userId;
+        this.carId = carId;
+        this.car = car;
+    }
 }

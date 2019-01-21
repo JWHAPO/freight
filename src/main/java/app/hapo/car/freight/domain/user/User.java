@@ -5,13 +5,15 @@ package app.hapo.car.freight.domain.user;/*
  */
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="ta2user")
 public class User {
@@ -43,4 +45,24 @@ public class User {
 
     @Column(name = "level_id")
     private Long levelId;
+
+    @CreationTimestamp
+    @Column(name = "created_time_at")
+    private LocalDateTime createdTimeAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_time_at")
+    private LocalDateTime updatedTimeAt;
+
+    @Builder
+    public User(Long userNo, String email, String password, String name, String phone, String imagePath, Long experienceValue, Long levelId) {
+        this.userNo = userNo;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.phone = phone;
+        this.imagePath = imagePath;
+        this.experienceValue = experienceValue;
+        this.levelId = levelId;
+    }
 }

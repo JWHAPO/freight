@@ -57,7 +57,7 @@ public class UserControllerTest {
 
     @Test
     public void findAllTest() throws Exception{
-        User user = new User(1L,1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
+        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
 
         List<User> allUsers = Collections.singletonList(user);
         given(userService.findAll()).willReturn(allUsers);
@@ -71,7 +71,7 @@ public class UserControllerTest {
 
     @Test
     public void findByIdTest() throws Exception{
-        User user = new User(1L,1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
+        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
         Optional<User> userOptional = Optional.of(user);
 
         given(userService.findById(1L)).willReturn(userOptional);
@@ -84,7 +84,7 @@ public class UserControllerTest {
 
     @Test
     public void findByEmailAndPasswordTest() throws Exception{
-        User user = new User(1L,1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
+        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
         given(userService.findByEmailAndPassword("jw.kim@emaintec.com","1234")).willReturn(user);
 
         mockMvc.perform(get("/users/jw.kim@emaintec.com/1234").contentType(MediaType.APPLICATION_JSON))
@@ -94,7 +94,7 @@ public class UserControllerTest {
 
     @Test
     public void createUserTest() throws Exception{
-        User user = new User(1L,1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
+        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
 
         String userJson = objectMapper.writeValueAsString(user);
         System.out.println("userJson:::");
@@ -113,7 +113,7 @@ public class UserControllerTest {
 
     @Test
     public void updateUserTest() throws Exception{
-        User user = new User(1L,1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
+        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
         String userJson = objectMapper.writeValueAsString(user);
 
         mockMvc.perform(put("/users/1")
@@ -136,8 +136,8 @@ public class UserControllerTest {
 
     @Test
     public void findUserCarsTest() throws Exception{
-        Car car = new Car(2L,2L,"newCar1", 160L,"cm",280L,"cm",180L,"cm",1100L,"Kg");
-        UserCar userCar = new UserCar(1L,1L,2L,car);
+        Car car = new Car(2L,"newCar1", 160L,"cm",280L,"cm",180L,"cm",1100L,"Kg");
+        UserCar userCar = new UserCar(1L,2L,car);
 
         List<UserCar> allUserCars = Collections.singletonList(userCar);
 

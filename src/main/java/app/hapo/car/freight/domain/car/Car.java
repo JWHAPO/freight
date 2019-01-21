@@ -4,16 +4,16 @@ package app.hapo.car.freight.domain.car;/*
  * Description : Car DTO
  */
 
-import app.hapo.car.freight.domain.usercar.UserCar;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="ta2car")
 public class Car {
@@ -52,4 +52,25 @@ public class Car {
     @Column(name = "loadable_weight_uom")
     private String loadableWeightUom;
 
+    @CreationTimestamp
+    @Column(name = "created_time_at")
+    private LocalDateTime createdTimeAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_time_at")
+    private LocalDateTime updatedTimeAt;
+
+    @Builder
+    public Car(Long carNo, String description, Long width, String widthUom, Long length, String lengthUom, Long loadableHeight, String loadableHeightUom, Long loadableWeight, String loadableWeightUom) {
+        this.carNo = carNo;
+        this.description = description;
+        this.width = width;
+        this.widthUom = widthUom;
+        this.length = length;
+        this.lengthUom = lengthUom;
+        this.loadableHeight = loadableHeight;
+        this.loadableHeightUom = loadableHeightUom;
+        this.loadableWeight = loadableWeight;
+        this.loadableWeightUom = loadableWeightUom;
+    }
 }

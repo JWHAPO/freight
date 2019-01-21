@@ -9,33 +9,28 @@ create table ta2user(
    phone varchar(12),
    image_path varchar(512),
    experience_value int,
-   level_id int );
-   delete from ta2user;
-   insert into ta2user(user_no,email,password,name)
-   values ( '1', 'jw.kim@email.com','1234','Mr.Kim' );
-   insert into ta2user(user_no,email,password,name)
-   values ( '2', 'jw.kim@email.com','1234','Mr.Kim' );
-   insert into ta2user(user_no,email,password,name)
-   values ( '3', 'jw.kim@email.com','1234','Mr.Kim' );
-   insert into ta2user(user_no,email,password,name)
-   values ( '4', 'jw.kim@email.com','1234','Mr.Kim' );
+   level_id int,
+    created_time_at timestamp,
+    updated_time_at timestamp);
 
 
 /** ta2car 생성 */
-drop table  if exists ta2car;
-create table ta2car(
-   car_id int primary key auto_increment,
-   car_no int not null,
-   description varchar(120) not null );
-
-    alter table ta2car add column width int;
-    alter table ta2car add column width_uom varchar(20);
-    alter table ta2car add column length int;
-    alter table ta2car add column length_uom varchar(20);
-    alter table ta2car add column loadable_height int;
-    alter table ta2car add column loadable_height_uom varchar(20);
-    alter table ta2car add column loadable_weight int;
-    alter table ta2car add column loadable_weight_uom varchar(20);
+    drop table  if exists ta2car;
+    create table ta2car(
+       car_id int primary key auto_increment,
+       car_no int not null,
+       description varchar(120) not null,
+       width int,
+       width_uom varchar(20),
+       length int,
+       length_uom varchar(20),
+       loadable_height int,
+       loadable_height_uom varchar(20),
+       loadable_weight int,
+       loadable_weight_uom varchar(20),
+       created_time_at timestamp,
+       updated_time_at timestamp
+    );
 
    delete from ta2car;
    insert into ta2car(car_no,description,width,width_uom,length, length_uom,loadable_height,loadable_height_uom,loadable_weight,loadable_weight_uom)
@@ -67,7 +62,9 @@ drop table  if exists ta2user_car;
     create table ta2user_car(
      user_car_id int primary key auto_increment,
      user_id int not null,
-     car_id int not null);
+     car_id int not null,
+     created_time_at timestamp,
+     updated_time_at timestamp);
 
    insert into ta2user_car(user_id,car_id)
    values ( 1,2);
@@ -90,7 +87,8 @@ drop table  if exists ta2email_auth;
      user_id int not null,
      email varchar(120) not null,
      auth_key varchar(512) not null,
-     reg_date timestamp,
-     expired_date datetime,
-     is_auth varchar(4));
+     expired_date timestamp,
+     is_auth varchar(4),
+     created_time_at timestamp,
+     updated_time_at timestamp);
 

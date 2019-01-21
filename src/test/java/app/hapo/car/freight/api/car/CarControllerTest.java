@@ -43,7 +43,7 @@ public class CarControllerTest {
 
     @Test
     public void findAllTest() throws Exception{
-        Car car = new Car(1L,1L,"newCar1", 160L,"cm",280L,"cm",180L,"cm",1100L,"Kg");
+        Car car = new Car(1L,"newCar1", 160L,"cm",280L,"cm",180L,"cm",1100L,"Kg");
 
         List<Car> allCars = Collections.singletonList(car);
         given(carService.findAll()).willReturn(allCars);

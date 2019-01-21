@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService {
         authEmailContents.append("<h1> Hello My Users. </<h1>");
         authEmailContents.append("<h3> If you want to use this app, You try! </h3>");
         authEmailContents.append("<h3> This is Aour Authorization key: "+authKey+"</h3>");
-        authEmailContents.append("<a href = \"http://localhost:8080/auth/email/"+emailAddress+"/"+authKey+"\">여기를 클릭</a>");
+        authEmailContents.append("<a href = \"http://220.71.48.107:8080/auth/email/"+emailAddress+"/"+authKey+"\">여기를 클릭</a>");
         authEmailContents.append("</html>");
 
         return authEmailContents.toString();
