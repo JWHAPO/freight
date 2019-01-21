@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "ta2email_auth")
 public class EmailAuth {
@@ -41,6 +40,13 @@ public class EmailAuth {
     @Column(name = "is_auth")
     private String isAuth;
 
-
-
+    @Builder
+    public EmailAuth(Long userId, String email, String authKey, LocalDateTime regDate, LocalDateTime expiredDate, String isAuth) {
+        this.userId = userId;
+        this.email = email;
+        this.authKey = authKey;
+        this.regDate = regDate;
+        this.expiredDate = expiredDate;
+        this.isAuth = isAuth;
+    }
 }

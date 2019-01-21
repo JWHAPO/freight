@@ -64,6 +64,9 @@ public class UserServiceImpl implements UserService {
         Optional<User> checkedUser = findByEmail(user.getEmail());
         Optional<EmailAuth> checkedAuth = emailAuthService.findByEmail(user.getEmail());
 
+        LocalDateTime currentLocalDateTime = LocalDateTime.now();
+        LocalDateTime expiredDateTime = currentLocalDateTime.plusDays(7);
+
         EmailAuth emailAuth = null;
 
         if(checkedUser.isPresent()){ //Email 주소가 이미 있는 경우
@@ -71,14 +74,34 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException("Already Have ID");
             }else{//인증메일을 보낸 적이 없는 경우.
                 String authKey = GenerateKey.generateRandomKey(50);
-                emailAuth = new EmailAuth(1L,checkedUser.get().getUserId(),checkedUser.get().getEmail(),authKey,LocalDateTime.now(),LocalDateTime.now(),"N");
+
+                emailAuth = EmailAuth.builder()
+                        .userId(checkedUser.get().getUserId())
+                        .email(checkedUser.get().getEmail())
+                        .authKey(authKey)
+                        .regDate(currentLocalDateTime)
+                        .expiredDate(expiredDateTime)
+                        .isAuth("N")
+                        .build();
+
+
                 emailAuthService.save(emailAuth);
                 sendEmail(checkedUser.get().getEmail(),authKey);
             }
         }else{
             String authKey = GenerateKey.generateRandomKey(50);
             checkedUser = Optional.of(userRepository.save(user));
-            emailAuth = new EmailAuth(1L,checkedUser.get().getUserId(),checkedUser.get().getEmail(),authKey,LocalDateTime.now(),LocalDateTime.now(),"N");
+
+
+            emailAuth = EmailAuth.builder()
+                    .userId(checkedUser.get().getUserId())
+                    .email(checkedUser.get().getEmail())
+                    .authKey(authKey)
+                    .regDate(currentLocalDateTime)
+                    .expiredDate(expiredDateTime)
+                    .isAuth("N")
+                    .build();
+
             emailAuthService.save(emailAuth);
             sendEmail(checkedUser.get().getEmail(),authKey);
         }
