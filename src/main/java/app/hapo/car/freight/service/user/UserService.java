@@ -4,9 +4,7 @@ package app.hapo.car.freight.service.user;/*
  * Description :
  */
 
-import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.user.User;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;

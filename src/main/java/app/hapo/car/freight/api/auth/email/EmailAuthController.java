@@ -7,12 +7,19 @@ package app.hapo.car.freight.api.auth.email;/*
 import app.hapo.car.freight.domain.auth.email.EmailAuth;
 import app.hapo.car.freight.service.auth.email.EmailAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping(value = "/auth/email")
 public class EmailAuthController {
 
@@ -20,21 +27,20 @@ public class EmailAuthController {
     EmailAuthService emailAuthService;
 
     @GetMapping(value = "/{email}/{authKey}")
-    public Optional<EmailAuth> updateEmailAuth(@PathVariable String email, @PathVariable String authKey){
-        return emailAuthService.findByEmailAndAuthKey(email,authKey).map(emailAuth -> {
+    public String confirmEmailAuth(@PathVariable String email, @PathVariable String authKey) {
+        Optional<EmailAuth> emailAuth = emailAuthService.findByEmailAndAuthKey(email,authKey);
+        LocalDateTime expiredDate = emailAuth.get().getExpiredDate();
+        LocalDateTime currentDateTime = LocalDateTime.now();
 
-            LocalDateTime expiredDate = emailAuth.getExpiredDate();
-            LocalDateTime currentDateTime = LocalDateTime.now();
+        if(!emailAuth.isPresent()){
+            throw new RuntimeException("Don't have auth history.");
+        }
+        if(!currentDateTime.isBefore(expiredDate)){
+            throw new RuntimeException("After Expired Date. Re sign-up Please.");
+        }
+        emailAuth.get().setIsAuth("Y");
+        emailAuthService.save(emailAuth.get());
 
-            if(!currentDateTime.isBefore(expiredDate)){
-                throw new RuntimeException("After Expired Date. Re sign-up Please.");
-            }
-
-            emailAuth.setIsAuth("Y");
-            return emailAuthService.save(emailAuth);
-        }).orElseGet(() -> {
-           throw new RuntimeException("Wrong Auth Key");
-        });
-
+        return "authConfirm";
     }
 }
