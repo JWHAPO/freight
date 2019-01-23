@@ -9,13 +9,16 @@ import app.hapo.car.freight.domain.usercar.UserCar;
 import app.hapo.car.freight.service.user.UserService;
 import app.hapo.car.freight.service.usercar.UserCarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/users")
 public class UserController {
 
     @Autowired
@@ -24,45 +27,58 @@ public class UserController {
     @Autowired
     UserCarService userCarService;
 
-    @GetMapping
-    public List<User> findAll(){
-        return userService.findAll();
+    @GetMapping("/users")
+    public Resources<Resource<User>> all(){
+
+        List<Resource<User>> users = userService.findAll().stream()
+                .map(user -> new Resource<>(user,
+                        linkTo(methodOn(UserController.class).findById(user.getUserId())).withSelfRel(),
+                        linkTo(methodOn(UserController.class).findByEmailAndPassword(user.getEmail(),user.getPassword())).withRel("emailPassword"),
+                        linkTo(methodOn(UserController.class).all()).withRel("users")))
+                .collect(Collectors.toList());
+
+        return new Resources<>(users,
+                linkTo(methodOn(UserController.class).all()).withSelfRel());
     }
 
-    @GetMapping(value = "/{id}")
-    public User findById(@PathVariable Long id){
-        return userService.findById(id).orElseThrow(()->new UserNotFoundException(id));
+    @PostMapping("/users")
+    public User newUser(@RequestBody User user) {
+        return userService.save(user).orElseThrow(()->new UserNotFoundException(user.getUserId()));
     }
 
-    @GetMapping(value = "/{email}/{password}")
+    @GetMapping("/users/{id}")
+    public Resource<User> findById(@PathVariable Long id){
+
+        User user = userService.findById(id).orElseThrow(()->new UserNotFoundException(id));
+        return new Resource<>(user,
+                linkTo(methodOn(UserController.class).findById(id)).withSelfRel(),
+                linkTo(methodOn(UserController.class).all()).withRel("users"));
+    }
+
+    @GetMapping("/users/{email}/{password}")
     public User findByEmailAndPassword(@PathVariable String email, @PathVariable String password){
-        return userService.findByEmailAndPassword(email, password);
+        return userService.findByEmailAndPassword(email, password).orElseThrow(()->new UserNotFoundException(email));
     }
 
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
-    }
-
-    @PutMapping(value = "/{id}")
-    public User updateUser(@RequestBody User newUser, @PathVariable Long id){
+    @PutMapping("users/{id}")
+    public User replaceUser(@RequestBody User newUser, @PathVariable Long id){
 
         return userService.findById(id).map(user-> {
             user.setName(newUser.getName());
-            return userService.createUser(user);
+            return userService.save(user).get();
         })
-                .orElseGet(() ->{
-                    newUser.setUserId(id);
-                    return userService.createUser(newUser);
-                });
+        .orElseGet(() ->{
+            newUser.setUserId(id);
+            return userService.save(newUser).get();
+        });
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable Long id){
         userService.deleteById(id);
     }
 
-    @GetMapping(value = "/{id}/cars")
+    @GetMapping("/users/{id}/cars")
     public List<UserCar> findUserCars(@PathVariable Long id){
         return userCarService.findByUserId(id);
     }
@@ -73,6 +89,9 @@ public class UserController {
         public UserNotFoundException(Long id) {
             super("Could not find user " + id);
         }
+        public UserNotFoundException(String email) {
+            super("Could not find user " + email);
+        }
     }
 
     @ControllerAdvice
@@ -81,7 +100,7 @@ public class UserController {
         @ResponseBody
         @ExceptionHandler(UserNotFoundException.class)
         @ResponseStatus(HttpStatus.NOT_FOUND)
-        String employeeNotFoundHandler(UserNotFoundException ex) {
+        String userNotFoundHandler(UserNotFoundException ex) {
             return ex.getMessage();
         }
     }

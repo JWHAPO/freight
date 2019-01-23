@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmailAndPassword(String email, String password) {
+    public Optional<User> findByEmailAndPassword(String email, String password) {
         return userRepository.findByEmailAndPassword(email,password);
     }
 
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
+    public Optional<User> save(User user) {
         Optional<User> checkedUser = findByEmail(user.getEmail());
         Optional<EmailAuth> checkedAuth = emailAuthService.findByEmail(user.getEmail());
 
@@ -103,7 +103,7 @@ public class UserServiceImpl implements UserService {
             emailAuthService.save(emailAuth);
             sendEmail(checkedUser.get().getEmail(),authKey);
         }
-        return checkedUser.get();
+        return checkedUser;
     }
 
     @Override
