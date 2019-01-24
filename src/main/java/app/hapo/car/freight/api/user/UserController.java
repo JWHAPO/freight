@@ -23,19 +23,20 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
     @Autowired
     UserCarService userCarService;
 
+    private final UserResourceAssembler userResourceAssembler;
+
+    public UserController(UserResourceAssembler userResourceAssembler) {
+        this.userResourceAssembler = userResourceAssembler;
+    }
+
     @GetMapping("/users")
     public Resources<Resource<User>> all(){
-
         List<Resource<User>> users = userService.findAll().stream()
-                .map(user -> new Resource<>(user,
-                        linkTo(methodOn(UserController.class).findById(user.getUserId())).withSelfRel(),
-                        linkTo(methodOn(UserController.class).findByEmailAndPassword(user.getEmail(),user.getPassword())).withRel("emailPassword"),
-                        linkTo(methodOn(UserController.class).all()).withRel("users")))
-                .collect(Collectors.toList());
+                                     .map(userResourceAssembler::toResource)
+                                     .collect(Collectors.toList());
 
         return new Resources<>(users,
                 linkTo(methodOn(UserController.class).all()).withSelfRel());
@@ -48,11 +49,8 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public Resource<User> findById(@PathVariable Long id){
-
         User user = userService.findById(id).orElseThrow(()->new UserNotFoundException(id));
-        return new Resource<>(user,
-                linkTo(methodOn(UserController.class).findById(id)).withSelfRel(),
-                linkTo(methodOn(UserController.class).all()).withRel("users"));
+        return userResourceAssembler.toResource(user);
     }
 
     @GetMapping("/users/{email}/{password}")
