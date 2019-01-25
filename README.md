@@ -1,8 +1,8 @@
 # freight
-Start Peronal Project - 2018/01/02   
+Start Personal Project - 2018/01/02
 Freight Car App API  
 
-*-Springboot*  
+*-Spring boot*
 *-JPA*  
 *-MariaDB*  
 *-Restful API*  

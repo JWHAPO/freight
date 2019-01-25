@@ -27,17 +27,14 @@ import java.util.logging.Logger;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private UserRepository userRepository;
-
     @Autowired
-    public EmailAuthService emailAuthService;
-
+    private EmailAuthService emailAuthService;
     @Autowired
-    public JavaMailSender emailSender;
+    private JavaMailSender emailSender;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+//    private PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) {
@@ -56,11 +53,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
+//        passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//        String password = passwordEncoder.encode("12341234");
+//        System.out.println("password:"+password);
         return userRepository.findAll();
     }
 
     @Override
     public Optional<User> save(User user) {
+
+
         Optional<User> checkedUser = findByEmail(user.getEmail());
         Optional<EmailAuth> checkedAuth = emailAuthService.findByEmail(user.getEmail());
 
