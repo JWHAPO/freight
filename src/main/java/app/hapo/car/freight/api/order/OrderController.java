@@ -30,11 +30,8 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    private final OrderResourceAssembler orderResourceAssembler;
-
-    public OrderController(OrderResourceAssembler orderResourceAssembler) {
-        this.orderResourceAssembler = orderResourceAssembler;
-    }
+    @Autowired
+    OrderResourceAssembler orderResourceAssembler;
 
     @GetMapping(value = "/orders")
     public Resources<Resource<Order>> all(){

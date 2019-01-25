@@ -31,12 +31,8 @@ public class UserController {
     UserService userService;
     @Autowired
     UserCarService userCarService;
-
-    private final UserResourceAssembler userResourceAssembler;
-
-    public UserController(UserResourceAssembler userResourceAssembler) {
-        this.userResourceAssembler = userResourceAssembler;
-    }
+    @Autowired
+    UserResourceAssembler userResourceAssembler;
 
     @GetMapping(value = "/users")
     public Resources<Resource<User>> all(){
