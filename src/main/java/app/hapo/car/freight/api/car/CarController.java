@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/cars")
 public class CarController {
 
     @Autowired
     CarService carService;
 
-    @GetMapping
+    @GetMapping(value = "/cars")
     public List<Car> findAll(){
         List<Car> cars = carService.findAll();
         return cars;

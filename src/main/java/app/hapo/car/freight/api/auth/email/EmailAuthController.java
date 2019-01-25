@@ -8,25 +8,19 @@ import app.hapo.car.freight.domain.auth.email.EmailAuth;
 import app.hapo.car.freight.service.auth.email.EmailAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(value = "/auth/email")
 public class EmailAuthController {
 
     @Autowired
     EmailAuthService emailAuthService;
 
-    @GetMapping(value = "/{email}/{authKey}")
+    @GetMapping(value = "/auth/email/{email}/{authKey}")
     public String confirmEmailAuth(@PathVariable String email, @PathVariable String authKey) {
         Optional<EmailAuth> emailAuth = emailAuthService.findByEmailAndAuthKey(email,authKey);
         LocalDateTime expiredDate = emailAuth.get().getExpiredDate();

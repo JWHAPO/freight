@@ -12,11 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 public class UserController {
@@ -32,7 +38,7 @@ public class UserController {
         this.userResourceAssembler = userResourceAssembler;
     }
 
-    @GetMapping("/users")
+    @GetMapping(value = "/users")
     public Resources<Resource<User>> all(){
         List<Resource<User>> users = userService.findAll().stream()
                                      .map(userResourceAssembler::toResource)
@@ -42,38 +48,47 @@ public class UserController {
                 linkTo(methodOn(UserController.class).all()).withSelfRel());
     }
 
-    @PostMapping("/users")
-    public User newUser(@RequestBody User user) {
-        return userService.save(user).orElseThrow(()->new UserNotFoundException(user.getUserId()));
+    @PostMapping(value = "/users")
+    public ResponseEntity<?> newUser(@RequestBody User newUser) throws URISyntaxException{
+        Resource<User> resource = userResourceAssembler.toResource(userService.save(newUser).get());
+        return ResponseEntity
+                .created(new URI(resource.getId().expand().getHref()))
+                .body(resource);
     }
 
-    @GetMapping("/users/{id}")
+
+    @GetMapping(value = "/users/{id}")
     public Resource<User> findById(@PathVariable Long id){
         User user = userService.findById(id).orElseThrow(()->new UserNotFoundException(id));
         return userResourceAssembler.toResource(user);
     }
 
-    @GetMapping("/users/{email}/{password}")
+    @GetMapping(value = "/users/{email}/{password}")
     public User findByEmailAndPassword(@PathVariable String email, @PathVariable String password){
         return userService.findByEmailAndPassword(email, password).orElseThrow(()->new UserNotFoundException(email));
     }
 
-    @PutMapping("users/{id}")
-    public User replaceUser(@RequestBody User newUser, @PathVariable Long id){
-
-        return userService.findById(id).map(user-> {
-            user.setName(newUser.getName());
-            return userService.save(user).get();
-        })
-        .orElseGet(() ->{
-            newUser.setUserId(id);
-            return userService.save(newUser).get();
-        });
+    @PutMapping(value = "/users/{id}")
+    public ResponseEntity<?> replaceUser(@RequestBody User newUser, @PathVariable Long id) throws URISyntaxException{
+        Optional<User> updatedUser = userService.findById(id)
+                .map(user -> {
+                    user.setName(newUser.getName());
+                    return userService.save(user);
+                })
+                .orElseGet(()->{
+                    newUser.setUserId(id);
+                    return userService.save(newUser);
+                });
+        Resource<User> resource = userResourceAssembler.toResource(updatedUser.get());
+        return ResponseEntity
+                .created(new URI(resource.getId().expand().getHref()))
+                .body(resource);
     }
 
-    @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable Long id){
+    @DeleteMapping(value = "/users/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id){
         userService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/users/{id}/cars")
