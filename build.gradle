@@ -28,6 +28,7 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-hateoas")
+	implementation("org.springframework.boot:spring-boot-starter-security")
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.assertj:assertj-core:3.6.2')
 	testCompile 'junit:junit:4.12'

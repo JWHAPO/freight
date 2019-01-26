@@ -48,7 +48,9 @@ public class CarControllerTest {
         List<Car> allCars = Collections.singletonList(car);
         given(carService.findAll()).willReturn(allCars);
 
-        mockMvc.perform(get("/cars").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        mockMvc.perform(get("/cars")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].carNo",is(car.getCarNo().intValue())))
                 .andDo(document("cars/findAll"));

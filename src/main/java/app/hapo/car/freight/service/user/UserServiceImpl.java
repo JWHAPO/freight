@@ -12,6 +12,8 @@ import app.hapo.car.freight.service.auth.email.EmailAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -34,7 +36,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JavaMailSender emailSender;
 
-//    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) {
@@ -53,9 +55,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-//        passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        String password = passwordEncoder.encode("12341234");
-//        System.out.println("password:"+password);
+        passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        String password1 = passwordEncoder.encode("12341234");
+        String password2 = passwordEncoder.encode("abcdabcd");
+        System.out.println("password1:"+password1);
+        System.out.println("password2:"+password2);
         return userRepository.findAll();
     }
 
