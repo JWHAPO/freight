@@ -98,6 +98,15 @@ drop table  if exists ta2order;
     create table ta2order(
      order_id int primary key auto_increment,
      description varchar(512) not null,
+     car_id int,
+     departure_address varchar(512) not null,
+     arrival_address varchar(512) not null,
+     distance int not null,
+     hope_date date,
+     hope_time time,
+     hope_price DECIMAL not null,
+     is_mixed varchar(4) default 'N',
+     remark varchar(512),
      status varchar(64) not null,
      created_time_at timestamp,
      updated_time_at timestamp);

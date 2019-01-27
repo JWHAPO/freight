@@ -8,7 +8,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * freight
@@ -30,6 +32,33 @@ public class Order {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "car_id")
+    private Long carId;
+
+    @Column(name="departure_address")
+    private String departureAddress;
+
+    @Column(name = "arrival_address")
+    private String arrivalAddress;
+
+    @Column(name = "distance")
+    private Long distance;
+
+    @Column(name = "hope_date")
+    private LocalDate hopeDate;
+
+    @Column(name = "hope_time")
+    private LocalTime hopeTime;
+
+    @Column(name = "hope_price")
+    private Long hope_price;
+
+    @Column(name = "is_mixed")
+    private String isMixed;
+
+    @Column(name = "remark")
+    private String remark;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
@@ -42,8 +71,17 @@ public class Order {
     @Column(name = "updated_time_at")
     private LocalDateTime updatedTimeAt;
 
-    public Order(String description, OrderStatus status) {
+    public Order(String description, Long carId, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hope_price, String isMixed, String remark, OrderStatus status) {
         this.description = description;
+        this.carId = carId;
+        this.departureAddress = departureAddress;
+        this.arrivalAddress = arrivalAddress;
+        this.distance = distance;
+        this.hopeDate = hopeDate;
+        this.hopeTime = hopeTime;
+        this.hope_price = hope_price;
+        this.isMixed = isMixed;
+        this.remark = remark;
         this.status = status;
     }
 }
