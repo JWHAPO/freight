@@ -40,6 +40,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) {
+        passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        password = passwordEncoder.encode(password);
         return userRepository.findByEmailAndPassword(email,password);
     }
 
@@ -55,11 +57,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        String password1 = passwordEncoder.encode("12341234");
-        String password2 = passwordEncoder.encode("abcdabcd");
-        System.out.println("password1:"+password1);
-        System.out.println("password2:"+password2);
         return userRepository.findAll();
     }
 
