@@ -16,13 +16,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**", "/script/**", "image/**", "/fonts/**", "lib/**");
+        web.ignoring().antMatchers("/templates/**","/css/**", "/script/**", "image/**", "/fonts/**", "lib/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/**").permitAll();
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/users/**").permitAll();
     }
 }
