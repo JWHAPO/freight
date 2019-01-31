@@ -3,7 +3,6 @@ package app.hapo.car.freight.common.security.services;
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
