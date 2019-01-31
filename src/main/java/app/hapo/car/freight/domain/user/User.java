@@ -4,12 +4,15 @@ package app.hapo.car.freight.domain.user;/*
  * Description :
  */
 
+import app.hapo.car.freight.domain.user.Role.Role;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -53,6 +56,10 @@ public class User {
     @UpdateTimestamp
     @Column(name = "updated_time_at")
     private LocalDateTime updatedTimeAt;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "ta2user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     @Builder
     public User(Long userNo, String email, String password, String name, String phone, String imagePath, Long experienceValue, Long levelId) {

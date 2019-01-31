@@ -3,8 +3,8 @@ package app.hapo.car.freight.service.usercar;
 import app.hapo.car.freight.domain.usercar.UserCar;
 import app.hapo.car.freight.domain.usercar.UserCarRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**

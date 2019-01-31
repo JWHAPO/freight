@@ -7,8 +7,8 @@ package app.hapo.car.freight.service.car;/*
 import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.car.CarRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

@@ -3,8 +3,8 @@ package app.hapo.car.freight.service.auth.email;
 import app.hapo.car.freight.domain.auth.email.EmailAuth;
 import app.hapo.car.freight.domain.auth.email.EmailAuthRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 /**
