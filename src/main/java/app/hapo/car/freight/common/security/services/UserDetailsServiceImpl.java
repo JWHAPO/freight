@@ -3,6 +3,7 @@ package app.hapo.car.freight.common.security.services;
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by hapo on 2019-01-31.
  * Description: UserDetailServiceImpl
  */
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow( () ->new UsernameNotFoundException(
+                .orElseThrow( () -> new UsernameNotFoundException(
                         "User Not Found with -> email : "+email));
 
         return UserPrinciple.build(user);

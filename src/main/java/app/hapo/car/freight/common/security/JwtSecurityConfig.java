@@ -3,8 +3,11 @@ package app.hapo.car.freight.common.security;
 import app.hapo.car.freight.common.security.jwt.JwtAuthEntryPoint;
 import app.hapo.car.freight.common.security.jwt.JwtAuthTokenFilter;
 import app.hapo.car.freight.common.security.services.UserDetailsServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,17 +22,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * freight
- * Class: JwtSecurityConfig
+ * Class: WebSecurityConfig
  * Created by hapo on 2019-01-26.
  * Description: Security Config
  */
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+@Configuration
+public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtSecurityConfig.class);
 
     @Autowired
-    UserDetailsServiceImpl userDetailService;
+    UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private JwtAuthEntryPoint unauthorizedHandler;
@@ -42,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
-                .userDetailsService(userDetailService)
+                .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
@@ -59,9 +64,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        logger.info("configure!!");
+
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)

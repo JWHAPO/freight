@@ -5,7 +5,6 @@ package app.hapo.car.freight.api.car;/*
  */
 
 import app.hapo.car.freight.domain.car.Car;
-import app.hapo.car.freight.domain.usercar.UserCar;
 import app.hapo.car.freight.service.car.CarService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,17 +16,16 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(CarController.class)

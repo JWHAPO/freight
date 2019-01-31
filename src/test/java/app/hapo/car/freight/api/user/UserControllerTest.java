@@ -39,112 +39,112 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(UserController.class)
-@AutoConfigureRestDocs(outputDir = "target/snippets")
-@Import({UserResourceAssembler.class})
+//@RunWith(SpringRunner.class)
+//@WebMvcTest(UserController.class)
+//@AutoConfigureRestDocs(outputDir = "target/snippets")
+//@Import({UserResourceAssembler.class})
 public class UserControllerTest {
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    private UserService userService;
-
-    @MockBean
-    private UserCarService userCarService;
-
-    @Test
-    public void allTest() throws Exception{
-        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
-
-        List<User> allUsers = Collections.singletonList(user);
-        given(userService.findAll()).willReturn(allUsers);
-
-        mockMvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(document("users/findAll"));
-    }
-
-    @Test
-    public void findByIdTest() throws Exception{
-        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
-        Optional<User> userOptional = Optional.of(user);
-
-        given(userService.findById(1L)).willReturn(userOptional);
-
-        mockMvc.perform(get("/users/1").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email",is(user.getEmail())))
-                .andDo(document("users/findById"));
-    }
-
-    @Test
-    public void findByEmailAndPasswordTest() throws Exception{
-        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
-        given(userService.findByEmailAndPassword("jw.kim@emaintec.com","1234")).willReturn(Optional.of(user));
-
-        mockMvc.perform(get("/users/jw.kim@emaintec.com/1234").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(document("users/findByEmailAndPassword"));
-    }
-
-//    @Test
-//    public void saveTest() throws Exception{
-//        User user = new User(2L,"jw.kim1@emaintec.com","1234","Mr.Kim","","",100L,1L);
 //
-//        String userJson = objectMapper.writeValueAsString(user);
+//    @Autowired
+//    private WebApplicationContext webApplicationContext;
 //
+//    @Autowired
+//    private ObjectMapper objectMapper;
 //
-//        mockMvc.perform(post("/users")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(userJson))
-//                .andDo(MockMvcResultHandlers.print())
-//                .andExpect(status().isOk())
-//                .andDo(document("users/newUser"))
-//                .andReturn();
-//    }
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @MockBean
+//    private UserService userService;
+//
+//    @MockBean
+//    private UserCarService userCarService;
 //
 //    @Test
-//    public void replaceUserTest() throws Exception{
+//    public void allTest() throws Exception{
 //        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
-//        user.setUserId(1L);
 //
-//        String userJson = objectMapper.writeValueAsString(user);
+//        List<User> allUsers = Collections.singletonList(user);
+//        given(userService.findAll()).willReturn(allUsers);
 //
-//        mockMvc.perform(put("/users/1")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(userJson))
-//                .andDo(MockMvcResultHandlers.print())
+//        mockMvc.perform(get("/users").contentType(MediaType.APPLICATION_JSON))
 //                .andExpect(status().isOk())
-//                .andDo(document("users/updateUser"))
-//                .andReturn();
+//                .andDo(document("users/findAll"));
 //    }
-
-    @Test
-    public void deleteUserTest() throws Exception{
-
-        mockMvc.perform(delete("/users/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON));
-//                .andExpect(status().isNoContent());
-    }
-
-    @Test
-    public void findUserCarsTest() throws Exception{
-        Car car = new Car(2L,"newCar1", 160L,"cm",280L,"cm",180L,"cm",1100L,"Kg");
-        UserCar userCar = new UserCar(1L,2L,car);
-
-        List<UserCar> allUserCars = Collections.singletonList(userCar);
-
-        mockMvc.perform(get("/users/1/cars").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(document("users/findUserCars"));
-    }
+//
+//    @Test
+//    public void findByIdTest() throws Exception{
+//        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
+//        Optional<User> userOptional = Optional.of(user);
+//
+//        given(userService.findById(1L)).willReturn(userOptional);
+//
+//        mockMvc.perform(get("/users/1").contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.email",is(user.getEmail())))
+//                .andDo(document("users/findById"));
+//    }
+//
+//    @Test
+//    public void findByEmailAndPasswordTest() throws Exception{
+//        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
+//        given(userService.findByEmailAndPassword("jw.kim@emaintec.com","1234")).willReturn(Optional.of(user));
+//
+//        mockMvc.perform(get("/users/jw.kim@emaintec.com/1234").contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andDo(document("users/findByEmailAndPassword"));
+//    }
+//
+////    @Test
+////    public void saveTest() throws Exception{
+////        User user = new User(2L,"jw.kim1@emaintec.com","1234","Mr.Kim","","",100L,1L);
+////
+////        String userJson = objectMapper.writeValueAsString(user);
+////
+////
+////        mockMvc.perform(post("/users")
+////                .contentType(MediaType.APPLICATION_JSON)
+////                .content(userJson))
+////                .andDo(MockMvcResultHandlers.print())
+////                .andExpect(status().isOk())
+////                .andDo(document("users/newUser"))
+////                .andReturn();
+////    }
+////
+////    @Test
+////    public void replaceUserTest() throws Exception{
+////        User user = new User(1L,"jw.kim@emaintec.com","1234","Mr.Kim","","",100L,1L);
+////        user.setUserId(1L);
+////
+////        String userJson = objectMapper.writeValueAsString(user);
+////
+////        mockMvc.perform(put("/users/1")
+////                .contentType(MediaType.APPLICATION_JSON)
+////                .content(userJson))
+////                .andDo(MockMvcResultHandlers.print())
+////                .andExpect(status().isOk())
+////                .andDo(document("users/updateUser"))
+////                .andReturn();
+////    }
+//
+//    @Test
+//    public void deleteUserTest() throws Exception{
+//
+//        mockMvc.perform(delete("/users/1")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON));
+////                .andExpect(status().isNoContent());
+//    }
+//
+//    @Test
+//    public void findUserCarsTest() throws Exception{
+//        Car car = new Car(2L,"newCar1", 160L,"cm",280L,"cm",180L,"cm",1100L,"Kg");
+//        UserCar userCar = new UserCar(1L,2L,car);
+//
+//        List<UserCar> allUserCars = Collections.singletonList(userCar);
+//
+//        mockMvc.perform(get("/users/1/cars").contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andDo(document("users/findUserCars"));
+//    }
 }
