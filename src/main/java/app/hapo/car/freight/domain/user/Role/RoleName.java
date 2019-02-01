@@ -8,5 +8,9 @@ package app.hapo.car.freight.domain.user.Role;
  */
 public enum RoleName {
     ROLE_USER,
-    ROLE_ADMIN
+    ROLE_ADMIN;
+
+    public String authority() {
+        return this.name();
+    }
 }
