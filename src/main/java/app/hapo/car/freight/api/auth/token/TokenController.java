@@ -12,6 +12,9 @@ import app.hapo.car.freight.common.security.model.token.RawAccessJwtToken;
 import app.hapo.car.freight.common.security.model.token.RefreshToken;
 import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.service.user.UserService;
+import jdk.nashorn.internal.parser.Token;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -39,6 +42,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 public class TokenController {
+    public static final Logger logger = LoggerFactory.getLogger(TokenController.class);
 
     @Autowired private JwtTokenFactory tokenFactory;
     @Autowired private JwtSetting jwtSetting;
@@ -52,6 +56,9 @@ public class TokenController {
 
         RawAccessJwtToken rawToken = new RawAccessJwtToken(tokenPayload);
         RefreshToken refreshToken = RefreshToken.create(rawToken,jwtSetting.getTokenSigningKey()).orElseThrow(() -> new InvalidJwtToken());
+
+        logger.debug("rawToken:"+rawToken.getToken());
+        logger.debug("refreshToken:"+refreshToken.getSubject());
 
         String jti = refreshToken.getJti();
         if(!tokenVerifier.verify(jti)){

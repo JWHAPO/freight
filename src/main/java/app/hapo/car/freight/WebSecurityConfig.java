@@ -36,8 +36,8 @@ import java.util.List;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String AUTHENTICATION_HEADER_NAME = "Authorization";
-    public static final String AUTHENTICATION_URL = "/api/auth/login";
-    public static final String REFRESH_TOKEN_URL = "/api/auth/token";
+    public static final String AUTHENTICATION_URL = "/auth/login";
+    public static final String REFRESH_TOKEN_URL = "/auth/token";
     public static final String API_ROOT_URL = "/api/**";
 
     @Autowired private RestAuthenticationEntryPoint authenticationEntryPoint;

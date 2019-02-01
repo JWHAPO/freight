@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class JwtSetting {
-    @Value("${app.hapo.car.freight.tokenIssure}")
+    @Value("${app.hapo.car.freight.tokenIssuer}")
     private String tokenIssuer;
     @Value("${app.hapo.car.freight.secretKey}")
     private String tokenSigningKey;

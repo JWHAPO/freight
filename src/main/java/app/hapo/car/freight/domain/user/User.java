@@ -56,7 +56,7 @@ public class User {
     private LocalDateTime updatedTimeAt;
 
     @OneToMany
-    @JoinColumn(name="user_id", referencedColumnName="user_id")
+    @JoinColumn(name="user_id", referencedColumnName="user_id" ,insertable = false, updatable = false)
     private List<UserRole> userRoles;
 
     @Builder
