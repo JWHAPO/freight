@@ -2,6 +2,8 @@ package app.hapo.car.freight;
 
 import app.hapo.car.freight.common.security.CustomCorsFilter;
 import app.hapo.car.freight.common.security.RestAuthenticationEntryPoint;
+import app.hapo.car.freight.common.security.ajax.AjaxAuthenticationProvider;
+import app.hapo.car.freight.common.security.ajax.AjaxLoginProcessingFilter;
 import app.hapo.car.freight.common.security.jwt.JwtAuthenticationProvider;
 import app.hapo.car.freight.common.security.jwt.JwtTokenAuthenticationProcessingFilter;
 import app.hapo.car.freight.common.security.jwt.SkipPathRequestMatcher;
@@ -43,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired private RestAuthenticationEntryPoint authenticationEntryPoint;
     @Autowired private AuthenticationSuccessHandler successHandler;
     @Autowired private AuthenticationFailureHandler failureHandler;
+    @Autowired private AjaxAuthenticationProvider ajaxAuthenticationProvider;
     @Autowired private JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @Autowired private TokenExtractor tokenExtractor;
@@ -51,6 +54,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired private ObjectMapper objectMapper;
 
+    protected AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter(String loginEntryPoint) throws Exception {
+        AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(loginEntryPoint, successHandler, failureHandler, objectMapper);
+        filter.setAuthenticationManager(this.authenticationManager);
+        return filter;
+    }
 
     protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter(List<String> pathsToSkip, String pattern) throws Exception{
         SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, pattern);
@@ -69,6 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(ajaxAuthenticationProvider);
         auth.authenticationProvider(jwtAuthenticationProvider);
     }
 
@@ -98,6 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(API_ROOT_URL).authenticated()
                 .and()
                     .addFilterBefore(new CustomCorsFilter(), UsernamePasswordAuthenticationFilter.class)
+                    .addFilterBefore(buildAjaxLoginProcessingFilter(AUTHENTICATION_URL), UsernamePasswordAuthenticationFilter.class)
                     .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(permitAllEndpointList,API_ROOT_URL),
                             UsernamePasswordAuthenticationFilter.class);
     }

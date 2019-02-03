@@ -1,6 +1,5 @@
 package app.hapo.car.freight.domain.user;
 
-import app.hapo.car.freight.domain.user.Role.Role;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,7 +37,7 @@ public class UserRole {
     @Column(name = "created_time_at")
     private LocalDateTime createdTimeAt;
 
-    @OneToOne
-    @JoinColumn(name="role_id", referencedColumnName="role_id" , insertable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", insertable=false, updatable=false)
     protected Role role;
 }

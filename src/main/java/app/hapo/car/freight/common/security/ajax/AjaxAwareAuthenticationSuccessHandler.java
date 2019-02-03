@@ -24,7 +24,7 @@ import java.util.Map;
  * freight
  * Class: AjaxAwareAuthenticationSuccessHandler
  * Created by hapo on 2019-02-01.
- * Description: JwtExpiredTokenException
+ * Description: AjaxAwareAuthenticationSuccessHandler
  */
 @Component
 public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {

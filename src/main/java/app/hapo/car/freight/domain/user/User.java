@@ -56,11 +56,11 @@ public class User {
     private LocalDateTime updatedTimeAt;
 
     @OneToMany
-    @JoinColumn(name="user_id", referencedColumnName="user_id" ,insertable = false, updatable = false)
-    private List<UserRole> userRoles;
+    @JoinColumn(name="user_id", referencedColumnName="user_id" )
+    private List<UserRole> roles;
 
     @Builder
-    public User(Long userNo, String email, String password, String name, String phone, String imagePath, Long experienceValue, Long levelId, List<UserRole> userRoles) {
+    public User(Long userNo, String email, String password, String name, String phone, String imagePath, Long experienceValue, Long levelId, List<UserRole> roles) {
         this.userNo = userNo;
         this.email = email;
         this.password = password;
@@ -69,6 +69,6 @@ public class User {
         this.imagePath = imagePath;
         this.experienceValue = experienceValue;
         this.levelId = levelId;
-        this.userRoles = userRoles;
+        this.roles = roles;
     }
 }
