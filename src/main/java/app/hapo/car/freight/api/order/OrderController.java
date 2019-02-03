@@ -25,6 +25,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * Description: OrderController
  */
 @RestController
+@RequestMapping(value = "/api")
 public class OrderController {
 
     @Autowired

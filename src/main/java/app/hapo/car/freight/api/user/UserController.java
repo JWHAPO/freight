@@ -25,6 +25,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
+@RequestMapping(value = "/api")
 public class UserController {
 
     @Autowired
