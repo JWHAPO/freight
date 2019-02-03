@@ -50,7 +50,7 @@ public class TokenController {
     @Autowired private TokenVerifier tokenVerifier;
     @Autowired @Qualifier("jwtHeaderTokenExtractor") private TokenExtractor tokenExtractor;
 
-    @RequestMapping(value="/api/auth/token", method= RequestMethod.GET, produces={ MediaType.APPLICATION_JSON_VALUE })
+    @RequestMapping(value="/auth/token", method= RequestMethod.GET, produces={ MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody JwtToken refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         String tokenPayload = tokenExtractor.extract(request.getHeader(WebSecurityConfig.AUTHENTICATION_HEADER_NAME));
 
@@ -68,9 +68,9 @@ public class TokenController {
         String subject = refreshToken.getSubject();
         User user = userService.findByEmail(subject).orElseThrow(() -> new UsernameNotFoundException("User not found: " + subject));
 
-        if(user.getUserRoles() == null) throw new InsufficientAuthenticationException("User has no roles assigned");
-        List<GrantedAuthority> authorities = user.getUserRoles().stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getRole().getName().authority()))
+        if(user.getRoles() == null) throw new InsufficientAuthenticationException("User has no roles assigned");
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.getRole().authority()))
                 .collect(Collectors.toList());
 
         UserContext userContext = UserContext.create(user.getEmail(), authorities);

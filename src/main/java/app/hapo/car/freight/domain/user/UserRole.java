@@ -30,9 +30,6 @@ public class UserRole {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "role_id")
-    private Long roleId;
-
     @CreationTimestamp
     @Column(name = "created_time_at")
     private LocalDateTime createdTimeAt;

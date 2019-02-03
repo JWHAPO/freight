@@ -55,8 +55,8 @@ public class User {
     @Column(name = "updated_time_at")
     private LocalDateTime updatedTimeAt;
 
-    @OneToMany
-    @JoinColumn(name="user_id", referencedColumnName="user_id" )
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id", referencedColumnName="user_id",  insertable = false, updatable = false)
     private List<UserRole> roles;
 
     @Builder
