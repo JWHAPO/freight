@@ -52,13 +52,12 @@ public class TokenController {
 
     @RequestMapping(value="/auth/token", method= RequestMethod.GET, produces={ MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody JwtToken refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+
         String tokenPayload = tokenExtractor.extract(request.getHeader(WebSecurityConfig.AUTHENTICATION_HEADER_NAME));
 
         RawAccessJwtToken rawToken = new RawAccessJwtToken(tokenPayload);
-        RefreshToken refreshToken = RefreshToken.create(rawToken,jwtSetting.getTokenSigningKey()).orElseThrow(() -> new InvalidJwtToken());
 
-        logger.debug("rawToken:"+rawToken.getToken());
-        logger.debug("refreshToken:"+refreshToken.getSubject());
+        RefreshToken refreshToken = RefreshToken.create(rawToken,jwtSetting.getTokenSigningKey()).orElseThrow(() -> new InvalidJwtToken());
 
         String jti = refreshToken.getJti();
         if(!tokenVerifier.verify(jti)){

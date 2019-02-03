@@ -45,9 +45,14 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 
         User user = userService.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found : "+email));
 
-        if(!encoder.matches(password, user.getPassword())){
+        if(!password.equals(user.getPassword())){
             throw new BadCredentialsException("Authentication Failed. Email or Password not valid.");
         }
+
+        //BCrypt
+//        if(!encoder.matches(password, user.getPassword())){
+//            throw new BadCredentialsException("Authentication Failed. Email or Password not valid.");
+//        }
 
         if(user.getRoles() == null) throw new InsufficientAuthenticationException("User has no roles assigned");
 
