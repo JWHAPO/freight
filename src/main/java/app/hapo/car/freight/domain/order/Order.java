@@ -18,10 +18,10 @@ import java.time.LocalTime;
  * Created by hapo on 2019-01-25.
  * Description:
  */
-@Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Getter
 @Table(name="ta2order")
 public class Order {
     @Id
