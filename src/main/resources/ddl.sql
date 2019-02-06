@@ -126,7 +126,7 @@ create table ta2order_response(
      order_id int not null,
      user_id int not null,
      response varchar(512) not null,
-     is_selection varchar(4) default 'N',
+     is_selected varchar(4) default 'N',
      created_time_at timestamp,
      updated_time_at timestamp);
 

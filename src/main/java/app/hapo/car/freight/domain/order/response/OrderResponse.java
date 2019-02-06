@@ -30,9 +30,9 @@ public class OrderResponse {
     @Column(name = "user_id")
     private Long userId;
     @Column(name = "response")
-    private Long response;
-    @Column(name = "is_selection")
-    private Long isSelection;
+    private String response;
+    @Column(name = "is_selected")
+    private String isSelected;
     @CreationTimestamp
     @Column(name = "created_time_at")
     private LocalDateTime createdTimeAt;
@@ -41,10 +41,10 @@ public class OrderResponse {
     private LocalDateTime updatedTimeAt;
 
     @Builder
-    public OrderResponse(Long orderId, Long userId, Long response, Long isSelection) {
+    public OrderResponse(Long orderId, Long userId, String response, String isSelection) {
         this.orderId = orderId;
         this.userId = userId;
         this.response = response;
-        this.isSelection = isSelection;
+        this.isSelected = isSelected;
     }
 }

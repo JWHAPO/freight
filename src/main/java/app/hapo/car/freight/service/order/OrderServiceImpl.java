@@ -2,6 +2,7 @@ package app.hapo.car.freight.service.order;
 
 import app.hapo.car.freight.domain.order.Order;
 import app.hapo.car.freight.domain.order.OrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +19,8 @@ import java.util.Optional;
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
+    @Autowired
     private OrderRepository orderRepository;
-
-    public OrderServiceImpl(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
 
     @Override
     public List<Order> findAll() {

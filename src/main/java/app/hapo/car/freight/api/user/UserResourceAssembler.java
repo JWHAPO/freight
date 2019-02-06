@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 /**
  * freight
  * Class: UserResourceAssembler
@@ -22,3 +23,6 @@ public class UserResourceAssembler implements ResourceAssembler<User, Resource<U
                 linkTo(methodOn(UserController.class).all()).withRel("users"));
     }
 }
+
+
+
