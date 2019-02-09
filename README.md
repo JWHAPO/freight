@@ -6,5 +6,7 @@ Freight Car App API
 *-JPA*  
 *-MariaDB*  
 *-Restful API*  
+*-JWT*  
+*-HATEOS*  
 
 
