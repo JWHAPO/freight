@@ -4,15 +4,47 @@ package app.hapo.car.freight.api.notice;/*
  * Description : NoticeController
  */
 
+import app.hapo.car.freight.domain.notice.Notice;
+import app.hapo.car.freight.service.notice.NoticeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/api")
 public class NoticeController {
 
+    @Autowired
+    NoticeService noticeService;
 
+    @Autowired
+    NoticeAssembler noticeAssembler;
 
+    @GetMapping(value = "/notices")
+    public Resources<Resource<Notice>> findAll(){
+        List<Resource<Notice>> notices = noticeService.findAll().stream()
+                .map(noticeAssembler::toResource)
+                .collect(Collectors.toList());
+
+        return new Resources<>(notices,
+                linkTo(methodOn(NoticeController.class).findAll()).withSelfRel());
+    }
+
+    @GetMapping(value = "notices/{id}")
+    public Resource<Notice> findById(@PathVariable Long id){
+        return noticeAssembler.toResource(
+                noticeService.findById(id)
+                .orElseThrow(()->new NoticeNotFoundException(id))
+        );
+    }
 
 
     class NoticeNotFoundException extends RuntimeException{
