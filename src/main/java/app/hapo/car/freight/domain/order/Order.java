@@ -1,9 +1,6 @@
 package app.hapo.car.freight.domain.order;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -63,6 +60,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Column(name = "cancel_remark")
+    private String cancelRemark;
+
     @CreationTimestamp
     @Column(name = "created_time_at")
     private LocalDateTime createdTimeAt;
@@ -71,7 +71,8 @@ public class Order {
     @Column(name = "updated_time_at")
     private LocalDateTime updatedTimeAt;
 
-    public Order(String description, Long carId, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hope_price, String isMixed, String remark, OrderStatus status) {
+    @Builder
+    public Order(String description, Long carId, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hope_price, String isMixed, String remark, OrderStatus status, String cancelRemark) {
         this.description = description;
         this.carId = carId;
         this.departureAddress = departureAddress;
@@ -83,5 +84,6 @@ public class Order {
         this.isMixed = isMixed;
         this.remark = remark;
         this.status = status;
+        this.cancelRemark = cancelRemark;
     }
 }

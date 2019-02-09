@@ -108,6 +108,7 @@ drop table  if exists ta2order;
      is_mixed varchar(4) default 'N',
      remark varchar(512),
      status varchar(64) not null,
+     cancel_remark varchar(512),
      created_time_at timestamp,
      updated_time_at timestamp);
 
@@ -125,8 +126,24 @@ create table ta2order_response(
      order_response_id int primary key auto_increment,
      order_id int not null,
      user_id int not null,
-     response varchar(512) not null,
+     pickup_date date,
+     pickup_time time,
+     suggested_price DECIMAL not null,
+     current_avg_price DECIMAL,
+     seller_message varchar(512),
+     buyer_message varchar(512),
+     result_point int default 0,
      is_selected varchar(4) default 'N',
+     created_time_at timestamp,
+     updated_time_at timestamp);
+
+     /** ta2notice 생성 */
+drop table  if exists ta2notice;
+create table ta2notice(
+     notice_id int primary key auto_increment,
+     user_id int not null,
+     title varchar(512),
+     contents varchar(2048),
      created_time_at timestamp,
      updated_time_at timestamp);
 

@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -29,8 +30,20 @@ public class OrderResponse {
     private Long orderId;
     @Column(name = "user_id")
     private Long userId;
-    @Column(name = "response")
-    private String response;
+    @Column(name = "pickup_date")
+    private LocalDate pickupDate;
+    @Column(name = "pickup_time")
+    private LocalDate pickupTime;
+    @Column(name = "suggested_price")
+    private Long suggestedPrice;
+    @Column(name = "current_avg_price")
+    private Long currentAvgPrice;
+    @Column(name = "seller_message")
+    private String sellerMessage;
+    @Column(name = "buyer_message")
+    private String buyerMessage;
+    @Column(name = "result_point")
+    private Long resultPoint;
     @Column(name = "is_selected")
     private String isSelected;
     @CreationTimestamp
@@ -41,10 +54,16 @@ public class OrderResponse {
     private LocalDateTime updatedTimeAt;
 
     @Builder
-    public OrderResponse(Long orderId, Long userId, String response, String isSelection) {
+    public OrderResponse(Long orderId, Long userId, LocalDate pickupDate, LocalDate pickupTime, Long suggestedPrice, Long currentAvgPrice, String sellerMessage, String buyerMessage, Long resultPoint, String isSelected) {
         this.orderId = orderId;
         this.userId = userId;
-        this.response = response;
+        this.pickupDate = pickupDate;
+        this.pickupTime = pickupTime;
+        this.suggestedPrice = suggestedPrice;
+        this.currentAvgPrice = currentAvgPrice;
+        this.sellerMessage = sellerMessage;
+        this.buyerMessage = buyerMessage;
+        this.resultPoint = resultPoint;
         this.isSelected = isSelected;
     }
 }
