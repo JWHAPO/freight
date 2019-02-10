@@ -1,7 +1,7 @@
 package app.hapo.car.freight.api.order.response;/*
  * Created by hapo
  * Date : 19. 2. 6 오후 10:19
- * Description : OrderResponseAssembler
+ * Description : OrderResponseResourceAssembler
  */
 
 import app.hapo.car.freight.domain.order.response.OrderResponse;
@@ -13,7 +13,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Component
-public class OrderResponseAssembler implements ResourceAssembler<OrderResponse, Resource<OrderResponse>> {
+public class OrderResponseResourceAssembler implements ResourceAssembler<OrderResponse, Resource<OrderResponse>> {
 
     @Override
     public Resource<OrderResponse> toResource(OrderResponse orderResponse) {

@@ -1,7 +1,7 @@
 package app.hapo.car.freight.api.notice;/*
  * Created by hapo
  * Date : 19. 2. 9 오후 11:22
- * Description : NoticeAssembler
+ * Description : NoticeResourceAssembler
  */
 
 import app.hapo.car.freight.domain.notice.Notice;
@@ -13,7 +13,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Component
-public class NoticeAssembler implements ResourceAssembler<Notice, Resource<Notice>> {
+public class NoticeResourceAssembler implements ResourceAssembler<Notice, Resource<Notice>> {
     @Override
     public Resource<Notice> toResource(Notice notice) {
         return new Resource<>(notice,

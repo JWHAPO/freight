@@ -26,12 +26,12 @@ public class OrderResponseController {
     OrderResponseService orderResponseService;
 
     @Autowired
-    OrderResponseAssembler orderResponseAssembler;
+    OrderResponseResourceAssembler orderResponseResourceAssembler;
 
     @GetMapping(value = "/order-responses")
     public Resources<Resource<OrderResponse>> findAll(){
         List<Resource<OrderResponse>> orderResponses = orderResponseService.findAll().stream()
-                .map(orderResponseAssembler::toResource)
+                .map(orderResponseResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(orderResponses,
@@ -40,7 +40,7 @@ public class OrderResponseController {
 
     @GetMapping(value = "/order-responses/{id}")
     public Resource<OrderResponse> findById(@PathVariable Long id){
-        return orderResponseAssembler.toResource(
+        return orderResponseResourceAssembler.toResource(
                 orderResponseService.findById(id)
                 .orElseThrow(()->new OrderResponseNotFoundException(id))
         );
@@ -48,7 +48,7 @@ public class OrderResponseController {
 
     @GetMapping(value = "/order-responses/order/{id}")
     public Resource<OrderResponse> findByOrderId(@PathVariable Long id){
-        return orderResponseAssembler.toResource(
+        return orderResponseResourceAssembler.toResource(
                 orderResponseService.findByOrderId(id)
                         .orElseThrow(()->new OrderResponseNotFoundException(id))
         );

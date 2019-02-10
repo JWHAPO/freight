@@ -144,6 +144,22 @@ create table ta2notice(
      user_id int not null,
      title varchar(512),
      contents varchar(2048),
+     hits int,
+     created_time_at timestamp,
+     updated_time_at timestamp);
+
+     /** ta2board 생성 */
+drop table  if exists ta2board;
+create table ta2board(
+     board_id int primary key auto_increment,
+     group_id int not null,
+     parent_board_id int not null,
+     user_id int not null,
+     board_type varchar(32) not null,
+     title varchar(512),
+     contents varchar(2048),
+     hits int,
+     is_secret varchar(4) default 'N',
      created_time_at timestamp,
      updated_time_at timestamp);
 

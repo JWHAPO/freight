@@ -31,6 +31,9 @@ public class Notice {
     @Column(name = "contents")
     private String contents;
 
+    @Column(name = "hits")
+    private Long hits;
+
     @CreationTimestamp
     @Column(name = "created_time_at")
     private LocalDateTime createdTimeAt;
@@ -40,9 +43,10 @@ public class Notice {
     private LocalDateTime updatedTimeAt;
 
     @Builder
-    public Notice(Long userId, String title, String contents) {
+    public Notice(Long userId, String title, String contents, Long hits) {
         this.userId = userId;
         this.title = title;
         this.contents = contents;
+        this.hits = hits;
     }
 }

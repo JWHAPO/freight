@@ -26,12 +26,12 @@ public class NoticeController {
     NoticeService noticeService;
 
     @Autowired
-    NoticeAssembler noticeAssembler;
+    NoticeResourceAssembler noticeResourceAssembler;
 
     @GetMapping(value = "/notices")
     public Resources<Resource<Notice>> findAll(){
         List<Resource<Notice>> notices = noticeService.findAll().stream()
-                .map(noticeAssembler::toResource)
+                .map(noticeResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(notices,
@@ -40,7 +40,7 @@ public class NoticeController {
 
     @GetMapping(value = "notices/{id}")
     public Resource<Notice> findById(@PathVariable Long id){
-        return noticeAssembler.toResource(
+        return noticeResourceAssembler.toResource(
                 noticeService.findById(id)
                 .orElseThrow(()->new NoticeNotFoundException(id))
         );
