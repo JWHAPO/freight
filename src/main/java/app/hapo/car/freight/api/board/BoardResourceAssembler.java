@@ -19,7 +19,7 @@ public class BoardResourceAssembler implements ResourceAssembler<Board, Resource
 
         Resource<Board> boardResource = new Resource<>(board,
                 linkTo(methodOn(BoardController.class).findById(board.getBoardId())).withSelfRel(),
-                linkTo(methodOn(BoardController.class).findHelpDesks()).withRel("helpdesks"));
+                linkTo(methodOn(BoardController.class).findQuestions()).withRel("questions"));
 
         return boardResource;
     }

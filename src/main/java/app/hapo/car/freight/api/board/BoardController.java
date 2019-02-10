@@ -29,23 +29,23 @@ public class BoardController {
     @Autowired
     BoardResourceAssembler boardResourceAssembler;
 
-    @GetMapping(value = "/boards/helpdesks")
-    public Resources<Resource<Board>> findHelpDesks(){
-        List<Resource<Board>> helpdesks = boardService.findByBoardType(BoardType.HELP).stream()
+    @GetMapping(value = "/boards/questions")
+    public Resources<Resource<Board>> findQuestions(){
+        List<Resource<Board>> questions = boardService.findByBoardType(BoardType.QUESTION).stream()
                 .map(boardResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
-        return new Resources<>(helpdesks,
-                linkTo(methodOn(BoardController.class).findHelpDesks()).withSelfRel());
+        return new Resources<>(questions,
+                linkTo(methodOn(BoardController.class).findQuestions()).withSelfRel());
     }
 
     @GetMapping(value = "/boards/group/{id}")
     public Resources<Resource<Board>> findByGroupId(@PathVariable Long groupId){
-        List<Resource<Board>> boards = boardService.findByGroupId(groupId).stream()
+        List<Resource<Board>> boardsByGroupId = boardService.findByGroupId(groupId).stream()
                 .map(boardResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
-        return new Resources<>(boards,
+        return new Resources<>(boardsByGroupId,
                 linkTo(methodOn(BoardController.class).findByGroupId(groupId)).withSelfRel());
     }
 

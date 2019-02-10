@@ -5,7 +5,7 @@ package app.hapo.car.freight.domain.board;/*
  */
 
 public enum BoardType {
-    HELP,
+    QUESTION,
     EVENT,
     BBS
 }
