@@ -1,6 +1,6 @@
 # freight
-Start Personal Project - 2018/01/02
-Freight Car App API  
+*Personal Project* - 2018/01/02
+Freight Car API  
 
 *-Spring boot*
 *-JPA*  
@@ -8,5 +8,4 @@ Freight Car App API
 *-Restful API*  
 *-JWT*  
 *-HATEOS*  
-
 
