@@ -2,7 +2,7 @@
 
 ## Freight API  
 
-*-Spring boot*
+*-Spring boot*   
 *-JPA*  
 *-MariaDB*  
 *-Restful API*  
