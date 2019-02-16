@@ -163,5 +163,14 @@ create table ta2board(
      created_time_at timestamp,
      updated_time_at timestamp);
 
+drop table  if exists ta2order_location;
+create table ta2order_location(
+     order_location_id int primary key auto_increment,
+     order_id int not null,
+     latitude int not null,
+     longitude int not null,
+     created_time_at timestamp,
+     updated_time_at timestamp);
+
 
 
