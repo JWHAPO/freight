@@ -1,9 +1,6 @@
 package app.hapo.car.freight.domain.user;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -35,6 +32,12 @@ public class UserRole {
     private LocalDateTime createdTimeAt;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", insertable=false, updatable=false)
+    @Column(name = "role",  updatable=false)
     protected Role role;
+
+    @Builder
+    public UserRole(Long userId, Role role) {
+        this.userId = userId;
+        this.role = role;
+    }
 }
