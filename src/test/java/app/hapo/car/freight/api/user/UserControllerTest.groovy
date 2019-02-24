@@ -1,13 +1,21 @@
 package app.hapo.car.freight.api.user
 
-
+import app.hapo.car.freight.AuthorizedControllerHelper
+import app.hapo.car.freight.WebSecurityConfig
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.mock.web.MockHttpSession
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.MvcResult
+import org.springframework.web.context.WebApplicationContext
 import spock.lang.Specification
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup
+import static org.springframework.http.HttpStatus.*
 
 /**
  * freight
@@ -16,27 +24,28 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
  * Description: 
  */
 @WebAppConfiguration
+@ContextConfiguration(classes = WebSecurityConfig.class)
 class UserControllerTest extends Specification {
 
-//    def userController = new UserController()
-//
+//    @Autowired
+//    WebApplicationContext context
 //    MockMvc mockMvc
 //
 //    //@Before
 //    def setup(){
-//        mockMvc = standaloneSetup(userController).build()
+//        mockMvc = standaloneSetup(new UserController()).build()
+//
+//        def tokenResponse = mockMvc.perform(post("/auth/login")).andReturn().response
 //    }
 //
 //    def "Test find all"(){
 //        setup:
-//        def token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYWExQGVtYWludGVjLmNvbSIsInNjb3BlcyI6WyJST0xFX01FTUJFUiJdLCJpc3MiOiJoYXBvIiwiaWF0IjoxNTUwOTEyNDgxLCJleHAiOjE1NTA5MTMzODF9.jJ0554eqIGHFgTySoOklZfhk8Wu5CUSLcEiGbpKKO0yhkiiLVeHy6_xfkTIwEL5pVxB2g_of8GbJF_nowSHT1Q"
-//        def request = get("/api/users")
-//        request.header("Authorization","Bearer $token")
+//        def response = mockMvc.perform(get("/api/users")).andReturn().response
 //
 //        when:
-//        def response = mockMvc.perform(get("/api/users"))
+//        MockHttpSession session = AuthorizedControllerHelper.buildSecuritySession(context, "aaa1@emaintec.com")
 //
 //        then:
-//        response.andExpect(status().isOk())
+//        response.status == OK.value()
 //    }
 }
