@@ -3,6 +3,8 @@ package app.hapo.car.freight.api.user
 import app.hapo.car.freight.AuthorizedControllerHelper
 import app.hapo.car.freight.WebSecurityConfig
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.MediaType
 import org.springframework.mock.web.MockHttpSession
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.web.WebAppConfiguration
@@ -23,28 +25,34 @@ import static org.springframework.http.HttpStatus.*
  * Created by hapo on 2019-02-22.
  * Description: 
  */
-@WebAppConfiguration
-@ContextConfiguration(classes = WebSecurityConfig.class)
+@SpringBootTest
+@ContextConfiguration
 class UserControllerTest extends Specification {
-
+//
 //    @Autowired
 //    WebApplicationContext context
-//    MockMvc mockMvc
+//
+//    MockMvc mockMvc = standaloneSetup(new UserController()).build()
 //
 //    //@Before
 //    def setup(){
-//        mockMvc = standaloneSetup(new UserController()).build()
-//
-//        def tokenResponse = mockMvc.perform(post("/auth/login")).andReturn().response
 //    }
 //
 //    def "Test find all"(){
+//
 //        setup:
-//        def response = mockMvc.perform(get("/api/users")).andReturn().response
+//        def request = post("/auth/login")
+//        request.contentType(MediaType.APPLICATION_JSON_UTF8)
+//        request.content("{\n" +
+//                "    \"email\": \"aaa1@emaintec.com\",\n" +
+//                "    \"password\": \"1234\"\n" +
+//                "}")
+//        request.accept("application/json;charset=UTF-8")
 //
 //        when:
-//        MockHttpSession session = AuthorizedControllerHelper.buildSecuritySession(context, "aaa1@emaintec.com")
-//
+//            def response = mockMvc.perform(request).andReturn().response
+//            def result = response.contentAsString
+//            println(result)
 //        then:
 //        response.status == OK.value()
 //    }
