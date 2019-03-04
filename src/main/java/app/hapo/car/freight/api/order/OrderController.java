@@ -52,6 +52,16 @@ public class OrderController {
         );
     }
 
+    @GetMapping(value = "/orders/count/status/{status}")
+    public Long countByStatus(@PathVariable OrderStatus status){
+        return orderService.countByStatus(status);
+    }
+
+    @GetMapping(value = "/orders/status/{status}")
+    public List<Order> findByStatus(@PathVariable OrderStatus status){
+        return orderService.findByStatus(status);
+    }
+
     @PostMapping(value = "/orders")
     public ResponseEntity<Resource<Order>> newOrder(@RequestBody Order order){
         order.setStatus(OrderStatus.IN_PROGRESS);

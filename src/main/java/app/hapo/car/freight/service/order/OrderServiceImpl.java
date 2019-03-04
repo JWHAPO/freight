@@ -2,6 +2,7 @@ package app.hapo.car.freight.service.order;
 
 import app.hapo.car.freight.domain.order.Order;
 import app.hapo.car.freight.domain.order.OrderRepository;
+import app.hapo.car.freight.domain.order.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,6 @@ import java.util.Optional;
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
-
     @Autowired
     private OrderRepository orderRepository;
 
@@ -35,5 +35,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Optional<Order> save(Order order) {
         return Optional.of(orderRepository.save(order));
+    }
+
+    @Override
+    public Long countByStatus(OrderStatus status) {
+        return orderRepository.countByStatus(status);
+    }
+
+    @Override
+    public List<Order> findByStatus(OrderStatus status) {
+        return orderRepository.findByStatus(status);
     }
 }

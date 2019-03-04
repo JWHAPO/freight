@@ -182,5 +182,16 @@ create table ta2grade(
      created_time_at timestamp,
      updated_time_at timestamp);
 
+     insert into ta2grade(grade_no, from_exp, to_exp)
+        values ( 1,0,100);
+     insert into ta2grade(grade_no, from_exp, to_exp)
+        values ( 2,101,200);
+     insert into ta2grade(grade_no, from_exp, to_exp)
+        values ( 3,201,300);
+     insert into ta2grade(grade_no, from_exp, to_exp)
+        values ( 4,301,400);
+     insert into ta2grade(grade_no, from_exp, to_exp)
+        values ( 5,401,500);
+
 
 

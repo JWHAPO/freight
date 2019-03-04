@@ -1,6 +1,7 @@
 package app.hapo.car.freight.service.order;
 
 import app.hapo.car.freight.domain.order.Order;
+import app.hapo.car.freight.domain.order.OrderStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,4 +16,6 @@ public interface OrderService {
     List<Order> findAll();
     Optional<Order> findById(Long id);
     Optional<Order> save(Order order);
+    Long countByStatus(OrderStatus status);
+    List<Order> findByStatus(OrderStatus status);
 }

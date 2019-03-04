@@ -60,7 +60,7 @@ public class NoticeController {
         @ResponseBody
         @ExceptionHandler(NoticeController.NoticeNotFoundException.class)
         @ResponseStatus(HttpStatus.NOT_FOUND)
-        String orderNotFoundHandler(NoticeController.NoticeNotFoundException ex) {
+        String noticeNotFoundHandler(NoticeController.NoticeNotFoundException ex) {
             return ex.getMessage();
         }
     }
