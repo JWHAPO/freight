@@ -172,5 +172,15 @@ create table ta2order_location(
      created_time_at timestamp,
      updated_time_at timestamp);
 
+drop table  if exists ta2grade;
+create table ta2grade(
+     grade_id int primary key auto_increment,
+     grade_no int not null,
+     from_exp int not null,
+     to_exp int not null,
+     image_path varchar(512),
+     created_time_at timestamp,
+     updated_time_at timestamp);
+
 
 

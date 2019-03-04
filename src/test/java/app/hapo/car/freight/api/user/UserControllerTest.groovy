@@ -1,23 +1,9 @@
 package app.hapo.car.freight.api.user
 
-import app.hapo.car.freight.AuthorizedControllerHelper
-import app.hapo.car.freight.WebSecurityConfig
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.MediaType
-import org.springframework.mock.web.MockHttpSession
-import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.web.WebAppConfiguration
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.MvcResult
-import org.springframework.web.context.WebApplicationContext
-import spock.lang.Specification
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup
-import static org.springframework.http.HttpStatus.*
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ContextConfiguration
+import spock.lang.Specification
 
 /**
  * freight
