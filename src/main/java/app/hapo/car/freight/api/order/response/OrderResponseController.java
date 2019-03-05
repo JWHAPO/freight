@@ -12,11 +12,11 @@ import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -54,7 +54,10 @@ public class OrderResponseController {
         );
     }
 
-
+    @GetMapping(value = "/order-response/order/{id}/count")
+    public Long countByOrderId(@PathVariable Long id){
+        return orderResponseService.countByOrderId(id);
+    }
 
 
     class OrderResponseNotFoundException extends RuntimeException{

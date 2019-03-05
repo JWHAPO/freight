@@ -12,4 +12,6 @@ public interface OrderResponseRepository extends JpaRepository<OrderResponse,Lon
 
     Optional<OrderResponse> findByOrderId(Long orderId);
 
+    Long countByOrderId(Long orderId);
+
 }

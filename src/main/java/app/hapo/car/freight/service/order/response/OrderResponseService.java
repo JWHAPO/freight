@@ -31,4 +31,9 @@ public interface OrderResponseService {
      */
     Optional<OrderResponse> findById(Long orderResponseId);
 
+    /**
+     * order에 붙은 response 수
+     */
+    Long countByOrderId(Long orderId);
+
 }
