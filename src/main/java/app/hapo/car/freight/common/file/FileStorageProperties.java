@@ -1,4 +1,4 @@
-package app.hapo.car.freight.common.upload;/*
+package app.hapo.car.freight.common.file;/*
  * Created by hapo
  * Date : 19. 3. 7 오전 12:32
  * Description :

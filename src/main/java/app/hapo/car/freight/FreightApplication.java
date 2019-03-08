@@ -1,6 +1,6 @@
 package app.hapo.car.freight;
 
-import app.hapo.car.freight.common.upload.FileStorageProperties;
+import app.hapo.car.freight.common.file.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

@@ -1,0 +1,27 @@
+package app.hapo.car.freight.domain.file;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * freight
+ * Class: UploadFileResponse
+ * Created by hapo on 2019-03-08.
+ * Description:
+ */
+@Getter
+@Setter
+public class UploadFileResponse {
+
+    private String fileName;
+    private String fileDownloadUri;
+    private String fileType;
+    private long size;
+
+    public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size) {
+        this.fileName = fileName;
+        this.fileDownloadUri = fileDownloadUri;
+        this.fileType = fileType;
+        this.size = size;
+    }
+}
