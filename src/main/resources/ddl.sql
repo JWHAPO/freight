@@ -194,4 +194,14 @@ create table ta2grade(
         values ( 5,401,500);
 
 
+drop table  if exists ta2file;
+create table ta2file(
+     file_id int primary key auto_increment,
+     file_name varchar(512) not null,
+     file_ext varchar(64) not null,
+     file_size int not null,
+     download_uri varchar(512) not null,
+     content_type varchar(512) not null,
+     created_time_at timestamp,
+     updated_time_at timestamp);
 

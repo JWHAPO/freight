@@ -1,6 +1,6 @@
 package app.hapo.car.freight.api.file;
 
-import app.hapo.car.freight.domain.file.UploadFileResponse;
+import app.hapo.car.freight.domain.file.File;
 import app.hapo.car.freight.service.file.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,19 +35,12 @@ public class FileController {
     private FileStorageService fileStorageService;
 
     @PostMapping(value = "/uploadFile")
-    public UploadFileResponse uploadFile(@RequestParam("file")MultipartFile file){
-        String fileName = fileStorageService.storeFile(file);
-
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
-                .path(fileName)
-                .toUriString();
-
-        return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+    public File uploadFile(@RequestParam("file")MultipartFile file){
+        return fileStorageService.storeFile(file);
     }
 
     @PostMapping(value = "/uploadMultipleFiles")
-    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files){
+    public List<File> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files){
         return Arrays.asList(files)
                 .stream()
                 .map(file -> uploadFile(file))

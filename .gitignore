@@ -143,4 +143,7 @@ gradle-app.setting
 application.properties
 /target/
 
+# upload file directory#
+uploads/
+
 # End of https://www.gitignore.io/api/git,java,gradle,intellij
