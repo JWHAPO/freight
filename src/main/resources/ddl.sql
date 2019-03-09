@@ -205,3 +205,11 @@ create table ta2file(
      created_time_at timestamp,
      updated_time_at timestamp);
 
+drop table  if exists ta2order_file;
+    create table ta2order_file(
+     order_file_id int primary key auto_increment,
+     order_id int not null,
+     file_id int not null,
+     created_time_at timestamp,
+     updated_time_at timestamp);
+
