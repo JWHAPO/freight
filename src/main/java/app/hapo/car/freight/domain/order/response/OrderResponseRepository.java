@@ -6,11 +6,11 @@ package app.hapo.car.freight.domain.order.response;/*
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface OrderResponseRepository extends JpaRepository<OrderResponse,Long> {
 
-    Optional<OrderResponse> findByOrderId(Long orderId);
+    List<OrderResponse> findByOrderId(Long orderId);
 
     Long countByOrderId(Long orderId);
 

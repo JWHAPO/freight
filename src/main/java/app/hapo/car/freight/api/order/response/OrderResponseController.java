@@ -47,11 +47,13 @@ public class OrderResponseController {
     }
 
     @GetMapping(value = "/order-responses/order/{id}")
-    public Resource<OrderResponse> findByOrderId(@PathVariable Long id){
-        return orderResponseResourceAssembler.toResource(
-                orderResponseService.findByOrderId(id)
-                        .orElseThrow(()->new OrderResponseNotFoundException(id))
-        );
+    public Resources<Resource<OrderResponse>> findByOrderId(@PathVariable Long id){
+        List<Resource<OrderResponse>> orderResponses = orderResponseService.findByOrderId(id).stream()
+                .map(orderResponseResourceAssembler::toResource)
+                .collect(Collectors.toList());
+
+        return new Resources<>(orderResponses,
+                linkTo(methodOn(OrderResponseController.class).findByOrderId(id)).withSelfRel());
     }
 
     @GetMapping(value = "/order-response/order/{id}/count")

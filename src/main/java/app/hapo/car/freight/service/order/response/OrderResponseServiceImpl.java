@@ -21,7 +21,7 @@ public class OrderResponseServiceImpl implements OrderResponseService {
     OrderResponseRepository orderResponseRepository;
 
     @Override
-    public Optional<OrderResponse> findByOrderId(Long orderId) {
+    public List<OrderResponse> findByOrderId(Long orderId) {
         return orderResponseRepository.findByOrderId(orderId);
     }
 
