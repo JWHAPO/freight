@@ -56,6 +56,16 @@ public class OrderResponseController {
                 linkTo(methodOn(OrderResponseController.class).findByOrderId(id)).withSelfRel());
     }
 
+    @GetMapping(value = "/order-responses/user/{id}")
+    public Resources<Resource<OrderResponse>> findByUserId(@PathVariable Long id){
+        List<Resource<OrderResponse>> orderResponses = orderResponseService.findByUserId(id).stream()
+                .map(orderResponseResourceAssembler::toResource)
+                .collect(Collectors.toList());
+
+        return new Resources<>(orderResponses,
+                linkTo(methodOn(OrderResponseController.class).findByUserId(id)).withSelfRel());
+    }
+
     @GetMapping(value = "/order-response/order/{id}/count")
     public Long countByOrderId(@PathVariable Long id){
         return orderResponseService.countByOrderId(id);

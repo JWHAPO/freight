@@ -17,6 +17,7 @@ public interface OrderResponseService {
      * @return
      */
     List<OrderResponse> findByOrderId(Long orderId);
+    List<OrderResponse> findByUserId(Long userId);
 
     /**
      * 전체 응답리스트

@@ -26,6 +26,11 @@ public class OrderResponseServiceImpl implements OrderResponseService {
     }
 
     @Override
+    public List<OrderResponse> findByUserId(Long userId) {
+        return orderResponseRepository.findByUserId(userId);
+    }
+
+    @Override
     public List<OrderResponse> findAll() {
         return orderResponseRepository.findAll();
     }
