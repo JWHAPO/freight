@@ -1,5 +1,6 @@
 package app.hapo.car.freight.domain.order;
 
+import app.hapo.car.freight.domain.order.response.OrderResponse;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * freight
@@ -62,6 +64,9 @@ public class Order {
 
     @Column(name = "cancel_remark")
     private String cancelRemark;
+    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="order_id")
+    private List<OrderResponse> orderResponses;
 
     @CreationTimestamp
     @Column(name = "created_time_at")
@@ -72,7 +77,7 @@ public class Order {
     private LocalDateTime updatedTimeAt;
 
     @Builder
-    public Order(String description, Long carId, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hope_price, String isMixed, String remark, OrderStatus status, String cancelRemark) {
+    public Order(String description, Long carId, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hope_price, String isMixed, String remark, OrderStatus status, String cancelRemark, List<OrderResponse> orderResponses) {
         this.description = description;
         this.carId = carId;
         this.departureAddress = departureAddress;
@@ -85,5 +90,6 @@ public class Order {
         this.remark = remark;
         this.status = status;
         this.cancelRemark = cancelRemark;
+        this.orderResponses = orderResponses;
     }
 }
