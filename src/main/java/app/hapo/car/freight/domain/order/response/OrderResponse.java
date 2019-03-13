@@ -49,7 +49,7 @@ public class OrderResponse {
     @Column(name = "is_selected")
     private String isSelected;
     @ManyToOne
-    @JoinColumn(name = "order_id",  insertable = false, updatable = false )
+    @JoinColumn(name = "order_id")
     private Order order;
     @CreationTimestamp
     @Column(name = "created_time_at")
