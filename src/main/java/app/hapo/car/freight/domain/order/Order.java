@@ -66,7 +66,8 @@ public class Order {
     @Column(name = "cancel_remark")
     private String cancelRemark;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="order_id", referencedColumnName="order_id",  insertable = false, updatable = false)
     private List<OrderResponse> orderResponses;
 
     @CreationTimestamp

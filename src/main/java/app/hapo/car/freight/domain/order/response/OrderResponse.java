@@ -48,9 +48,6 @@ public class OrderResponse {
     private Long resultPoint;
     @Column(name = "is_selected")
     private String isSelected;
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
     @CreationTimestamp
     @Column(name = "created_time_at")
     private LocalDateTime createdTimeAt;
@@ -59,7 +56,7 @@ public class OrderResponse {
     private LocalDateTime updatedTimeAt;
 
     @Builder
-    public OrderResponse(Long orderId, Long userId, LocalDate pickupDate, LocalTime pickupTime, Long suggestedPrice, Long currentAvgPrice, String sellerMessage, String buyerMessage, Long resultPoint, String isSelected, Order order) {
+    public OrderResponse(Long orderId, Long userId, LocalDate pickupDate, LocalTime pickupTime, Long suggestedPrice, Long currentAvgPrice, String sellerMessage, String buyerMessage, Long resultPoint, String isSelected) {
         this.orderId = orderId;
         this.userId = userId;
         this.pickupDate = pickupDate;
@@ -70,6 +67,5 @@ public class OrderResponse {
         this.buyerMessage = buyerMessage;
         this.resultPoint = resultPoint;
         this.isSelected = isSelected;
-        this.order = order;
     }
 }
