@@ -1,5 +1,6 @@
 package app.hapo.car.freight.domain.order.response;
 
+import app.hapo.car.freight.domain.common.AuditModel;
 import app.hapo.car.freight.domain.order.Order;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,7 +23,7 @@ import java.time.LocalTime;
 @Entity
 @Getter
 @Table(name="ta2order_response")
-public class OrderResponse {
+public class OrderResponse extends AuditModel {
     @Id
     @Column(name = "order_response_id")
     @GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -48,12 +49,6 @@ public class OrderResponse {
     private Long resultPoint;
     @Column(name = "is_selected")
     private String isSelected;
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createdTimeAt;
-    @UpdateTimestamp
-    @Column(name = "updated_time_at")
-    private LocalDateTime updatedTimeAt;
 
     @Builder
     public OrderResponse(Long orderId, Long userId, LocalDate pickupDate, LocalTime pickupTime, Long suggestedPrice, Long currentAvgPrice, String sellerMessage, String buyerMessage, Long resultPoint, String isSelected) {

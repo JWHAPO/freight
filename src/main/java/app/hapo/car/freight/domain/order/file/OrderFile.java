@@ -5,6 +5,7 @@ package app.hapo.car.freight.domain.order.file;/*
  */
 
 import app.hapo.car.freight.domain.car.Car;
+import app.hapo.car.freight.domain.common.AuditModel;
 import app.hapo.car.freight.domain.file.File;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="ta2order_file")
-public class OrderFile {
+public class OrderFile extends AuditModel {
 
     @Id
     @Column(name = "order_file_id")
@@ -35,14 +36,6 @@ public class OrderFile {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "file_id", referencedColumnName = "file_id", insertable = false, updatable = false)
     private File file;
-
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createdTimeAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_time_at")
-    private LocalDateTime updatedTimeAt;
 
     @Builder
     public OrderFile(Long orderId, Long fileId, File file) {

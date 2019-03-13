@@ -1,5 +1,6 @@
 package app.hapo.car.freight.domain.order;
 
+import app.hapo.car.freight.domain.common.AuditModel;
 import app.hapo.car.freight.domain.order.response.OrderResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -23,7 +24,7 @@ import java.util.List;
 @Entity
 @Getter
 @Table(name="ta2order")
-public class Order {
+public class Order extends AuditModel {
     @Id
     @Column(name = "order_id")
     @GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -69,14 +70,6 @@ public class Order {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="order_id", referencedColumnName="order_id",  insertable = false, updatable = false)
     private List<OrderResponse> orderResponses;
-
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createdTimeAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_time_at")
-    private LocalDateTime updatedTimeAt;
 
     @Builder
     public Order(String description, Long carId, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hope_price, String isMixed, String remark, OrderStatus status, String cancelRemark, List<OrderResponse> orderResponses) {

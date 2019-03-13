@@ -5,6 +5,7 @@ package app.hapo.car.freight.domain.usercar;/*
  */
 
 import app.hapo.car.freight.domain.car.Car;
+import app.hapo.car.freight.domain.common.AuditModel;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="ta2user_car")
-public class UserCar {
+public class UserCar extends AuditModel {
     @Id
     @Column(name = "user_car_id")
     @GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -32,14 +33,6 @@ public class UserCar {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id", referencedColumnName = "car_id", insertable = false, updatable = false)
     private Car car;
-
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createdTimeAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_time_at")
-    private LocalDateTime updatedTimeAt;
 
     @Builder
     public UserCar(Long userId, Long carId, Car car) {

@@ -1,5 +1,6 @@
 package app.hapo.car.freight.domain.user;
 
+import app.hapo.car.freight.domain.common.AuditModel;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="ta2user_role")
-public class UserRole {
+public class UserRole extends AuditModel {
     @Id
     @Column(name = "user_role_id")
     @GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -26,10 +27,6 @@ public class UserRole {
 
     @Column(name = "user_id")
     private Long userId;
-
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createdTimeAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role",  updatable=false)

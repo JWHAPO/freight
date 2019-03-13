@@ -4,6 +4,7 @@ package app.hapo.car.freight.domain.car;/*
  * Description : Car DTO
  */
 
+import app.hapo.car.freight.domain.common.AuditModel;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="ta2car")
-public class Car {
+public class Car extends AuditModel {
     @Id
     @Column(name = "car_id")
     @GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -51,14 +52,6 @@ public class Car {
 
     @Column(name = "loadable_weight_uom")
     private String loadableWeightUom;
-
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createdTimeAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_time_at")
-    private LocalDateTime updatedTimeAt;
 
     @Builder
     public Car(Long carNo, String description, Long width, String widthUom, Long length, String lengthUom, Long loadableHeight, String loadableHeightUom, Long loadableWeight, String loadableWeightUom) {

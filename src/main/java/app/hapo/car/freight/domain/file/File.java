@@ -1,5 +1,6 @@
 package app.hapo.car.freight.domain.file;
 
+import app.hapo.car.freight.domain.common.AuditModel;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="ta2file")
-public class File {
+public class File extends AuditModel {
     @Id
     @Column(name = "file_id")
     @GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -38,14 +39,6 @@ public class File {
 
     @Column(name = "content_type")
     private String contentType;
-
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createdTimeAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_time_at")
-    private LocalDateTime updatedTimeAt;
 
     @Builder
     public File(String fileName, String fileExt, Long fileSize, String downloadUri, String contentType) {

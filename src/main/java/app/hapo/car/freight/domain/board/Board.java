@@ -4,6 +4,7 @@ package app.hapo.car.freight.domain.board;/*
  * Description : Board DTO
  */
 
+import app.hapo.car.freight.domain.common.AuditModel;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="ta2board")
-public class Board {
+public class Board extends AuditModel {
 
     @Id
     @Column(name = "board_id")
@@ -47,14 +48,6 @@ public class Board {
 
     @Column(name = "is_secret")
     private String isSecret;
-
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createTimeAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_time_at")
-    private LocalDateTime updatedTimeAt;
 
     @Builder
     public Board(Long groupId, Long parentBoardId, Long userId, BoardType boardType, String title, String contents, Long hist, String isSecret) {

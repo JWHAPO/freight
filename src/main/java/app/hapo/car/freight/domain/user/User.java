@@ -4,6 +4,7 @@ package app.hapo.car.freight.domain.user;/*
  * Description :
  */
 
+import app.hapo.car.freight.domain.common.AuditModel;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="ta2user")
-public class User {
+public class User extends AuditModel {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -46,14 +47,6 @@ public class User {
 
     @Column(name = "level_id")
     private Long levelId;
-
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createdTimeAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_time_at")
-    private LocalDateTime updatedTimeAt;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="user_id", referencedColumnName="user_id",  insertable = false, updatable = false)

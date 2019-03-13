@@ -118,7 +118,8 @@ create table ta2user_role(
      user_role_id int primary key auto_increment,
      user_id int not null,
      role varchar(20) not null,
-     created_time_at timestamp);
+     created_time_at timestamp,
+     updated_time_at timestamp);
 
      /** ta2order_response 생성 */
 drop table  if exists ta2order_response;

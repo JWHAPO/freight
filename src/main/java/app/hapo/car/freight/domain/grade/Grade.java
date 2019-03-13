@@ -4,6 +4,7 @@ package app.hapo.car.freight.domain.grade;/*
  * Description : Grade
  */
 
+import app.hapo.car.freight.domain.common.AuditModel;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="ta2grade")
-public class Grade {
+public class Grade extends AuditModel {
     @Id
     @Column(name="grade_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +31,6 @@ public class Grade {
 
     @Column(name = "to_exp")
     private Long toExp;
-
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createdTimeAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_time_at")
-    private LocalDateTime updatedTimeAt;
 
     @Builder
     public Grade(Long gradeNo, Long fromExp, Long toExp) {

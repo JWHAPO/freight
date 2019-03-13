@@ -1,5 +1,6 @@
 package app.hapo.car.freight.domain.auth.email;
 
+import app.hapo.car.freight.domain.common.AuditModel;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "ta2email_auth")
-public class EmailAuth {
+public class EmailAuth extends AuditModel {
     @Id
     @Column(name = "email_auth_id")
     @GeneratedValue(strategy = GenerationType. IDENTITY)
@@ -38,14 +39,6 @@ public class EmailAuth {
 
     @Column(name = "is_auth")
     private String isAuth;
-
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createdTimeAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_time_at")
-    private LocalDateTime updatedTimeAt;
 
     @Builder
     public EmailAuth(Long userId, String email, String authKey, LocalDateTime expiredDate, String isAuth) {

@@ -4,6 +4,7 @@ package app.hapo.car.freight.domain.notice;/*
  * Description :공지사항
  */
 
+import app.hapo.car.freight.domain.common.AuditModel;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "ta2notice")
-public class Notice {
+public class Notice extends AuditModel {
     @Id
     @Column(name = "notice_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,14 +34,6 @@ public class Notice {
 
     @Column(name = "hits")
     private Long hits;
-
-    @CreationTimestamp
-    @Column(name = "created_time_at")
-    private LocalDateTime createdTimeAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_time_at")
-    private LocalDateTime updatedTimeAt;
 
     @Builder
     public Notice(Long userId, String title, String contents, Long hits) {
