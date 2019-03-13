@@ -1,6 +1,7 @@
 package app.hapo.car.freight.domain.order;
 
 import app.hapo.car.freight.domain.order.response.OrderResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -64,8 +65,10 @@ public class Order {
 
     @Column(name = "cancel_remark")
     private String cancelRemark;
-    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="order_id")
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="order_id", referencedColumnName="order_id",  insertable = false, updatable = false)
     private List<OrderResponse> orderResponses;
 
     @CreationTimestamp

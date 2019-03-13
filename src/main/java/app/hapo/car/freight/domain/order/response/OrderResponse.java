@@ -1,5 +1,6 @@
 package app.hapo.car.freight.domain.order.response;
 
+import app.hapo.car.freight.domain.order.Order;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * freight
@@ -33,7 +35,7 @@ public class OrderResponse {
     @Column(name = "pickup_date")
     private LocalDate pickupDate;
     @Column(name = "pickup_time")
-    private LocalDate pickupTime;
+    private LocalTime pickupTime;
     @Column(name = "suggested_price")
     private Long suggestedPrice;
     @Column(name = "current_avg_price")
@@ -46,6 +48,9 @@ public class OrderResponse {
     private Long resultPoint;
     @Column(name = "is_selected")
     private String isSelected;
+    @ManyToOne
+    @JoinColumn(name = "order_id",  insertable = false, updatable = false )
+    private Order order;
     @CreationTimestamp
     @Column(name = "created_time_at")
     private LocalDateTime createdTimeAt;
@@ -54,7 +59,7 @@ public class OrderResponse {
     private LocalDateTime updatedTimeAt;
 
     @Builder
-    public OrderResponse(Long orderId, Long userId, LocalDate pickupDate, LocalDate pickupTime, Long suggestedPrice, Long currentAvgPrice, String sellerMessage, String buyerMessage, Long resultPoint, String isSelected) {
+    public OrderResponse(Long orderId, Long userId, LocalDate pickupDate, LocalTime pickupTime, Long suggestedPrice, Long currentAvgPrice, String sellerMessage, String buyerMessage, Long resultPoint, String isSelected, Order order) {
         this.orderId = orderId;
         this.userId = userId;
         this.pickupDate = pickupDate;
@@ -65,5 +70,6 @@ public class OrderResponse {
         this.buyerMessage = buyerMessage;
         this.resultPoint = resultPoint;
         this.isSelected = isSelected;
+        this.order = order;
     }
 }
