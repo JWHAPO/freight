@@ -44,4 +44,9 @@ public class OrderResponseServiceImpl implements OrderResponseService {
     public Long countByOrderId(Long orderId) {
         return orderResponseRepository.countByOrderId(orderId);
     }
+
+    @Override
+    public Optional<OrderResponse> save(OrderResponse orderResponse) {
+        return Optional.of(orderResponseRepository.save(orderResponse));
+    }
 }

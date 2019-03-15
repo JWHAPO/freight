@@ -37,4 +37,6 @@ public interface OrderResponseService {
      */
     Long countByOrderId(Long orderId);
 
+    Optional<OrderResponse> save(OrderResponse orderResponse);
+
 }
