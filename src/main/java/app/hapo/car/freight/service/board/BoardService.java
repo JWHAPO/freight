@@ -18,4 +18,6 @@ public interface BoardService {
 
     Optional<Board> findById(Long id);
 
+    Optional<Board> save(Board board);
+
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +56,15 @@ public class BoardController {
                 boardService.findById(id)
                 .orElseThrow(()->new BoardNotFoundException(id))
         );
+    }
+
+    @PostMapping(value = "/boards")
+    public ResponseEntity<Resource<Board>> newBoard(@RequestBody Board board){
+        Board newBoard = boardService.save(board).get();
+
+        return ResponseEntity
+                .created(linkTo(methodOn(BoardController.class).findById(newBoard.getBoardId())).toUri())
+                .body(boardResourceAssembler.toResource(newBoard));
     }
 
     class BoardNotFoundException extends RuntimeException{

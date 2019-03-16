@@ -35,4 +35,9 @@ public class BoardServiceImpl implements BoardService {
     public Optional<Board> findById(Long id) {
         return boardRepository.findById(id);
     }
+
+    @Override
+    public Optional<Board> save(Board board) {
+        return Optional.of(boardRepository.save(board));
+    }
 }
