@@ -20,4 +20,6 @@ public interface BoardService {
 
     Optional<Board> save(Board board);
 
+    void delete(Board board);
+
 }

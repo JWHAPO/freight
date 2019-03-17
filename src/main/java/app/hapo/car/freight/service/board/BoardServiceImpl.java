@@ -40,4 +40,9 @@ public class BoardServiceImpl implements BoardService {
     public Optional<Board> save(Board board) {
         return Optional.of(boardRepository.save(board));
     }
+
+    @Override
+    public void delete(Board board) {
+        boardRepository.delete(board);
+    }
 }

@@ -9,6 +9,7 @@ import app.hapo.car.freight.domain.board.BoardType;
 import app.hapo.car.freight.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,6 +66,13 @@ public class BoardController {
         return ResponseEntity
                 .created(linkTo(methodOn(BoardController.class).findById(newBoard.getBoardId())).toUri())
                 .body(boardResourceAssembler.toResource(newBoard));
+    }
+
+    @DeleteMapping(value = "/boards/{id}")
+    public ResponseEntity<ResourceSupport> delete(@PathVariable Long id){
+        Board board = boardService.findById(id).orElseThrow(() -> new BoardNotFoundException(id));
+        boardService.delete(board);
+        return ResponseEntity.noContent().build();
     }
 
     class BoardNotFoundException extends RuntimeException{
