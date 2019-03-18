@@ -5,13 +5,18 @@ package app.hapo.car.freight.api.car;/*
  */
 
 import app.hapo.car.freight.domain.car.Car;
-import app.hapo.car.freight.domain.user.User;
 import app.hapo.car.freight.service.car.CarService;
-import app.hapo.car.freight.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -20,9 +25,41 @@ public class CarController {
     @Autowired
     CarService carService;
 
+    @Autowired
+    CarResourceAssembler carResourceAssembler;
+
     @GetMapping(value = "/cars")
-    public List<Car> findAll(){
-        List<Car> cars = carService.findAll();
-        return cars;
+    public Resources<Resource<Car>> findAll(){
+        List<Resource<Car>> cars = carService.findAll().stream()
+                .map(carResourceAssembler::toResource)
+                .collect(Collectors.toList());
+
+        return new Resources<>(cars,
+                linkTo(methodOn(CarController.class).findAll()).withSelfRel());
+    }
+
+    @GetMapping(value = "/cars/{id}")
+    public Resource<Car> findById(@PathVariable Long id){
+        return carResourceAssembler.toResource(
+                carService.findById(id).orElseThrow(()->new CarNotFoundException(id))
+        );
+    }
+
+    class CarNotFoundException extends RuntimeException{
+
+        public CarNotFoundException(Long id) {
+            super("Could not find Car " + id);
+        }
+    }
+
+    @ControllerAdvice
+    class CarNotFoundExceptionAdvice {
+
+        @ResponseBody
+        @ExceptionHandler(CarNotFoundException.class)
+        @ResponseStatus(HttpStatus.NOT_FOUND)
+        String carNotFoundHandler(CarNotFoundException ex) {
+            return ex.getMessage();
+        }
     }
 }

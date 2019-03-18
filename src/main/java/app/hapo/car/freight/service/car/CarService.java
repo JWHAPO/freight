@@ -7,8 +7,12 @@ package app.hapo.car.freight.service.car;/*
 import app.hapo.car.freight.domain.car.Car;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CarService {
 
     List<Car> findAll();
+
+    Optional<Car> findById(Long id);
+
 }
