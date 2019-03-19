@@ -72,10 +72,11 @@ public class OrderController {
                 .body(orderResourceAssembler.toResource(newOrder));
     }
 
-    @DeleteMapping("/orders/{id}/cancel")
-    public ResponseEntity<ResourceSupport> cancel(@PathVariable Long id){
+    @DeleteMapping("/orders/{id}/cancel/{message}")
+    public ResponseEntity<ResourceSupport> cancel(@PathVariable Long id, @PathVariable String message){
         Order order = orderService.findById(id).orElseThrow(()->new OrderNotFoundException(id));
 
+        order.setCancelRemark(message);
         if(order.getStatus() == OrderStatus.IN_PROGRESS){
             order.setStatus(OrderStatus.CANCELLED);
             return ResponseEntity.ok(orderResourceAssembler.toResource(orderService.save(order).get()));
