@@ -4,6 +4,10 @@ import app.hapo.car.freight.domain.order.Order;
 import app.hapo.car.freight.domain.order.OrderRepository;
 import app.hapo.car.freight.domain.order.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +27,12 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Override
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    public Page<Order> findAll() {
+        Pageable pageable = PageRequest.of(0,10, new Sort(Sort.Direction.DESC,"orderId"));
+        Page<Order> orderPage = orderRepository.findAll(pageable);
+
+
+        return orderPage;
     }
 
     @Override
