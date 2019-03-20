@@ -6,13 +6,14 @@ package app.hapo.car.freight.service.board;/*
 
 import app.hapo.car.freight.domain.board.Board;
 import app.hapo.car.freight.domain.board.BoardType;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface BoardService {
 
-    List<Board> findByBoardType(BoardType boardType);
+    Page<Board> findByBoardType(BoardType boardType);
 
     List<Board> findByGroupId(Long groupId);
 

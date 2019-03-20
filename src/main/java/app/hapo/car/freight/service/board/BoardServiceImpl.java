@@ -8,6 +8,10 @@ import app.hapo.car.freight.domain.board.Board;
 import app.hapo.car.freight.domain.board.BoardRepository;
 import app.hapo.car.freight.domain.board.BoardType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +26,11 @@ public class BoardServiceImpl implements BoardService {
     BoardRepository boardRepository;
 
     @Override
-    public List<Board> findByBoardType(BoardType boardType) {
-        return boardRepository.findByBoardType(boardType);
+    public Page<Board> findByBoardType(BoardType boardType) {
+
+        Pageable pageable = PageRequest.of(0,10, new Sort(Sort.Direction.DESC,"orderId"));
+        Page<Board> boardPage = boardRepository.findByBoardType(boardType,pageable);
+        return boardPage;
     }
 
     @Override

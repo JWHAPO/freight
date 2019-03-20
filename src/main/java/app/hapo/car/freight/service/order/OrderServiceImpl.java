@@ -30,8 +30,6 @@ public class OrderServiceImpl implements OrderService {
     public Page<Order> findAll() {
         Pageable pageable = PageRequest.of(0,10, new Sort(Sort.Direction.DESC,"orderId"));
         Page<Order> orderPage = orderRepository.findAll(pageable);
-
-
         return orderPage;
     }
 
