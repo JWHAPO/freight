@@ -1,9 +1,11 @@
 package app.hapo.car.freight.api.order;
 
+import app.hapo.car.freight.common.pagerequest.PageRequest;
 import app.hapo.car.freight.domain.order.Order;
 import app.hapo.car.freight.domain.order.OrderStatus;
 import app.hapo.car.freight.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.Resources;
@@ -35,13 +37,13 @@ public class OrderController {
     OrderResourceAssembler orderResourceAssembler;
 
     @GetMapping(value = "/orders")
-    public Resources<Resource<Order>> all(){
-        List<Resource<Order>> orders = orderService.findAll().stream()
+    public Resources<Resource<Order>> all(Pageable pageable){
+        List<Resource<Order>> orders = orderService.findAll(pageable).stream()
                 .map(orderResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(orders,
-                linkTo(methodOn(OrderController.class).all()).withSelfRel());
+                linkTo(methodOn(OrderController.class).all(pageable)).withSelfRel());
     }
 
     @GetMapping(value = "/orders/{id}")

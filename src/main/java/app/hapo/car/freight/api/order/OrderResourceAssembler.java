@@ -20,8 +20,8 @@ public class OrderResourceAssembler implements ResourceAssembler<Order, Resource
     @Override
     public Resource<Order> toResource(Order order) {
         Resource<Order> orderResource =  new Resource<>(order,
-                linkTo(methodOn(OrderController.class).findById(order.getOrderId())).withSelfRel(),
-                linkTo(methodOn(OrderController.class).all()).withRel("orders"));
+                linkTo(methodOn(OrderController.class).findById(order.getOrderId())).withSelfRel()
+        );
 
         // Conditional links based on state of the order
         if(order.getStatus() == OrderStatus.IN_PROGRESS){

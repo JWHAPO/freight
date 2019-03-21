@@ -26,11 +26,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+
     @Override
-    public Page<Order> findAll() {
-        Pageable pageable = PageRequest.of(0,10, new Sort(Sort.Direction.DESC,"orderId"));
-        Page<Order> orderPage = orderRepository.findAll(pageable);
-        return orderPage;
+    public Page<Order> findAll(Pageable pageable) {
+
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),new Sort(Sort.Direction.DESC,"orderId"));
+        return orderRepository.findAll(pageRequest);
     }
 
     @Override
