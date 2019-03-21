@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Page<Order> findAll(Pageable pageable) {
 
-        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),new Sort(Sort.Direction.DESC,"orderId"));
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort());
         return orderRepository.findAll(pageRequest);
     }
 
