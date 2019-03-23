@@ -4,6 +4,7 @@ import app.hapo.car.freight.domain.order.Order;
 import app.hapo.car.freight.domain.order.OrderStatus;
 import app.hapo.car.freight.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceSupport;
@@ -59,8 +60,8 @@ public class OrderController {
     }
 
     @GetMapping(value = "/orders/status/{status}")
-    public List<Order> findByStatus(@PathVariable OrderStatus status){
-        return orderService.findByStatus(status);
+    public Page<Order> findByStatus(@PathVariable OrderStatus status, Pageable pageable){
+        return orderService.findByStatus(status,pageable);
     }
 
     @PostMapping(value = "/orders")

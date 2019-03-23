@@ -50,7 +50,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findByStatus(OrderStatus status) {
-        return orderRepository.findByStatus(status);
+    public Page<Order> findByStatus(OrderStatus status, Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort());
+        return orderRepository.findByStatus(status, pageRequest);
     }
 }
