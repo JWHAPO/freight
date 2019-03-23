@@ -7,6 +7,7 @@ package app.hapo.car.freight.api.order.response;/*
 import app.hapo.car.freight.domain.order.response.OrderResponse;
 import app.hapo.car.freight.service.order.response.OrderResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
@@ -30,13 +31,13 @@ public class OrderResponseController {
     OrderResponseResourceAssembler orderResponseResourceAssembler;
 
     @GetMapping(value = "/order-responses")
-    public Resources<Resource<OrderResponse>> findAll(){
-        List<Resource<OrderResponse>> orderResponses = orderResponseService.findAll().stream()
+    public Resources<Resource<OrderResponse>> findAll(Pageable pageable){
+        List<Resource<OrderResponse>> orderResponses = orderResponseService.findAll(pageable).stream()
                 .map(orderResponseResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(orderResponses,
-                linkTo(methodOn(OrderResponseController.class).findAll()).withSelfRel());
+                linkTo(methodOn(OrderResponseController.class).findAll(pageable)).withSelfRel());
     }
 
     @GetMapping(value = "/order-responses/{id}")
@@ -48,23 +49,23 @@ public class OrderResponseController {
     }
 
     @GetMapping(value = "/order-responses/order/{id}")
-    public Resources<Resource<OrderResponse>> findByOrderId(@PathVariable Long id){
-        List<Resource<OrderResponse>> orderResponses = orderResponseService.findByOrderId(id).stream()
+    public Resources<Resource<OrderResponse>> findByOrderId(@PathVariable Long id,Pageable pageable){
+        List<Resource<OrderResponse>> orderResponses = orderResponseService.findByOrderId(id,pageable).stream()
                 .map(orderResponseResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(orderResponses,
-                linkTo(methodOn(OrderResponseController.class).findByOrderId(id)).withSelfRel());
+                linkTo(methodOn(OrderResponseController.class).findByOrderId(id,pageable)).withSelfRel());
     }
 
     @GetMapping(value = "/order-responses/user/{id}")
-    public Resources<Resource<OrderResponse>> findByUserId(@PathVariable Long id){
-        List<Resource<OrderResponse>> orderResponses = orderResponseService.findByUserId(id).stream()
+    public Resources<Resource<OrderResponse>> findByUserId(@PathVariable Long id,Pageable pageable){
+        List<Resource<OrderResponse>> orderResponses = orderResponseService.findByUserId(id,pageable).stream()
                 .map(orderResponseResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(orderResponses,
-                linkTo(methodOn(OrderResponseController.class).findByUserId(id)).withSelfRel());
+                linkTo(methodOn(OrderResponseController.class).findByUserId(id,pageable)).withSelfRel());
     }
 
     @GetMapping(value = "/order-response/order/{id}/count")

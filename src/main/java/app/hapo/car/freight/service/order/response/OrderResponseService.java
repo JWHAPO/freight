@@ -5,8 +5,9 @@ package app.hapo.car.freight.service.order.response;/*
  */
 
 import app.hapo.car.freight.domain.order.response.OrderResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface OrderResponseService {
@@ -16,14 +17,14 @@ public interface OrderResponseService {
      * * @param orderId
      * @return
      */
-    List<OrderResponse> findByOrderId(Long orderId);
-    List<OrderResponse> findByUserId(Long userId);
+    Page<OrderResponse> findByOrderId(Long orderId, Pageable pageable);
+    Page<OrderResponse> findByUserId(Long userId, Pageable pageable);
 
     /**
      * 전체 응답리스트
      * @return
      */
-    List<OrderResponse> findAll();
+    Page<OrderResponse> findAll(Pageable pageable);
 
     /**
      * id로 응답데이터 검색

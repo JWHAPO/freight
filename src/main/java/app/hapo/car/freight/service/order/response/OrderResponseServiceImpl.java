@@ -7,6 +7,9 @@ package app.hapo.car.freight.service.order.response;/*
 import app.hapo.car.freight.domain.order.response.OrderResponse;
 import app.hapo.car.freight.domain.order.response.OrderResponseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,18 +24,24 @@ public class OrderResponseServiceImpl implements OrderResponseService {
     OrderResponseRepository orderResponseRepository;
 
     @Override
-    public List<OrderResponse> findByOrderId(Long orderId) {
-        return orderResponseRepository.findByOrderId(orderId);
+    public Page<OrderResponse> findByOrderId(Long orderId, Pageable pageable) {
+        PageRequest pageRequest =
+                PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort());
+        return orderResponseRepository.findByOrderId(orderId, pageRequest);
     }
 
     @Override
-    public List<OrderResponse> findByUserId(Long userId) {
-        return orderResponseRepository.findByUserId(userId);
+    public Page<OrderResponse> findByUserId(Long userId, Pageable pageable) {
+        PageRequest pageRequest =
+                PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort());
+        return orderResponseRepository.findByUserId(userId, pageRequest);
     }
 
     @Override
-    public List<OrderResponse> findAll() {
-        return orderResponseRepository.findAll();
+    public Page<OrderResponse> findAll(Pageable pageable) {
+        PageRequest pageRequest =
+                PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort());
+        return orderResponseRepository.findAll(pageRequest);
     }
 
     @Override

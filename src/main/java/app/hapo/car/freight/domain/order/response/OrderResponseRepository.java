@@ -4,15 +4,17 @@ package app.hapo.car.freight.domain.order.response;/*
  * Description : 주문에 대한 응답 repository
  */
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public interface OrderResponseRepository extends JpaRepository<OrderResponse,Long> {
 
-    List<OrderResponse> findByOrderId(Long orderId);
+    Page<OrderResponse> findByOrderId(Long orderId, Pageable pageable);
 
-    List<OrderResponse> findByUserId(Long userId);
+    Page<OrderResponse> findByUserId(Long userId, Pageable pageable);
 
     Long countByOrderId(Long orderId);
 

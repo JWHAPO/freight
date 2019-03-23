@@ -18,7 +18,7 @@ public class OrderResponseResourceAssembler implements ResourceAssembler<OrderRe
     @Override
     public Resource<OrderResponse> toResource(OrderResponse orderResponse) {
         return new Resource<>(orderResponse,
-                linkTo(methodOn(OrderResponseController.class).findById(orderResponse.getOrderResponseId())).withSelfRel(),
-                linkTo(methodOn(OrderResponseController.class).findAll()).withRel("responses"));
+                linkTo(methodOn(OrderResponseController.class).findById(orderResponse.getOrderResponseId())).withSelfRel()
+        );
     }
 }
