@@ -2,6 +2,7 @@ package app.hapo.car.freight.service.usercar;
 
 import app.hapo.car.freight.domain.usercar.UserCar;
 import app.hapo.car.freight.domain.usercar.UserCarRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +19,8 @@ import java.util.List;
 @Transactional
 public class UserCarServiceImpl implements UserCarService{
 
+    @Autowired
     private UserCarRepository userCarRepository;
-
-    public UserCarServiceImpl(UserCarRepository userCarRepository) {
-        this.userCarRepository = userCarRepository;
-    }
 
     @Override
     public UserCar createUserCar(UserCar userCar) {

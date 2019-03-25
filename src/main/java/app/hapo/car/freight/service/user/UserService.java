@@ -5,6 +5,8 @@ package app.hapo.car.freight.service.user;/*
  */
 
 import app.hapo.car.freight.domain.user.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +15,7 @@ public interface UserService {
     Optional<User> findByEmailAndPassword(String email, String password);
     Optional<User> findById(Long id);
     Optional<User> findByEmail(String email);
-    List<User> findAll();
+    Page<User> findAll(Pageable pageable);
     Optional<User> save(User user);
     void delete(User user);
 

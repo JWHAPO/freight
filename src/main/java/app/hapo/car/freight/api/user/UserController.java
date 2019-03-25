@@ -9,6 +9,7 @@ import app.hapo.car.freight.domain.usercar.UserCar;
 import app.hapo.car.freight.service.user.UserService;
 import app.hapo.car.freight.service.usercar.UserCarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
@@ -36,13 +37,13 @@ public class UserController {
     UserResourceAssembler userResourceAssembler;
 
     @GetMapping(value = "/users")
-    public Resources<Resource<User>> all(){
-        List<Resource<User>> users = userService.findAll().stream()
+    public Resources<Resource<User>> all(Pageable pageable){
+        List<Resource<User>> users = userService.findAll(pageable).stream()
                                      .map(userResourceAssembler::toResource)
                                      .collect(Collectors.toList());
 
         return new Resources<>(users,
-                linkTo(methodOn(UserController.class).all()).withSelfRel());
+                linkTo(methodOn(UserController.class).all(pageable)).withSelfRel());
     }
 
     @PostMapping(value = "/users")
