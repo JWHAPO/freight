@@ -15,6 +15,7 @@ public interface UserService {
     Optional<User> findByEmailAndPassword(String email, String password);
     Optional<User> findById(Long id);
     Optional<User> findByEmail(String email);
+    Optional<User> findByEmailHavingAuth(String email);
     Page<User> findAll(Pageable pageable);
     Optional<User> save(User user);
     void delete(User user);

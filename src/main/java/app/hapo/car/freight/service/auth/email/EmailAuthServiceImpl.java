@@ -2,6 +2,7 @@ package app.hapo.car.freight.service.auth.email;
 
 import app.hapo.car.freight.domain.auth.email.EmailAuth;
 import app.hapo.car.freight.domain.auth.email.EmailAuthRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,15 +19,17 @@ import java.util.Optional;
 @Transactional
 public class EmailAuthServiceImpl implements EmailAuthService {
 
+    @Autowired
     private EmailAuthRepository emailAuthRepository;
-
-    public EmailAuthServiceImpl(EmailAuthRepository emailAuthRepository) {
-        this.emailAuthRepository = emailAuthRepository;
-    }
 
     @Override
     public Optional<EmailAuth> findByEmail(String email) {
         return emailAuthRepository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<EmailAuth> findByEmailAndIsAuth(String email, String isAuth) {
+        return emailAuthRepository.findByEmailAndIsAuth(email,isAuth);
     }
 
     @Override

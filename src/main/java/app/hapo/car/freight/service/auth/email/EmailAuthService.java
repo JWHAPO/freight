@@ -12,6 +12,7 @@ import java.util.Optional;
  */
 public interface EmailAuthService {
     Optional<EmailAuth> findByEmail(String email);
+    Optional<EmailAuth> findByEmailAndIsAuth(String email, String isAuth);
     Optional<EmailAuth> findByUserId(Long id);
     Optional<EmailAuth> findByEmailAndAuthKey(String email, String authKey);
     Optional<EmailAuth> save(EmailAuth emailAuth);

@@ -65,7 +65,7 @@ public class TokenController {
         }
 
         String subject = refreshToken.getSubject();
-        User user = userService.findByEmail(subject).orElseThrow(() -> new UsernameNotFoundException("User not found: " + subject));
+        User user = userService.findByEmailHavingAuth(subject).orElseThrow(() -> new UsernameNotFoundException("User not found: " + subject));
 
         if(user.getRoles() == null) throw new InsufficientAuthenticationException("User has no roles assigned");
         List<GrantedAuthority> authorities = user.getRoles().stream()

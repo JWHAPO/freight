@@ -53,6 +53,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findByEmailHavingAuth(String email) {
+        Optional<EmailAuth> checkedAuth = emailAuthService.findByEmailAndIsAuth(email,"Y");
+        Optional<User> checkedUser = findByEmail(email);
+
+        if(checkedAuth.isPresent()) return checkedUser;
+        else return Optional.empty();
+    }
+
+    @Override
     public Page<User> findAll(Pageable pageable) {
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort());
         return userRepository.findAll(pageRequest);

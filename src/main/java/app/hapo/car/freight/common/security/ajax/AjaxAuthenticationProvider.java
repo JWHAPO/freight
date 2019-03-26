@@ -43,7 +43,7 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
         String email = (String)authentication.getPrincipal();
         String password = (String)authentication.getCredentials();
 
-        User user = userService.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found : "+email));
+        User user = userService.findByEmailHavingAuth(email).orElseThrow(() -> new UsernameNotFoundException("User not found : "+email));
 
         if(!password.equals(user.getPassword())){
             throw new BadCredentialsException("Authentication Failed. Email or Password not valid.");
