@@ -7,15 +7,16 @@ package app.hapo.car.freight.service.board;/*
 import app.hapo.car.freight.domain.board.Board;
 import app.hapo.car.freight.domain.board.BoardType;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface BoardService {
 
-    Page<Board> findByBoardType(BoardType boardType);
+    Page<Board> findByBoardType(BoardType boardType, Pageable pageable);
 
-    List<Board> findByGroupId(Long groupId);
+    Page<Board> findByGroupId(Long groupId, Pageable pageable);
 
     Optional<Board> findById(Long id);
 

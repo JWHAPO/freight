@@ -8,6 +8,7 @@ import app.hapo.car.freight.domain.board.Board;
 import app.hapo.car.freight.domain.board.BoardType;
 import app.hapo.car.freight.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.Resources;
@@ -32,23 +33,23 @@ public class BoardController {
     BoardResourceAssembler boardResourceAssembler;
 
     @GetMapping(value = "/boards/questions")
-    public Resources<Resource<Board>> findQuestions(){
-        List<Resource<Board>> questions = boardService.findByBoardType(BoardType.QUESTION).stream()
+    public Resources<Resource<Board>> findQuestions(Pageable pageable){
+        List<Resource<Board>> questions = boardService.findByBoardType(BoardType.QUESTION,pageable).stream()
                 .map(boardResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(questions,
-                linkTo(methodOn(BoardController.class).findQuestions()).withSelfRel());
+                linkTo(methodOn(BoardController.class).findQuestions(pageable)).withSelfRel());
     }
 
     @GetMapping(value = "/boards/group/{id}")
-    public Resources<Resource<Board>> findByGroupId(@PathVariable Long groupId){
-        List<Resource<Board>> boardsByGroupId = boardService.findByGroupId(groupId).stream()
+    public Resources<Resource<Board>> findByGroupId(@PathVariable Long groupId,Pageable pageable){
+        List<Resource<Board>> boardsByGroupId = boardService.findByGroupId(groupId,pageable).stream()
                 .map(boardResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(boardsByGroupId,
-                linkTo(methodOn(BoardController.class).findByGroupId(groupId)).withSelfRel());
+                linkTo(methodOn(BoardController.class).findByGroupId(groupId,pageable)).withSelfRel());
     }
 
     @GetMapping(value = "/boards/{id}")

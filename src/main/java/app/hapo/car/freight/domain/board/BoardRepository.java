@@ -14,5 +14,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     Page<Board> findByBoardType(BoardType boardType, Pageable pageable);
 
-    List<Board> findByGroupId(Long groupId);
+    Page<Board> findByGroupId(Long groupId, Pageable pageable);
 }

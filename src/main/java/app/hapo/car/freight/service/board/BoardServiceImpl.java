@@ -26,16 +26,15 @@ public class BoardServiceImpl implements BoardService {
     BoardRepository boardRepository;
 
     @Override
-    public Page<Board> findByBoardType(BoardType boardType) {
-
-        Pageable pageable = PageRequest.of(0,10, new Sort(Sort.Direction.DESC,"orderId"));
-        Page<Board> boardPage = boardRepository.findByBoardType(boardType,pageable);
-        return boardPage;
+    public Page<Board> findByBoardType(BoardType boardType, Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort());
+        return boardRepository.findByBoardType(boardType,pageRequest);
     }
 
     @Override
-    public List<Board> findByGroupId(Long groupId) {
-        return boardRepository.findByGroupId(groupId);
+    public Page<Board> findByGroupId(Long groupId, Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort());
+        return boardRepository.findByGroupId(groupId,pageRequest);
     }
 
     @Override
