@@ -44,20 +44,20 @@ public class Board extends AuditModel {
     private String contents;
 
     @Column(name = "hits")
-    private Long hist;
+    private Long hits;
 
     @Column(name = "is_secret")
     private String isSecret;
 
     @Builder
-    public Board(Long groupId, Long parentBoardId, Long userId, BoardType boardType, String title, String contents, Long hist, String isSecret) {
+    public Board(Long groupId, Long parentBoardId, Long userId, BoardType boardType, String title, String contents, Long hits, String isSecret) {
         this.groupId = groupId;
         this.parentBoardId = parentBoardId;
         this.userId = userId;
         this.boardType = boardType;
         this.title = title;
         this.contents = contents;
-        this.hist = hist;
+        this.hits = hits;
         this.isSecret = isSecret;
     }
 }
