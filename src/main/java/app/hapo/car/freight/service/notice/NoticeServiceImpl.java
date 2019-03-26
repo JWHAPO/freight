@@ -7,10 +7,12 @@ package app.hapo.car.freight.service.notice;/*
 import app.hapo.car.freight.domain.notice.Notice;
 import app.hapo.car.freight.domain.notice.NoticeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,8 +24,9 @@ public class NoticeServiceImpl implements NoticeService {
     NoticeRepository noticeRepository;
 
     @Override
-    public List<Notice> findAll() {
-        return noticeRepository.findAll();
+    public Page<Notice> findAll(Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort());
+        return noticeRepository.findAll(pageRequest);
     }
 
     @Override

@@ -7,6 +7,7 @@ package app.hapo.car.freight.api.grade;/*
 import app.hapo.car.freight.domain.grade.Grade;
 import app.hapo.car.freight.service.grade.GradeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
@@ -28,13 +29,13 @@ public class GradeController {
     GradeResourceAssembler gradeResourceAssembler;
 
     @GetMapping(value = "/grades")
-    public Resources<Resource<Grade>> findAll(){
-        List<Resource<Grade>> grades = gradeService.findAll().stream()
+    public Resources<Resource<Grade>> findAll(Pageable pageable){
+        List<Resource<Grade>> grades = gradeService.findAll(pageable).stream()
                 .map(gradeResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(grades,
-                linkTo(methodOn(GradeController.class).findAll()).withSelfRel());
+                linkTo(methodOn(GradeController.class).findAll(pageable)).withSelfRel());
     }
 
     @GetMapping(value = "/grades/{id}")

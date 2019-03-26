@@ -7,6 +7,7 @@ package app.hapo.car.freight.api.order.file;/*
 import app.hapo.car.freight.domain.order.file.OrderFile;
 import app.hapo.car.freight.service.order.file.OrderFileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
@@ -29,13 +30,13 @@ public class OrderFileController {
     OrderFileResourceAssembler orderFileResourceAssembler;
 
     @GetMapping(value = "/order-files")
-    public Resources<Resource<OrderFile>> findAll(){
-        List<Resource<OrderFile>> orderFiles = orderFileService.findAll().stream()
+    public Resources<Resource<OrderFile>> findAll(Pageable pageable){
+        List<Resource<OrderFile>> orderFiles = orderFileService.findAll(pageable).stream()
                 .map(orderFileResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(orderFiles,
-                linkTo(methodOn(OrderFileController.class).findAll()).withSelfRel());
+                linkTo(methodOn(OrderFileController.class).findAll(pageable)).withSelfRel());
     }
 
     @GetMapping(value = "/order-files/{id}")
@@ -47,13 +48,13 @@ public class OrderFileController {
     }
 
     @GetMapping(value = "/order-files/order/{id}")
-    public Resources<Resource<OrderFile>> findByOrderId(@PathVariable Long id){
-        List<Resource<OrderFile>> orderFiles = orderFileService.findByOrderId(id).stream()
+    public Resources<Resource<OrderFile>> findByOrderId(@PathVariable Long id, Pageable pageable){
+        List<Resource<OrderFile>> orderFiles = orderFileService.findByOrderId(id,pageable).stream()
                 .map(orderFileResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(orderFiles,
-                linkTo(methodOn(OrderFileController.class).findByOrderId(id)).withSelfRel());
+                linkTo(methodOn(OrderFileController.class).findByOrderId(id,pageable)).withSelfRel());
     }
 
     class OrderFileNotFoundException extends RuntimeException{

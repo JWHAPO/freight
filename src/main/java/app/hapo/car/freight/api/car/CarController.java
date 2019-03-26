@@ -7,6 +7,7 @@ package app.hapo.car.freight.api.car;/*
 import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.service.car.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
@@ -29,13 +30,13 @@ public class CarController {
     CarResourceAssembler carResourceAssembler;
 
     @GetMapping(value = "/cars")
-    public Resources<Resource<Car>> findAll(){
-        List<Resource<Car>> cars = carService.findAll().stream()
+    public Resources<Resource<Car>> findAll(Pageable pageable){
+        List<Resource<Car>> cars = carService.findAll(pageable).stream()
                 .map(carResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(cars,
-                linkTo(methodOn(CarController.class).findAll()).withSelfRel());
+                linkTo(methodOn(CarController.class).findAll(pageable)).withSelfRel());
     }
 
     @GetMapping(value = "/cars/{id}")

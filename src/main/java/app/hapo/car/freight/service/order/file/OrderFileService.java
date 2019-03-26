@@ -5,12 +5,13 @@ package app.hapo.car.freight.service.order.file;/*
  */
 
 import app.hapo.car.freight.domain.order.file.OrderFile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface OrderFileService {
-    List<OrderFile> findByOrderId(Long orderId);
+    Page<OrderFile> findByOrderId(Long orderId, Pageable pageable);
     Optional<OrderFile> findById(Long id);
-    List<OrderFile> findAll();
+    Page<OrderFile> findAll(Pageable pageable);
 }

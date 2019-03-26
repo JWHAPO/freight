@@ -17,7 +17,7 @@ public class NoticeResourceAssembler implements ResourceAssembler<Notice, Resour
     @Override
     public Resource<Notice> toResource(Notice notice) {
         return new Resource<>(notice,
-                linkTo(methodOn(NoticeController.class).findById(notice.getNoticeId())).withSelfRel(),
-                linkTo(methodOn(NoticeController.class).findAll()).withRel("notices"));
+                linkTo(methodOn(NoticeController.class).findById(notice.getNoticeId())).withSelfRel()
+        );
     }
 }

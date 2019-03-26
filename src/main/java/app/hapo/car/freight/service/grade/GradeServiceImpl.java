@@ -7,10 +7,12 @@ package app.hapo.car.freight.service.grade;/*
 import app.hapo.car.freight.domain.grade.Grade;
 import app.hapo.car.freight.domain.grade.GradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,8 +23,9 @@ public class GradeServiceImpl implements GradeService{
     GradeRepository gradeRepository;
 
     @Override
-    public List<Grade> findAll() {
-        return gradeRepository.findAll();
+    public Page<Grade> findAll(Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort());
+        return gradeRepository.findAll(pageRequest);
     }
 
     @Override

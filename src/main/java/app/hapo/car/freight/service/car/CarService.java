@@ -5,13 +5,14 @@ package app.hapo.car.freight.service.car;/*
  */
 
 import app.hapo.car.freight.domain.car.Car;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface CarService {
 
-    List<Car> findAll();
+    Page<Car> findAll(Pageable pageable);
 
     Optional<Car> findById(Long id);
 

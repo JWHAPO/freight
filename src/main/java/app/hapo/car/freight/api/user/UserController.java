@@ -9,6 +9,7 @@ import app.hapo.car.freight.domain.usercar.UserCar;
 import app.hapo.car.freight.service.user.UserService;
 import app.hapo.car.freight.service.usercar.UserCarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -91,8 +92,8 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}/cars")
-    public List<UserCar> findUserCars(@PathVariable Long id){
-        return userCarService.findByUserId(id);
+    public Page<UserCar> findUserCars(@PathVariable Long id, Pageable pageable){
+        return userCarService.findByUserId(id,pageable);
     }
 
 

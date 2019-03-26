@@ -5,13 +5,14 @@ package app.hapo.car.freight.service.notice;/*
  */
 
 import app.hapo.car.freight.domain.notice.Notice;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface NoticeService {
 
-    List<Notice> findAll();
+    Page<Notice> findAll(Pageable pageable);
     Optional<Notice> findById(Long id);
 
 }

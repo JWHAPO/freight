@@ -17,7 +17,7 @@ public class GradeResourceAssembler implements ResourceAssembler<Grade, Resource
     @Override
     public Resource<Grade> toResource(Grade grade) {
         return new Resource<>(grade,
-                linkTo(methodOn(GradeController.class).findById(grade.getGradeId())).withSelfRel(),
-                linkTo(methodOn(GradeController.class).findAll()).withRel("grades"));
+                linkTo(methodOn(GradeController.class).findById(grade.getGradeId())).withSelfRel()
+        );
     }
 }

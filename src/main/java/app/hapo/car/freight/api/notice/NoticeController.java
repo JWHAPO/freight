@@ -7,6 +7,7 @@ package app.hapo.car.freight.api.notice;/*
 import app.hapo.car.freight.domain.notice.Notice;
 import app.hapo.car.freight.service.notice.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
@@ -29,13 +30,13 @@ public class NoticeController {
     NoticeResourceAssembler noticeResourceAssembler;
 
     @GetMapping(value = "/notices")
-    public Resources<Resource<Notice>> findAll(){
-        List<Resource<Notice>> notices = noticeService.findAll().stream()
+    public Resources<Resource<Notice>> findAll(Pageable pageable){
+        List<Resource<Notice>> notices = noticeService.findAll(pageable).stream()
                 .map(noticeResourceAssembler::toResource)
                 .collect(Collectors.toList());
 
         return new Resources<>(notices,
-                linkTo(methodOn(NoticeController.class).findAll()).withSelfRel());
+                linkTo(methodOn(NoticeController.class).findAll(pageable)).withSelfRel());
     }
 
     @GetMapping(value = "notices/{id}")

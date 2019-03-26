@@ -3,10 +3,11 @@ package app.hapo.car.freight.service.usercar;
 import app.hapo.car.freight.domain.usercar.UserCar;
 import app.hapo.car.freight.domain.usercar.UserCarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * freight
@@ -28,7 +29,9 @@ public class UserCarServiceImpl implements UserCarService{
     }
 
     @Override
-    public List<UserCar> findByUserId(Long userId) {
-        return userCarRepository.findByUserId(userId);
+    public Page<UserCar> findByUserId(Long userId, Pageable pageable) {
+        PageRequest pageRequest =
+                PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), pageable.getSort());
+        return userCarRepository.findByUserId(userId,pageRequest);
     }
 }

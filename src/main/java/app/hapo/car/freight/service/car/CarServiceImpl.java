@@ -7,6 +7,9 @@ package app.hapo.car.freight.service.car;/*
 import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.car.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +24,9 @@ public class CarServiceImpl implements CarService {
     private CarRepository carRepository;
 
     @Override
-    public List<Car> findAll() {
-        return carRepository.findAll();
+    public Page<Car> findAll(Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort());
+        return carRepository.findAll(pageRequest);
     }
 
     @Override

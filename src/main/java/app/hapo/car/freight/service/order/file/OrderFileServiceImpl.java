@@ -7,10 +7,12 @@ package app.hapo.car.freight.service.order.file;/*
 import app.hapo.car.freight.domain.order.file.OrderFile;
 import app.hapo.car.freight.domain.order.file.OrderFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,8 +23,9 @@ public class OrderFileServiceImpl implements OrderFileService {
     OrderFileRepository orderFileRepository;
 
     @Override
-    public List<OrderFile> findByOrderId(Long orderId) {
-        return orderFileRepository.findByOrderId(orderId);
+    public Page<OrderFile> findByOrderId(Long orderId, Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort());
+        return orderFileRepository.findByOrderId(orderId,pageRequest);
     }
 
     @Override
@@ -31,7 +34,8 @@ public class OrderFileServiceImpl implements OrderFileService {
     }
 
     @Override
-    public List<OrderFile> findAll() {
-        return orderFileRepository.findAll();
+    public Page<OrderFile> findAll(Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSort());
+        return orderFileRepository.findAll(pageRequest);
     }
 }

@@ -19,8 +19,8 @@ public class CarResourceAssembler implements ResourceAssembler<Car, Resource<Car
     public Resource<Car> toResource(Car car) {
 
         Resource<Car> carResource = new Resource<>(car,
-                linkTo(methodOn(CarController.class).findById(car.getCarId())).withSelfRel(),
-                linkTo(methodOn(CarController.class).findAll()).withRel("cars"));
+                linkTo(methodOn(CarController.class).findById(car.getCarId())).withSelfRel()
+        );
         return carResource;
     }
 }

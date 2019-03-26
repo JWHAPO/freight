@@ -4,10 +4,10 @@ package app.hapo.car.freight.domain.usercar;/*
  * Description :
  */
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
 public interface UserCarRepository extends JpaRepository<UserCar, Long> {
-    List<UserCar> findByUserId(Long userId);
+    Page<UserCar> findByUserId(Long userId, Pageable pageable);
 }

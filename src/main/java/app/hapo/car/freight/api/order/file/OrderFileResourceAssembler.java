@@ -4,16 +4,25 @@ package app.hapo.car.freight.api.order.file;/*
  * Description :
  */
 
+import app.hapo.car.freight.api.order.OrderController;
 import app.hapo.car.freight.domain.order.file.OrderFile;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @Component
 public class OrderFileResourceAssembler implements ResourceAssembler<OrderFile, Resource<OrderFile>> {
 
     @Override
     public Resource<OrderFile> toResource(OrderFile orderFile) {
-        return null;
+
+        Resource<OrderFile> orderFileResource =  new Resource<>(orderFile,
+                linkTo(methodOn(OrderController.class).findById(orderFile.getOrderFileId())).withSelfRel()
+        );
+
+        return orderFileResource;
     }
 }
