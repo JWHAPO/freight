@@ -137,12 +137,59 @@ public class UserServiceImpl implements UserService {
     private String getAuthEmailForm(String emailAddress, String authKey){
         StringBuffer authEmailContents = new StringBuffer();
 
+
         authEmailContents.append("<html>");
-        authEmailContents.append("<h1> Hello My Users. </<h1>");
-        authEmailContents.append("<h3> If you want to use this app, You try! </h3>");
-        authEmailContents.append("<h3> This is Aour Authorization key: "+authKey+"</h3>");
+        authEmailContents.append("<head>");
+        authEmailContents.append("<style type=\"text/css\">");
+        authEmailContents.append("body{text-align:center;}");
+
+        authEmailContents.append("img{");
+        authEmailContents.append("width: 100px;");
+        authEmailContents.append("height: 100px");
+        authEmailContents.append("float:center;");
+        authEmailContents.append("}");
+
+        authEmailContents.append(".btncls{");
+        authEmailContents.append("background-color:#5587ED;");
+        authEmailContents.append("border: #5587ED;");
+        authEmailContents.append("font-family: Arial, Geneva, Arial, Helvetica,  sans-serif;");
+        authEmailContents.append("font-size: 15px;");
+        authEmailContents.append("color: #fff;");
+        authEmailContents.append("letter-spacing: 1px;");
+        authEmailContents.append("padding: 8px 12px;");
+        authEmailContents.append("font-size: 14px;");
+        authEmailContents.append("font-weight: normal;");
+
+        authEmailContents.append("border-radius: 4px;");
+        authEmailContents.append("line-height: 1.5;");
+        authEmailContents.append("text-decoration:none;");
+        authEmailContents.append("}");
+
+
+        authEmailContents.append("</style>");
+        authEmailContents.append("</head>");
+        authEmailContents.append("<body>");
+        authEmailContents.append("<img src=\"tracking.png\" align=\"center\">");
+
+        authEmailContents.append("<h1> Hello. </h1>");
+        authEmailContents.append("<h3> Click and confirm that you want to sign in to Freight.</h3>");
+        authEmailContents.append("<h3> This link will expire in five minutes.</h3>");
+        authEmailContents.append("<br />");
+
+
         authEmailContents.append("<a href = \"http://localhost:8080/auth/email/"+emailAddress+"/"+authKey+"\">여기를 클릭</a>");
-        authEmailContents.append("</html>");
+
+        authEmailContents.append("<button class=\"btncls\" onclick=\"location.href = 'http://localhost:8080/auth/email/"+emailAddress+"/"+authKey+"'\">SIGN IN TO FREIGHT</button>");
+
+
+        authEmailContents.append("<br />");
+        authEmailContents.append("<br />");
+        authEmailContents.append("<br />");
+        authEmailContents.append("<h5> If you are having any issues with your account, </h5>");
+        authEmailContents.append("<h5> Please don't hesitate to contact us replying to this mail.</h5>");
+        authEmailContents.append("<h5> Thank you.</h5>");
+
+        authEmailContents.append("</body>");
 
         return authEmailContents.toString();
     }
