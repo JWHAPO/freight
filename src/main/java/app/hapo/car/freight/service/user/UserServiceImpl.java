@@ -139,48 +139,16 @@ public class UserServiceImpl implements UserService {
 
 
         authEmailContents.append("<html>");
-        authEmailContents.append("<head>");
-        authEmailContents.append("<style type=\"text/css\">");
-        authEmailContents.append("body{text-align:center;}");
-
-        authEmailContents.append("img{");
-        authEmailContents.append("width: 100px;");
-        authEmailContents.append("height: 100px");
-        authEmailContents.append("float:center;");
-        authEmailContents.append("}");
-
-        authEmailContents.append(".btncls{");
-        authEmailContents.append("background-color:#5587ED;");
-        authEmailContents.append("border: #5587ED;");
-        authEmailContents.append("font-family: Arial, Geneva, Arial, Helvetica,  sans-serif;");
-        authEmailContents.append("font-size: 15px;");
-        authEmailContents.append("color: #fff;");
-        authEmailContents.append("letter-spacing: 1px;");
-        authEmailContents.append("padding: 8px 12px;");
-        authEmailContents.append("font-size: 14px;");
-        authEmailContents.append("font-weight: normal;");
-
-        authEmailContents.append("border-radius: 4px;");
-        authEmailContents.append("line-height: 1.5;");
-        authEmailContents.append("text-decoration:none;");
-        authEmailContents.append("}");
-
-
-        authEmailContents.append("</style>");
-        authEmailContents.append("</head>");
-        authEmailContents.append("<body>");
-        authEmailContents.append("<img src=\"tracking.png\" align=\"center\">");
+        authEmailContents.append("<body style=\"text-align:center;\">");
+//        authEmailContents.append("<img style=\"width: 100px; height: 100px; float:center; \" src=\"https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png\" align=\"center\">");
 
         authEmailContents.append("<h1> Hello. </h1>");
         authEmailContents.append("<h3> Click and confirm that you want to sign in to Freight.</h3>");
         authEmailContents.append("<h3> This link will expire in five minutes.</h3>");
         authEmailContents.append("<br />");
 
-
-        authEmailContents.append("<a href = \"http://localhost:8080/auth/email/"+emailAddress+"/"+authKey+"\">여기를 클릭</a>");
-
-        authEmailContents.append("<button class=\"btncls\" onclick=\"location.href = 'http://localhost:8080/auth/email/"+emailAddress+"/"+authKey+"'\">SIGN IN TO FREIGHT</button>");
-
+        authEmailContents.append("<button style =\"background-color:#5587ED; border: #5587ED; font-family: Arial, Geneva, Arial, Helvetica,  sans-serif; font-size: 15px; color: #fff; letter-spacing: 1px; padding: 8px 12px; font-size: 14px; font-weight: normal; border-radius: 4px; line-height: 1.5; text-decoration:none;      \" ");
+        authEmailContents.append(" onclick=\"location.href = 'http://localhost:8080/auth/email/"+emailAddress+"/"+authKey+"'\">SIGN IN TO FREIGHT</button>");
 
         authEmailContents.append("<br />");
         authEmailContents.append("<br />");

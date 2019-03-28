@@ -37,7 +37,7 @@ class UserServiceTest extends Specification {
         given:
 
             List<UserRole> userRoles = Arrays.asList(new UserRole(2L, Role.MEMBER))
-            User testUser = new User(4L,"email11@email.com","1234","Mr.Park",null,null,null,null,userRoles)
+            User testUser = new User(4L,"email1331@email.com","1234","Mr.Park",null,null,null,null,userRoles)
 
             given(userRepository.save(testUser))
                     .willReturn(testUser)
