@@ -140,6 +140,7 @@ public class UserServiceImpl implements UserService {
 
         authEmailContents.append("<html>");
         authEmailContents.append("<body style=\"text-align:center;\">");
+
 //        authEmailContents.append("<img style=\"width: 100px; height: 100px; float:center; \" src=\"https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png\" align=\"center\">");
 
         authEmailContents.append("<h1> Hello. </h1>");
