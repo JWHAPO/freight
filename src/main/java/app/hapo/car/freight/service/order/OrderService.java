@@ -21,4 +21,5 @@ public interface OrderService {
     Optional<Order> save(Order order);
     Long countByStatus(OrderStatus status);
     Page<Order> findByStatus(OrderStatus status, Pageable pageable);
+    Optional<Order> complete(Order order);
 }

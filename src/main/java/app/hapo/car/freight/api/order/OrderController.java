@@ -97,6 +97,9 @@ public class OrderController {
             order.setStatus(OrderStatus.COMPLETED);
             return ResponseEntity.ok(orderResourceAssembler.toResource(orderService.save(order).get()));
         }
+
+
+
         return ResponseEntity
                 .status(HttpStatus.METHOD_NOT_ALLOWED)
                 .body(new VndErrors.VndError("Method not allowed", "You can't complete an order that is in the " + order.getStatus() + " status"));
