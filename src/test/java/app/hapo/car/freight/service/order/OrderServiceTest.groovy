@@ -5,8 +5,7 @@ import app.hapo.car.freight.domain.order.OrderRepository
 import app.hapo.car.freight.domain.order.OrderStatus
 import app.hapo.car.freight.domain.order.response.OrderResponse
 import app.hapo.car.freight.domain.order.response.OrderResponseRepository
-import app.hapo.car.freight.domain.user.User
-import app.hapo.car.freight.domain.user.UserRepository
+import app.hapo.car.freight.service.user.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -25,79 +24,48 @@ import static org.mockito.BDDMockito.given
 
 @SpringBootTest
 class OrderServiceTest extends Specification {
-    @MockBean(name = "orderRepository")
-    private OrderRepository orderRepository
-    @MockBean(name = "orderService")
+    @Autowired
     private OrderService orderService
 
     @MockBean(name = "orderResponseRepository")
     private OrderResponseRepository orderResponseRepository
-    @MockBean(name = "userRepository")
-    private UserRepository userRepository
+
+    @MockBean(name = "orderRepository")
+    private OrderRepository orderRepository
+    @Autowired
+    private UserService userService
 
 
     def "complete"(){
         given:
-        OrderResponse orderResponse1 = new OrderResponse()
-        orderResponse1.orderResponseId = 3L
-        orderResponse1.orderId = 3L
-        orderResponse1.userId = 1L
-        orderResponse1.pickupDate = LocalDate.parse("2019-03-31")
-        orderResponse1.pickupTime = LocalTime.parse("14:00:00")
-        orderResponse1.suggestedPrice = 30000L
-        orderResponse1.currentAvgPrice = 25000L
-        orderResponse1.sellerMessage = "To be Best"
-        orderResponse1.resultPoint = 3L
-        orderResponse1.isSelected = "Y"
 
+        Order order = new Order("FIGHTING FREIGHT ORDER3", 3L, "ADDRESS 1","ADDRESS 2",135000L,LocalDate.parse("2019-04-01")
+                                ,LocalTime.parse("11:30:00"), 20000L, "N","FIGHTING",OrderStatus.IN_PROGRESS,"",null
+        )
 
-        OrderResponse orderResponse2 = new OrderResponse()
-        orderResponse2.orderResponseId = 4L
-        orderResponse2.orderId = 3L
-        orderResponse2.userId = 2L
-        orderResponse2.pickupDate = LocalDate.parse("2019-04-01")
-        orderResponse2.pickupTime = LocalTime.parse("14:30:00")
-        orderResponse2.suggestedPrice = 20000L
-        orderResponse2.currentAvgPrice = 25000L
-        orderResponse2.sellerMessage = "To be Best No 2"
-        orderResponse2.resultPoint = 0L
-        orderResponse2.isSelected = "N"
+        OrderResponse orderResponse1 = new OrderResponse(order.getOrderId(), 1L, LocalDate.parse("2019-03-31"), LocalTime.parse("14:00:00")
+                ,30000L, 25000L, "To be best","",3L,"Y")
+
+        OrderResponse orderResponse2 = new OrderResponse(order.getOrderId(), 2L, LocalDate.parse("2019-04-01"), LocalTime.parse("11:00:00")
+                                                        ,30000L, 25000L, "To be best No2","",0L,"N")
+
+        orderResponse1.setOrderResponseId(98L)
+        orderResponse2.setOrderResponseId(99L)
 
         List<OrderResponse> orderResponses = new ArrayList<>()
         orderResponses.add(orderResponse1)
         orderResponses.add(orderResponse2)
 
-
-        Order order = new Order()
-        order.orderId = 3L
-        order.description = "FIGHTING FREIGHT ORDER3"
-        order.carId = 3L
-        order.departureAddress = "ADDRESS 1"
-        order.arrivalAddress = "ADDRESS 2"
-        order.distance = 135000L
-        order.hopeDate = LocalDate.parse("2019-04-01")
-        order.hopeTime = LocalTime.parse("11:30:00")
-        order.hope_price = 20000L
-        order.isMixed = "N"
-        order.remark = "FIGHTING"
-        order.status = OrderStatus.IN_PROGRESS
-        order.cancelRemark = ""
-        order.orderResponses = orderResponses
+        order.setOrderResponses(orderResponses)
 
         given(orderRepository.save(order)).willReturn(order)
+        given(orderResponseRepository.save(orderResponse1)).willReturn(orderResponse1)
+        given(orderResponseRepository.save(orderResponse2)).willReturn(orderResponse2)
 
         when:
-        orderService.save(order)
-        Optional<OrderResponse> orderResponse = orderResponseRepository.findByOrderIdAndIsSelected(order.getOrderId(), "Y")
-        Optional<User> beforeUser = userRepository.findById(orderResponse.get().getUserId())
-
-        Optional<Order> resultOrder = orderService.complete(order)
-        Optional<User> afterUser = userRepository.findById(orderResponse.get().getUserId())
+        Optional<Order> resultOrder = orderService.save(order)
 
         then :
-        Long afterVal = orderResponse1.resultPoint*5L
-        beforeUser.get().experienceValue + afterVal == afterUser.get().experienceValue
-
-
+        resultOrder.get() == order
     }
 }
