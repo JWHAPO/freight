@@ -27,7 +27,7 @@ import java.util.List;
 public class Order extends AuditModel {
     @Id
     @Column(name = "order_id")
-    @GeneratedValue(strategy = GenerationType. IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
     @Column(name = "description")
