@@ -42,7 +42,7 @@ class OrderServiceTest extends Specification {
         Order order = new Order("FIGHTING FREIGHT ORDER3", 3L, "ADDRESS 1","ADDRESS 2",135000L,LocalDate.parse("2019-04-01")
                                 ,LocalTime.parse("11:30:00"), 20000L, "N","FIGHTING",OrderStatus.IN_PROGRESS,"",null
         )
-
+        order.setOrderId(2L)
         OrderResponse orderResponse1 = new OrderResponse(order.getOrderId(), 1L, LocalDate.parse("2019-03-31"), LocalTime.parse("14:00:00")
                 ,30000L, 25000L, "To be best","",3L,"Y")
 
@@ -67,5 +67,6 @@ class OrderServiceTest extends Specification {
 
         then :
         resultOrder.get() == order
+        resultOrder.get().description == "FIGHTING FREIGHT ORDER3"
     }
 }
