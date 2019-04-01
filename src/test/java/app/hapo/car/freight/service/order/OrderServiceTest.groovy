@@ -14,8 +14,6 @@ import spock.lang.Specification
 import java.time.LocalDate
 import java.time.LocalTime
 
-import static org.mockito.BDDMockito.given
-
 /*
  * Created by hapo
  * Date : 19. 3. 31 오전 1:00
@@ -35,19 +33,17 @@ class OrderServiceTest extends Specification {
     @Autowired
     private UserService userService
 
-
-    def "complete"(){
-        given:
-
+    // @Before
+    def setup(){
         Order order = new Order("FIGHTING FREIGHT ORDER3", 3L, "ADDRESS 1","ADDRESS 2",135000L,LocalDate.parse("2019-04-01")
-                                ,LocalTime.parse("11:30:00"), 20000L, "N","FIGHTING",OrderStatus.IN_PROGRESS,"",null
+                ,LocalTime.parse("11:30:00"), 20000L, "N","FIGHTING",OrderStatus.IN_PROGRESS,"",null
         )
         order.setOrderId(2L)
         OrderResponse orderResponse1 = new OrderResponse(order.getOrderId(), 1L, LocalDate.parse("2019-03-31"), LocalTime.parse("14:00:00")
                 ,30000L, 25000L, "To be best","",3L,"Y")
 
         OrderResponse orderResponse2 = new OrderResponse(order.getOrderId(), 2L, LocalDate.parse("2019-04-01"), LocalTime.parse("11:00:00")
-                                                        ,30000L, 25000L, "To be best No2","",0L,"N")
+                ,30000L, 25000L, "To be best No2","",0L,"N")
 
         orderResponse1.setOrderResponseId(98L)
         orderResponse2.setOrderResponseId(99L)
@@ -58,15 +54,18 @@ class OrderServiceTest extends Specification {
 
         order.setOrderResponses(orderResponses)
 
-        given(orderRepository.save(order)).willReturn(order)
-        given(orderResponseRepository.save(orderResponse1)).willReturn(orderResponse1)
-        given(orderResponseRepository.save(orderResponse2)).willReturn(orderResponse2)
+        orderRepository.save(order)
+    }
 
+    def cleanup(){
+        orderRepository.deleteAll()
+    }
+
+    def "complete"(){
         when:
-        Optional<Order> resultOrder = orderService.save(order)
+        Optional<Order> resultOrder = orderRepository.findById(2L)
 
         then :
-        resultOrder.get() == order
         resultOrder.get().description == "FIGHTING FREIGHT ORDER3"
     }
 }
