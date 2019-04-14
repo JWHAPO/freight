@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface OrderRepository extends JpaRepository<Order,Long> {
 
-    Long countByStatus(OrderStatus status);
+    int countByStatus(OrderStatus status);
 
     Page<Order> findByStatus(OrderStatus status, Pageable pageable);
 }
