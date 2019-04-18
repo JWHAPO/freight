@@ -52,7 +52,7 @@ public class Order extends AuditModel {
     private LocalTime hopeTime;
 
     @Column(name = "hope_price")
-    private Long hope_price;
+    private Long hopePrice;
 
     @Column(name = "is_mixed")
     private String isMixed;
@@ -72,7 +72,7 @@ public class Order extends AuditModel {
     private List<OrderResponse> orderResponses;
 
     @Builder
-    public Order(String description, Long carId, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hope_price, String isMixed, String remark, OrderStatus status, String cancelRemark, List<OrderResponse> orderResponses) {
+    public Order(String description, Long carId, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hopePrice, String isMixed, String remark, OrderStatus status, String cancelRemark, List<OrderResponse> orderResponses) {
         this.description = description;
         this.carId = carId;
         this.departureAddress = departureAddress;
@@ -80,7 +80,7 @@ public class Order extends AuditModel {
         this.distance = distance;
         this.hopeDate = hopeDate;
         this.hopeTime = hopeTime;
-        this.hope_price = hope_price;
+        this.hopePrice = hopePrice;
         this.isMixed = isMixed;
         this.remark = remark;
         this.status = status;
