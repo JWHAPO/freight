@@ -1,5 +1,6 @@
 package app.hapo.car.freight.domain.order;
 
+import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.common.AuditModel;
 import app.hapo.car.freight.domain.order.response.OrderResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -76,9 +77,10 @@ public class Order extends AuditModel {
     private List<OrderResponse> orderResponses;
 
     @Builder
-    public Order(String description, Long carId, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hopePrice, String isMixed, String remark, OrderStatus status, String cancelRemark, List<OrderResponse> orderResponses) {
+    public Order(String description, Long carId,Car car, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hopePrice, String isMixed, String remark, OrderStatus status, String cancelRemark, List<OrderResponse> orderResponses) {
         this.description = description;
         this.carId = carId;
+        this.car = car;
         this.departureAddress = departureAddress;
         this.arrivalAddress = arrivalAddress;
         this.distance = distance;
