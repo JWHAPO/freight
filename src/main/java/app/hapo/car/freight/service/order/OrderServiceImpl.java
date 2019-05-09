@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Long countByStatus(OrderStatus status) {
+    public int countByStatus(OrderStatus status) {
         return orderRepository.countByStatus(status);
     }
 

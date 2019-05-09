@@ -1,6 +1,5 @@
 package app.hapo.car.freight.domain.order;
 
-import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.common.AuditModel;
 import app.hapo.car.freight.domain.order.response.OrderResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,7 +27,7 @@ import java.util.List;
 public class Order extends AuditModel {
     @Id
     @Column(name = "order_id")
-    @GeneratedValue(strategy = GenerationType. IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
     @Column(name = "description")
@@ -57,7 +56,7 @@ public class Order extends AuditModel {
     private LocalTime hopeTime;
 
     @Column(name = "hope_price")
-    private Long hope_price;
+    private Long hopePrice;
 
     @Column(name = "is_mixed")
     private String isMixed;
@@ -77,16 +76,15 @@ public class Order extends AuditModel {
     private List<OrderResponse> orderResponses;
 
     @Builder
-    public Order(String description, Long carId, Car car, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hope_price, String isMixed, String remark, OrderStatus status, String cancelRemark, List<OrderResponse> orderResponses) {
+    public Order(String description, Long carId, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hopePrice, String isMixed, String remark, OrderStatus status, String cancelRemark, List<OrderResponse> orderResponses) {
         this.description = description;
         this.carId = carId;
-        this.car = car;
         this.departureAddress = departureAddress;
         this.arrivalAddress = arrivalAddress;
         this.distance = distance;
         this.hopeDate = hopeDate;
         this.hopeTime = hopeTime;
-        this.hope_price = hope_price;
+        this.hopePrice = hopePrice;
         this.isMixed = isMixed;
         this.remark = remark;
         this.status = status;

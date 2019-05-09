@@ -55,7 +55,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/orders/count/status/{status}")
-    public Long countByStatus(@PathVariable OrderStatus status){
+    public int countByStatus(@PathVariable OrderStatus status){
         return orderService.countByStatus(status);
     }
 

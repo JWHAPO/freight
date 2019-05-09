@@ -19,7 +19,7 @@ public interface OrderService {
     Page<Order> findAll(Pageable pageable);
     Optional<Order> findById(Long id);
     Optional<Order> save(Order order);
-    Long countByStatus(OrderStatus status);
+    int countByStatus(OrderStatus status);
     Page<Order> findByStatus(OrderStatus status, Pageable pageable);
     Optional<Order> complete(Order order);
 }
