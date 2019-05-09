@@ -1,5 +1,6 @@
 package app.hapo.car.freight.domain.order;
 
+import app.hapo.car.freight.domain.car.Car;
 import app.hapo.car.freight.domain.common.AuditModel;
 import app.hapo.car.freight.domain.order.response.OrderResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,6 +36,10 @@ public class Order extends AuditModel {
 
     @Column(name = "car_id")
     private Long carId;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="car_id")
+    private Car car;
 
     @Column(name="departure_address")
     private String departureAddress;
@@ -72,9 +77,10 @@ public class Order extends AuditModel {
     private List<OrderResponse> orderResponses;
 
     @Builder
-    public Order(String description, Long carId, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hope_price, String isMixed, String remark, OrderStatus status, String cancelRemark, List<OrderResponse> orderResponses) {
+    public Order(String description, Long carId, Car car, String departureAddress, String arrivalAddress, Long distance, LocalDate hopeDate, LocalTime hopeTime, Long hope_price, String isMixed, String remark, OrderStatus status, String cancelRemark, List<OrderResponse> orderResponses) {
         this.description = description;
         this.carId = carId;
+        this.car = car;
         this.departureAddress = departureAddress;
         this.arrivalAddress = arrivalAddress;
         this.distance = distance;
